@@ -34,37 +34,32 @@ namespace PokeDojo.Stats
 
       int combinedHealth = baseHealth + healthIV;
       int dividedHealthEV = (int)(Math.Sqrt(healthEV) / 4);
-      int preModified = ((combinedHealth + dividedHealthEV) * 81) / 100;
+      int preModified = ((combinedHealth + dividedHealthEV) * level) / 100;
       int postModified = preModified + level + 10;
       health = postModified;
 
     }
 
-
-    // NEXT THING TO WORK ON 10/22
-    public void EarlyGenSpAttack(Pokemon pokemon)
+    public void EarlyGenStat(Pokemon pokemon, string stat)
     {
+      // calculates the attack according to the general stat calculation
+      int baseAttack = pokemon.GetBaseStat().GetBaseAttack();
+      int attackIV = pokemon.GetStatValue().GetIndividualValue().GetAttackIV();
+      int attackEV = pokemon.GetStatValue().GetEffortValue().GetAttackEV();
+      int level = pokemon.GetDescription().GetLevel();
 
+      switch (stat)
+      {
+        case "attack":
+          CalculateEarlyGenStat(baseAttack, attackIV, attackEV, level);
+          break;
+      }
     }
 
-    public void EarlyGenSpDefense(Pokemon pokemon)
+    public void CalculateEarlyGenStat(int baseStat, int IV, int EV, int level)
     {
-
-    }
-
-    public void EarlyGenAttack(Pokemon pokemon)
-    {
-
-    }
-
-    public void EarlyGenDefense(Pokemon pokemon)
-    {
-
-    }
-
-    public void EarlyGenSpeed(Pokemon pokemon)
-    {
-
+      int desiredStat;
+      desiredStat = (int)((baseStat + IV) * 2 + (Math.Sqrt(EV) / 4) * level) / 100;
     }
   }
 }
