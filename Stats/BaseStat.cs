@@ -20,7 +20,7 @@ namespace PokeDojo.Stats
       baseSpeed = 0;
     }
 
-    public void SetBaseStat(int health, int attack, int spAttack, int defense, int spDefense, int speed)
+    public void SetBaseStat(int health, int attack, int defense, int spAttack, int spDefense, int speed)
     {
       baseHealth = health;
       baseAttack = attack;

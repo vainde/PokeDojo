@@ -1,6 +1,7 @@
 ﻿using System;
 using PokeDojo.Descriptor;
 using PokeDojo.Stats;
+using PokeDojo.Value;
 
 namespace PokeDojo.Simulator
 {
@@ -48,7 +49,7 @@ namespace PokeDojo.Simulator
       Nature Jolly = new Nature("Jolly", "Speed", "Special Attack");
       Nature Naive = new Nature("Naive", "Speed", "Special Defense");
 
-      List<Nature> natures =
+      List<Nature> Natures =
         new List<Nature>()
         {
           Hardy,
@@ -77,7 +78,41 @@ namespace PokeDojo.Simulator
           Naive
         };
 
-      // TO DO LATER: Test Gen 1
+      /*
+       * Early Gen consists of Gen 1 and Gen 2
+       * Gen 1: No item
+       * Gen 2: Has item, hp type, shiny, gender
+       */
+      Description AlakazamDesc = new Description();
+      Stat AlakazamStat = new Stat();
+      BaseStat AlakazamBaseStat = new BaseStat();
+      StatValue AlakazamValue = new StatValue();
+      Gender AlakazamGender = new Gender();
+      Pokemon Alakazam = new Pokemon(AlakazamDesc, AlakazamStat, AlakazamBaseStat, AlakazamValue, AlakazamGender, Natures[4]);
+
+      // Let's use an Alakazam with max SP.ATK AND max SPD EV's and max IV's based on Gen 2
+      Alakazam.GetDescription().SetName("Alakazam");
+      Alakazam.GetDescription().SetLevel(100);
+      Alakazam.GetBaseStat().SetBaseStat(55, 50, 40, 135, 85, 120);
+      Alakazam.GetStatValue().GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
+      Alakazam.GetStatValue().GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
+      Alakazam.GetStat().EarlyGenHealth(Alakazam);
+      Alakazam.GetStat().EarlyGenAttack(Alakazam);
+      Alakazam.GetStat().EarlyGenDefense(Alakazam);
+      Alakazam.GetStat().EarlyGenSpAttack(Alakazam);
+      Alakazam.GetStat().EarlyGenSpDefense(Alakazam);
+      Alakazam.GetStat().EarlyGenSpeed(Alakazam);
+
+      Console.WriteLine("ALAKAZAM SUMMARY");
+      Console.WriteLine($"Name: {Alakazam.GetDescription().GetName()}");
+      Console.WriteLine($"Level: {Alakazam.GetDescription().GetLevel()}");
+      Console.WriteLine($"Gender: {Alakazam.GetGender().GetGender()}");
+      Console.WriteLine($"HP: {Alakazam.GetStat().GetHealth()}");
+      Console.WriteLine($"Attack: {Alakazam.GetStat().GetAttack()}");
+      Console.WriteLine($"Defense: {Alakazam.GetStat().GetDefense()}");
+      Console.WriteLine($"Sp. Attack: {Alakazam.GetStat().GetSpecialAttack()}");
+      Console.WriteLine($"Sp. Defense: {Alakazam.GetStat().GetSpecialDefense()}");
+      Console.WriteLine($"Speed: {Alakazam.GetStat().GetSpeed()}");
     }
   }
 }

@@ -13,12 +13,12 @@ namespace PokeDojo
         StatValue value;
         Gender gender;
         Nature nature;
-        public Pokemon(Description description, Stat stat, BaseStat baseStat, StatValue statValue, Gender gender, Nature nature)
+        public Pokemon(Description description, Stat stat, BaseStat baseStat, StatValue value, Gender gender, Nature nature)
         {
             this.description = description;
             this.stat = stat;
             this.baseStat = baseStat;
-            this.value = statValue;
+            this.value = value;
             this.gender = gender;
             this.nature = nature;
         }

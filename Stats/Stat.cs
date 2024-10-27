@@ -139,7 +139,7 @@ namespace PokeDojo.Stats
       int healthEV = pokemon.GetStatValue().GetEffortValue().GetHealthEV();
       int level = pokemon.GetDescription().GetLevel();
 
-      int combinedHealth = baseHealth + healthIV;
+      int combinedHealth = (baseHealth + healthIV) * 2;
       int dividedHealthEV = (int)(Math.Sqrt(healthEV) / 4);
       int preModified = ((combinedHealth + dividedHealthEV) * level) / 100;
       int postModified = preModified + level + 10;
@@ -149,9 +149,11 @@ namespace PokeDojo.Stats
     // Template for calculating non-health stats
     public int CalculateEarlyGenStat(int baseStat, int IV, int EV, int level)
     {
-      int desiredStat;
-      desiredStat = (int)((baseStat + IV) * 2 + (Math.Sqrt(EV) / 4) * level) / 100;
-      return desiredStat; 
+      int handleBase = (baseStat + IV) * 2;
+      int handleStatEXP = (int)Math.Sqrt(EV) / 4;
+      int preModified = ((handleBase + handleStatEXP) * level) / 100;
+      int postModified = preModified + 5;
+      return postModified; 
     }
 
     // Implements the template above based on specific stat

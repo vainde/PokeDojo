@@ -32,6 +32,7 @@ namespace PokeDojo.Stats
       this.genderRatio = genderRatio;
     }
 
+    // For AI trainers
     public void RandomizeGender()
     {
       if(genderRatio >= 0.5)
