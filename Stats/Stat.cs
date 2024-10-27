@@ -23,8 +23,10 @@ namespace PokeDojo.Stats
       speed = 0;
     }
 
-    // If the player wants to use Gen 1 and Gen 2 tiers, these stats must be applied
-    // LAST THING WORKED ON 12:38 10/22
+    /* If the player wants to use Gen 1 and Gen 2 for any tier, these stats must be applied.
+     * Health is calculated differently from the other stats, hence it's seperation
+     */
+
     public void EarlyGenHealth(Pokemon pokemon)
     {
       int baseHealth = pokemon.GetBaseStat().GetBaseHealth();
@@ -37,29 +39,64 @@ namespace PokeDojo.Stats
       int preModified = ((combinedHealth + dividedHealthEV) * level) / 100;
       int postModified = preModified + level + 10;
       health = postModified;
-
     }
 
-    public void EarlyGenStat(Pokemon pokemon, string stat)
+    // Template for calculating non-health stats
+    public int CalculateEarlyGenStat(int baseStat, int IV, int EV, int level)
     {
-      // calculates the attack according to the general stat calculation
+      int desiredStat;
+      desiredStat = (int)((baseStat + IV) * 2 + (Math.Sqrt(EV) / 4) * level) / 100;
+      return desiredStat; 
+    }
+
+    // Implements the template above based on specific stat
+    public void EarlyGenAttack(Pokemon pokemon)
+    {
       int baseAttack = pokemon.GetBaseStat().GetBaseAttack();
       int attackIV = pokemon.GetStatValue().GetIndividualValue().GetAttackIV();
       int attackEV = pokemon.GetStatValue().GetEffortValue().GetAttackEV();
       int level = pokemon.GetDescription().GetLevel();
-
-      switch (stat)
-      {
-        case "attack":
-          CalculateEarlyGenStat(baseAttack, attackIV, attackEV, level);
-          break;
-      }
+      attack = CalculateEarlyGenStat(baseAttack, attackIV, attackEV, level);
     }
 
-    public void CalculateEarlyGenStat(int baseStat, int IV, int EV, int level)
+    public void EarlyGenDefense(Pokemon pokemon)
     {
-      int desiredStat;
-      desiredStat = (int)((baseStat + IV) * 2 + (Math.Sqrt(EV) / 4) * level) / 100;
+      int baseDefense = pokemon.GetBaseStat().GetBaseDefense();
+      int defenseIV = pokemon.GetStatValue().GetIndividualValue().GetDefenseIV();
+      int defenseEV = pokemon.GetStatValue().GetEffortValue().GetDefenseEV();
+      int level = pokemon.GetDescription().GetLevel();
+
+      defense = CalculateEarlyGenStat(baseDefense, defenseIV, defenseEV, level);
+    }
+
+    public void EarlyGenSpAttack(Pokemon pokemon)
+    {
+      int baseSpAttack = pokemon.GetBaseStat().GetBaseSpAttack();
+      int spAttackIV = pokemon.GetStatValue().GetIndividualValue().GetSpAttackIV();
+      int spAttackEV = pokemon.GetStatValue().GetEffortValue().GetSpAttackEV();
+      int level = pokemon.GetDescription().GetLevel();
+
+     spAttack = CalculateEarlyGenStat(baseSpAttack, spAttackIV, spAttackEV, level);
+    }
+
+    public void EarlyGenSpDefense(Pokemon pokemon)
+    {
+      int baseSpDefense = pokemon.GetBaseStat().GetBaseSpDefense();
+      int spDefenseIV = pokemon.GetStatValue().GetIndividualValue().GetSpDefenseIV();
+      int spDefenseEV = pokemon.GetStatValue().GetEffortValue().GetSpDefenseEV();
+      int level = pokemon.GetDescription().GetLevel();
+
+      spDefense = CalculateEarlyGenStat(baseSpDefense, spDefenseIV, spDefenseEV, level);
+    }
+
+    public void EarlyGenSpeed(Pokemon pokemon)
+    {
+      int baseSpeed = pokemon.GetBaseStat().GetBaseSpeed();
+      int speedIV = pokemon.GetStatValue().GetIndividualValue().GetSpeedIV();
+      int speedEV = pokemon.GetStatValue().GetEffortValue().GetSpeedEV();
+      int level = pokemon.GetDescription().GetLevel();
+
+      speed = CalculateEarlyGenStat(baseSpeed, speedIV, speedEV, level);
     }
   }
 }
