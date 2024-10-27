@@ -32,7 +32,7 @@ namespace PokeDojo.Simulator
 
       // Natures that increase special attack
       Nature Modest = new Nature("Modest", "Special Attack", "Attack");
-      Nature Mild = new Nature("Mild", "Special Attack", "Defense"); // you are very cute kiki
+      Nature Mild = new Nature("Mild", "Special Attack", "Defense"); 
       Nature Rash = new Nature("Rash", "Special Attack", "Special Defense");
       Nature Quiet = new Nature("Quiet", "Special Attack", "Speed");
 
