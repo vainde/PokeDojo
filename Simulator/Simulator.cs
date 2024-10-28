@@ -1,11 +1,12 @@
-﻿using System;
+﻿using PokeDojo.Poke;
 using PokeDojo.Descriptor;
 using PokeDojo.Stats;
 using PokeDojo.Value;
+using PokeDojo.Summaries;
 
 namespace PokeDojo.Simulator
 {
-  class Simulator
+    class Simulator
   {
 
     static void Main()
@@ -88,7 +89,7 @@ namespace PokeDojo.Simulator
       BaseStat AlakazamBaseStat = new BaseStat();
       StatValue AlakazamValue = new StatValue();
       Gender AlakazamGender = new Gender();
-      Pokemon Alakazam = new Pokemon(AlakazamDesc, AlakazamStat, AlakazamBaseStat, AlakazamValue, AlakazamGender, Natures[4]);
+      Pokemon Alakazam = new Pokemon(AlakazamDesc, AlakazamStat, AlakazamBaseStat, AlakazamValue, AlakazamGender, Natures[4], 2);
 
       // Let's use an Alakazam with max SP.ATK AND max SPD EV's and max IV's based on Gen 2
       Alakazam.GetDescription().SetName("Alakazam");
@@ -103,16 +104,8 @@ namespace PokeDojo.Simulator
       Alakazam.GetStat().EarlyGenSpDefense(Alakazam);
       Alakazam.GetStat().EarlyGenSpeed(Alakazam);
 
-      Console.WriteLine("ALAKAZAM SUMMARY");
-      Console.WriteLine($"Name: {Alakazam.GetDescription().GetName()}");
-      Console.WriteLine($"Level: {Alakazam.GetDescription().GetLevel()}");
-      Console.WriteLine($"Gender: {Alakazam.GetGender().GetGender()}");
-      Console.WriteLine($"HP: {Alakazam.GetStat().GetHealth()}");
-      Console.WriteLine($"Attack: {Alakazam.GetStat().GetAttack()}");
-      Console.WriteLine($"Defense: {Alakazam.GetStat().GetDefense()}");
-      Console.WriteLine($"Sp. Attack: {Alakazam.GetStat().GetSpecialAttack()}");
-      Console.WriteLine($"Sp. Defense: {Alakazam.GetStat().GetSpecialDefense()}");
-      Console.WriteLine($"Speed: {Alakazam.GetStat().GetSpeed()}");
+      //TO DO: make a function that summarizes itself for testing
+      Summary.Gen1Summary(Alakazam);
     }
   }
 }

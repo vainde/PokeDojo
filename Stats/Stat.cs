@@ -1,10 +1,11 @@
 ﻿// Represents the actual stats of the pokemon
 using PokeDojo.Descriptor;
 using PokeDojo.Value;
+using PokeDojo.Poke;
 
 namespace PokeDojo.Stats
 {
-  class Stat
+    class Stat
   {
     int health;
     int attack;

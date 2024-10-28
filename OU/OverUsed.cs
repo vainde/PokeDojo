@@ -1,9 +1,8 @@
 ﻿// List of pokemon that represents the overused category
-using PokeDojo;
-
+using PokeDojo.Poke;
 namespace PokeDojo.OU
 {
-  class OverUsed
+    class OverUsed
   {
     List<Pokemon> overused;
 
