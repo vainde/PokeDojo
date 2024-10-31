@@ -2,6 +2,7 @@
 using PokeDojo.Stats;
 using PokeDojo.Descriptor;
 using PokeDojo.Value;
+using PokeDojo.Types;
 
 namespace PokeDojo.Poke
 {
@@ -11,18 +12,14 @@ namespace PokeDojo.Poke
         Stat stat;
         BaseStat baseStat;
         StatValue value;
-        Gender gender;
-        Nature nature;
-        int generation;
-        public Pokemon(Description description, Stat stat, BaseStat baseStat, StatValue value, Gender gender, Nature nature, int generation)
+        PokemonType type;
+        public Pokemon(Description description, Stat stat, BaseStat baseStat, StatValue value, PokemonType type)
         {
           this.description = description;
           this.stat = stat;
           this.baseStat = baseStat;
           this.value = value;
-          this.gender = gender;
-          this.nature = nature;
-          this.generation = generation;
+          this.type = type;  
         }
         public Description GetDescription()
         {
@@ -42,19 +39,9 @@ namespace PokeDojo.Poke
             return value;
         }
 
-        public Gender GetGender()
+        public PokemonType GetPokemonType()
         {
-            return gender;
-        }
-
-        public Nature GetNature()
-        {
-            return nature;
-        }
-
-        public int GetGeneration()
-        {
-          return generation;
+          return type;
         }
     }
 }

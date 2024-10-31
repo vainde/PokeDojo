@@ -5,11 +5,12 @@ namespace PokeDojo.Descriptor
   {
     string name;
     int level;
-
+    int generation;
     public Description()
     {
       name = "";
       level = 100;
+      generation = 1;
     }
     public void SetName(string name)
     {
@@ -20,6 +21,11 @@ namespace PokeDojo.Descriptor
       this.level = level;
     }
 
+    public void SetGeneration(int generation)
+    {
+      this.generation = generation;
+    }
+
     public string GetName()
     {
       return name;
@@ -28,6 +34,11 @@ namespace PokeDojo.Descriptor
     public int GetLevel()
     {
       return level;
+    }
+
+    public int GetGeneration()
+    {
+      return generation;
     }
   }
 }

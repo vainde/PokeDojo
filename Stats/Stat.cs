@@ -98,6 +98,7 @@ namespace PokeDojo.Stats
       return decrease;
     }
 
+    /*
     public void ApplyNature(Pokemon pokemon)
     {
       Nature nature = pokemon.GetNature();
@@ -127,7 +128,7 @@ namespace PokeDojo.Stats
           pokemon.GetStat().SetSpeed(DecreaseByNature(speed));
           break;
       }
-    }
+    }*/
 
     /* If the player wants to use Gen 1 and Gen 2 for any tier, these stats must be applied.
      * Health is calculated differently from the other stats, hence it's seperation
