@@ -1,16 +1,14 @@
 ﻿// Abstraction of the HUD in-battle
 namespace PokeDojo.src.Descriptor
 {
-    class Description
+    public class Description
     {
         string name;
         int level;
-        int generation;
         public Description()
         {
             name = "";
             level = 100;
-            generation = 1;
         }
         public void SetName(string name)
         {
@@ -19,11 +17,6 @@ namespace PokeDojo.src.Descriptor
         public void SetLevel(int level)
         {
             this.level = level;
-        }
-
-        public void SetGeneration(int generation)
-        {
-            this.generation = generation;
         }
 
         public string GetName()
@@ -36,9 +29,5 @@ namespace PokeDojo.src.Descriptor
             return level;
         }
 
-        public int GetGeneration()
-        {
-            return generation;
-        }
     }
 }

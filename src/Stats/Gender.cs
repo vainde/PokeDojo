@@ -2,7 +2,7 @@
 
 namespace PokeDojo.src.Stats
 {
-    class Gender
+    public class Gender
     {
         string value;
         double genderRatio;
