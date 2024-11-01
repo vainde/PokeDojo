@@ -5,7 +5,7 @@ namespace PokeDojo.Types
 {
   static class HiddenPower
   {
-    static public int HiddenPowerValue(Gen2Pokemon pokemon)
+    static public int HiddenPowerValue(Pokemon pokemon)
     {
       /* 
        * Type is determined by adding the two least significant bits
@@ -17,12 +17,12 @@ namespace PokeDojo.Types
       return hiddenPowerValue;
     }
 
-    static public void HiddenPowerType(Gen2Pokemon pokemon, List<PokemonType> types)
+    static public void HiddenPowerType(Pokemon pokemon, List<PokemonType> types)
     {
       int HPValue = HiddenPowerValue(pokemon);
       if(HPValue >= 0 && HPValue <= 15)
       {
-        pokemon.GetDescription().SetHiddenPower(types[HPValue]);
+        pokemon.GetGeneration().SetHiddenPower(types[HPValue]);
       }
     }
   }

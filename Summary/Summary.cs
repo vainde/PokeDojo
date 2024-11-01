@@ -13,11 +13,11 @@ namespace PokeDojo.Summaries
       ShowMenu(pokemon);
     }
 
-    static public void Gen2Summary(Gen2Pokemon pokemon)
+    static public void Gen2Summary(Pokemon pokemon)
     {
       ShowDefaultSummary(pokemon);
       ShowGender(pokemon);
-      ShowGen2Description(pokemon.GetDescription());
+      ShowGen2Description(pokemon);
       Console.WriteLine();
       ShowMenu(pokemon);
     }
@@ -65,7 +65,7 @@ namespace PokeDojo.Summaries
 
     static public void SummaryTitle(Pokemon pokemon)
     {
-      Console.WriteLine($"{pokemon.GetDescription().GetName()} Gen {pokemon.GetDescription().GetGeneration()} Summary");
+      Console.WriteLine($"{pokemon.GetGeneration().GetDescription().GetName()} Gen {pokemon.GetGeneration().GetGeneration()} Summary");
       Console.WriteLine($"========================");
     }
 
@@ -105,7 +105,7 @@ namespace PokeDojo.Summaries
             Console.WriteLine();
             break;
           case 5:
-            Console.WriteLine("Ending Gen 1 Summary");
+            Console.WriteLine($"Ending Gen {pokemon.GetGeneration().GetGeneration()} Summary");
             Console.WriteLine();
             break;
           default:
@@ -118,20 +118,20 @@ namespace PokeDojo.Summaries
 
     static public void ShowBasicDescription(Pokemon pokemon)
     {
-      Console.WriteLine($"Name: {pokemon.GetDescription().GetName()}");
-      Console.WriteLine($"Level: {pokemon.GetDescription().GetLevel()}");
+      Console.WriteLine($"Name: {pokemon.GetGeneration().GetDescription().GetName()}");
+      Console.WriteLine($"Level: {pokemon.GetGeneration().GetDescription().GetLevel()}");
       Console.WriteLine($"Type: {pokemon.GetPokemonType().GetName()}");
     }
 
-    static public void ShowGen2Description(Gen2Description description)
+    static public void ShowGen2Description(Pokemon pokemon)
     {
-      Console.WriteLine($"Happiness: {description.GetHappiness()}");
-      Console.WriteLine($"Hidden Power: {description.GetHiddenPower().GetName()}");
+      Console.WriteLine($"Happiness: {pokemon.GetGeneration().GetHappiness()}");
+      Console.WriteLine($"Hidden Power: {pokemon.GetGeneration().GetHiddenPower().GetName()}");
     }
 
-    static public void ShowGender(Gen2Pokemon pokemon) 
+    static public void ShowGender(Pokemon pokemon) 
     {
-      Console.WriteLine($"Gender: {pokemon.GetGender().GetGender()}");
+      Console.WriteLine($"Gender: {pokemon.GetGeneration().GetGender().GetGender()}");
     }
 
     static public void ShowEarlyGenStats(Pokemon pokemon)

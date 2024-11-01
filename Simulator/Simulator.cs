@@ -4,6 +4,7 @@ using PokeDojo.Stats;
 using PokeDojo.Value;
 using PokeDojo.Summaries;
 using PokeDojo.Types;
+using PokeDojo.Generation;
 
 namespace PokeDojo.Simulator
 {
@@ -81,11 +82,12 @@ namespace PokeDojo.Simulator
       BaseStat SnorlaxBaseStat = new BaseStat();
       StatValue SnorlaxValue = new StatValue();
       PokemonType SnorlaxType = Types[16];
+      GenerationInfo SnorlaxGen1 = new GenerationInfo(1, SnorlaxDesc);
 
       // Gen 1 Snorlax
-      Pokemon Snorlax = new Pokemon(SnorlaxDesc, SnorlaxStat, SnorlaxBaseStat, SnorlaxValue, SnorlaxType);
-      Snorlax.GetDescription().SetName("Snorlax");
-      Snorlax.GetDescription().SetLevel(100);
+      Pokemon Snorlax = new Pokemon(SnorlaxStat, SnorlaxBaseStat, SnorlaxValue, SnorlaxType, SnorlaxGen1);
+      Snorlax.GetGeneration().GetDescription().SetName("Snorlax"); 
+      Snorlax.GetGeneration().GetDescription().SetLevel(100);
       Snorlax.GetPokemonType().SetName("Normal");
 
       // Let's use a Snorlax with max ATK and max HP EV's and max IV's based on Early Gen
@@ -98,33 +100,29 @@ namespace PokeDojo.Simulator
       Snorlax.GetStat().EarlyGenSpAttack(Snorlax);
       Snorlax.GetStat().EarlyGenSpDefense(Snorlax);
       Snorlax.GetStat().EarlyGenSpeed(Snorlax);
-      Snorlax.GetDescription().SetGeneration(1);
 
       // Gen 2 Snorlax
-      Gen2Description SnorlaxGen2Desc = new Gen2Description();
       Gender SnorlaxGender = new Gender();
-      Gen2Pokemon SnorlaxGen2 = new(SnorlaxGen2Desc, SnorlaxStat, SnorlaxBaseStat, SnorlaxValue, SnorlaxGender, SnorlaxType);
-      SnorlaxGen2.GetDescription().SetName("Snorlax");
-      SnorlaxGen2.GetDescription().SetLevel(100);
-      SnorlaxGen2.GetDescription().SetGeneration(2);
-      SnorlaxGen2.GetDescription().SetHappiness(255);
-
+      GenerationInfo SnorlaxGen2 = new GenerationInfo(2, SnorlaxDesc);
+      Pokemon SecondGenSnorlax = new(SnorlaxStat, SnorlaxBaseStat, SnorlaxValue, SnorlaxType, SnorlaxGen2);
+      SecondGenSnorlax.GetGeneration().SetHappiness(255);
       // Setting Hidden Power
-      HiddenPower.HiddenPowerType(SnorlaxGen2, Types);
+      HiddenPower.HiddenPowerType(SecondGenSnorlax, Types);
 
       // Setting Stats for Snorlax
-      SnorlaxGen2.GetBaseStat().SetBaseStat(160, 110, 65, 65, 110, 30);
-      SnorlaxGen2.GetStatValue().GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
-      SnorlaxGen2.GetStatValue().GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
-      SnorlaxGen2.GetStat().EarlyGenHealth(Snorlax);
-      SnorlaxGen2.GetStat().EarlyGenAttack(Snorlax);
-      SnorlaxGen2.GetStat().EarlyGenDefense(Snorlax);
-      SnorlaxGen2.GetStat().EarlyGenSpAttack(Snorlax);
-      SnorlaxGen2.GetStat().EarlyGenSpDefense(Snorlax);
-      SnorlaxGen2.GetStat().EarlyGenSpeed(Snorlax);
+      SecondGenSnorlax.GetBaseStat().SetBaseStat(160, 110, 65, 65, 110, 30);
+      SecondGenSnorlax.GetStatValue().GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
+      SecondGenSnorlax.GetStatValue().GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
+      SecondGenSnorlax.GetStat().EarlyGenHealth(Snorlax);
+      SecondGenSnorlax.GetStat().EarlyGenAttack(Snorlax);
+      SecondGenSnorlax.GetStat().EarlyGenDefense(Snorlax);
+      SecondGenSnorlax.GetStat().EarlyGenSpAttack(Snorlax);
+      SecondGenSnorlax.GetStat().EarlyGenSpDefense(Snorlax);
+      SecondGenSnorlax.GetStat().EarlyGenSpeed(Snorlax);
 
-      // Summary.Gen1Summary(Snorlax);
-      Summary.Gen2Summary(SnorlaxGen2);
+
+      Summary.Gen1Summary(Snorlax);
+      Summary.Gen2Summary(SecondGenSnorlax);
     }
   }
 }
