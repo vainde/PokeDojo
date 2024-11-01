@@ -2,7 +2,7 @@
 
 namespace PokeDojo.src.Stats
 {
-    public class Gender
+    class Gender
     {
         string value;
         double genderRatio;
@@ -24,18 +24,12 @@ namespace PokeDojo.src.Stats
         }
         public void SetGender(string gender)
         {
-            if(gender == "Female" || gender == "Male")
-            {
-                value = gender;
-            }
+            value = gender;
         }
 
         public void SetGenderRatio(double genderRatio)
         {
-           if (genderRatio >= 0.0 && genderRatio <= 1.0)
-            {
-              this.genderRatio = genderRatio;
-            }
+            this.genderRatio = genderRatio;
         }
 
         // For AI trainers

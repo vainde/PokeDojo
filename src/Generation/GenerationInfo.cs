@@ -4,7 +4,7 @@ using PokeDojo.src.Type;
 
 namespace PokeDojo.src.Generation
 {
-    public class GenerationInfo
+    class GenerationInfo
     {
         int generation;
         Description description;
@@ -12,10 +12,10 @@ namespace PokeDojo.src.Generation
         PokemonType hiddenPower;
         int happiness;
 
-        public GenerationInfo()
+        public GenerationInfo(int generation, Description description)
         {
-            generation = 1;
-            description = new Description();
+            this.generation = generation;
+            this.description = description;
             gender = new Gender();
             hiddenPower = new PokemonType("");
             happiness = 0;
@@ -32,7 +32,7 @@ namespace PokeDojo.src.Generation
 
         public void SetHappiness(int happiness)
         {
-            if (happiness >= 0 && happiness <= 255)
+            if (happiness <= 255)
             {
                 this.happiness = happiness;
             }
@@ -40,18 +40,7 @@ namespace PokeDojo.src.Generation
 
         public void SetHiddenPower(PokemonType type)
         {
-            if(hiddenPower is PokemonType)
-            {
-                hiddenPower = type;
-            }
-        }
-
-        public void SetGeneration(int generation)
-        {
-            if (generation >= 1 && generation <= 2)
-            {
-                this.generation = generation;
-            }
+            hiddenPower = type;
         }
         public int GetHappiness()
         {

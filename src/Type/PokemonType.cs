@@ -1,7 +1,7 @@
 ﻿// Responsible for defining the type system in pokemon used for their type and moves
 namespace PokeDojo.src.Type
 {
-    public class PokemonType
+    class PokemonType
     {
         string name;
         List<PokemonType> strongAgainst;
