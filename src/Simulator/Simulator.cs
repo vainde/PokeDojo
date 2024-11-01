@@ -81,10 +81,12 @@ namespace PokeDojo.src.Simulator
             BaseStat SnorlaxBaseStat = new BaseStat();
             StatValue SnorlaxValue = new StatValue();
             PokemonType SnorlaxType = Types[16];
-            GenerationInfo SnorlaxGen1 = new GenerationInfo(1, SnorlaxDesc);
+            GenerationInfo SnorlaxGen1 = new GenerationInfo();
 
             // Gen 1 Snorlax
             Pokemon Snorlax = new Pokemon(SnorlaxStat, SnorlaxBaseStat, SnorlaxValue, SnorlaxType, SnorlaxGen1);
+            Snorlax.GetGeneration().SetGeneration(1);
+            Snorlax.GetGeneration().SetHappiness(255);
             Snorlax.GetGeneration().GetDescription().SetName("Snorlax");
             Snorlax.GetGeneration().GetDescription().SetLevel(100);
             Snorlax.GetPokemonType().SetName("Normal");
@@ -102,8 +104,9 @@ namespace PokeDojo.src.Simulator
 
             // Gen 2 Snorlax
             Gender SnorlaxGender = new Gender();
-            GenerationInfo SnorlaxGen2 = new GenerationInfo(2, SnorlaxDesc);
+            GenerationInfo SnorlaxGen2 = new GenerationInfo();
             Pokemon SecondGenSnorlax = new(SnorlaxStat, SnorlaxBaseStat, SnorlaxValue, SnorlaxType, SnorlaxGen2);
+            SecondGenSnorlax.GetGeneration().SetGeneration(2);
             SecondGenSnorlax.GetGeneration().SetHappiness(255);
             // Setting Hidden Power
             HiddenPower.HiddenPowerType(SecondGenSnorlax, Types);
