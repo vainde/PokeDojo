@@ -1,26 +1,28 @@
 ﻿// Represents the blueprint of a pokemon
-using PokeDojo.src.Descriptor;
 using PokeDojo.src.Generation;
 using PokeDojo.src.Stats;
 using PokeDojo.src.Type;
 using PokeDojo.src.Value;
+using PokeDojo.src.Items;
 
 namespace PokeDojo.src.Poke
 {
-    class Pokemon
+    public class Pokemon
     {
         Stat stat;
         BaseStat baseStat;
         StatValue value;
         PokemonType type;
         GenerationInfo generation;
-        public Pokemon(Stat stat, BaseStat baseStat, StatValue value, PokemonType type, GenerationInfo generation)
+        Item item;
+        public Pokemon(Stat stat, BaseStat baseStat, StatValue value, PokemonType type, GenerationInfo generation, Item item)
         {
             this.stat = stat;
             this.baseStat = baseStat;
             this.value = value;
             this.type = type;
             this.generation = generation;
+            this.item = item;
         }
 
         public Stat GetStat()
@@ -45,6 +47,11 @@ namespace PokeDojo.src.Poke
         public GenerationInfo GetGeneration()
         {
             return generation;
+        }
+
+        public Item GetItem()
+        {
+          return item;
         }
     }
 }

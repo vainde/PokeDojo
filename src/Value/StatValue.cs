@@ -1,6 +1,6 @@
 ﻿namespace PokeDojo.src.Value
 {
-    class StatValue
+    public class StatValue
     {
         EffortValue effortValue;
         IndividualValue individualValue;

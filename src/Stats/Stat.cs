@@ -5,9 +5,10 @@ using PokeDojo.src.Poke;
 
 namespace PokeDojo.src.Stats
 {
-    class Stat
+    public class Stat
     {
         int health;
+        int currentHealth;
         int attack;
         int spAttack;
         int defense;
@@ -17,6 +18,7 @@ namespace PokeDojo.src.Stats
         public Stat()
         {
             health = 0;
+            currentHealth = 0;
             attack = 0;
             spAttack = 0;
             defense = 0;
@@ -31,6 +33,10 @@ namespace PokeDojo.src.Stats
         public void SetHealth(int health)
         {
             this.health = health;
+        }
+
+        public void SetCurrentHealth(int currentHealth) {
+            this.currentHealth = currentHealth;
         }
 
         public void SetAttack(int attack)
@@ -85,6 +91,11 @@ namespace PokeDojo.src.Stats
         public int GetSpeed()
         {
             return speed;
+        }
+
+        public int GetCurrentHealth()
+        {
+            return currentHealth;
         }
 
         public int IncreaseByNature(int increase)
@@ -147,6 +158,7 @@ namespace PokeDojo.src.Stats
             int preModified = (combinedHealth + dividedHealthEV) * level / 100;
             int postModified = preModified + level + 10;
             pokemon.GetStat().SetHealth(postModified);
+            pokemon.GetStat().SetCurrentHealth(postModified);
         }
 
         // Template for calculating non-health stats

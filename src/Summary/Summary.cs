@@ -33,34 +33,40 @@ namespace PokeDojo.src.Summaries
             SummaryMenu(pokemon);
         }
 
-        static public void SummaryMenu(Pokemon pokemon)
+    static public void SummaryMenu(Pokemon pokemon)
+    {
+      int option = 0;
+      do
+      {
+        Console.WriteLine("POKEMON INFORMATION");
+        Console.WriteLine("========================");
+        Console.WriteLine("1. View Stats");
+        Console.WriteLine("2. View Item");
+        Console.WriteLine("3. Quit");
+        Console.WriteLine();
+        Console.WriteLine("What would you like to see?");
+        Console.Write(">");
+        option = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine();
+        switch (option)
         {
-            int option = 0;
-            do
-            {
-                Console.WriteLine("POKEMON INFORMATION");
-                Console.WriteLine("========================");
-                Console.WriteLine("1. View Stats");
-                Console.WriteLine("2. Quit");
-                Console.WriteLine();
-                Console.WriteLine("What would you like to see?");
-                Console.Write(">");
-                option = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine();
-                if (option == 1)
-                {
-                    ShowAllStats(pokemon);
-                }
-                else if (option == 2)
-                {
-                    Console.WriteLine("EXITING PROGRAM...");
-                }
-                else
-                {
-                    Console.WriteLine("Invalid option selected.");
-                }
-            } while (option != 2);
+          case 1:
+            ShowAllStats(pokemon);
+            break;
+          case 2:
+            ShowItemInformation(pokemon);
+            break;
+          case 3:
+            Console.WriteLine("EXITING PROGRAM...");
+            Console.WriteLine();
+            break;
+          default:
+            Console.WriteLine("Invalid option selected.");
+            Console.WriteLine();
+            break;
         }
+      } while (option != 3);
+    }
 
         static public void SummaryTitle(Pokemon pokemon)
         {
@@ -114,6 +120,42 @@ namespace PokeDojo.src.Summaries
                 }
             } while (option != 5);
         }
+
+    static public void ShowItemInformation(Pokemon pokemon)
+    {
+      int option;
+      do
+      {
+        Console.WriteLine("ITEM INFORMATION");
+        Console.WriteLine("=========================");
+        Console.WriteLine("1. View Item");
+        Console.WriteLine("2. Go Back");
+        Console.WriteLine("What would you like to see?");
+        Console.Write(">");
+        option = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine();
+        switch (option)
+        {
+          case 1:
+            if (pokemon.GetItem().GetName() == "")
+            {
+              Console.WriteLine("No item selected.");
+            }
+            else
+            {
+              Console.WriteLine(pokemon.GetItem().GetName());
+              Console.WriteLine(pokemon.GetItem().GetDescription());
+              Console.WriteLine();
+            }
+            break;
+          case 2: 
+            Console.WriteLine("Finished showing item...");
+            Console.WriteLine();
+            break;
+        }
+       
+      } while (option != 2);
+    }
 
         static public void ShowBasicDescription(Pokemon pokemon)
         {
