@@ -77,15 +77,25 @@ namespace PokeDojo.src.Data
     {
       return new List<Item>{
         new Item(
+          "",
+          "",
+          onPokemon =>
+          {
+
+          }
+          ),
+        new Item(
           "Leftovers",
-          "At the end of every turn, holder restores 1/6 of its max HP",
+          "At the end of every turn, holder restores 1/6 of its max HP.",
           onPokemon =>
           {
             int maxHealth = onPokemon.GetStat().GetHealth();
             int currentHealth = onPokemon.GetStat().GetCurrentHealth();
 
+            // If the pokemon is already at max health, it doesn't need to heal
             if(currentHealth != maxHealth)
             {
+              // Ratio at which leftovers recovers health
               int restoreHealth = (maxHealth / 16);
               // Health restored can't go over max health
               if(currentHealth + restoreHealth > maxHealth)
@@ -99,7 +109,48 @@ namespace PokeDojo.src.Data
               }
             }
           }
-        )
+        ),
+        new Item(
+          "Light Ball", 
+          "If held by Pikachu, it's special attack is doubled.",
+          onPokemon =>
+          {
+            string pokemonName = onPokemon.GetGeneration().GetDescription().GetName();
+            // Pikachu with a lightball needs to double it's sp. attack
+            if(pokemonName == "Pikachu")
+            {
+              int specialAttack = onPokemon.GetStat().GetSpecialAttack();
+              onPokemon.GetStat().SetSpecialAttack(specialAttack * 2);
+            }
+          }
+          ),
+        new Item(
+          "Gold Berry",
+          "Restores 30 HP when at 1/2 max HP or less.",
+          onPokemon =>
+          {
+            int maxHealth = onPokemon.GetStat().GetHealth();
+            int currentHealth = onPokemon.GetStat().GetCurrentHealth();
+            // Needs to heal by 30 HP if it meets the condition
+            if(currentHealth < (maxHealth / 2))
+            {
+              onPokemon.GetStat().SetCurrentHealth(currentHealth + 30);
+            }
+          }
+          ),
+        new Item(
+          "Thick Club",
+          "If held by a Cubone or Marowak, its Attack is doubled",
+          onPokemon =>
+          {
+            string pokemonName = onPokemon.GetGeneration().GetDescription().GetName();
+            if(pokemonName == "Cubone" || pokemonName == "Marowak")
+            {
+              int attack = onPokemon.GetStat().GetAttack();
+              onPokemon.GetStat().SetAttack(attack * 2);
+            }
+          }
+          )
       };
     }
   }

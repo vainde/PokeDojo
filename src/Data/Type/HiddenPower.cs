@@ -1,10 +1,5 @@
 ﻿// Responsible for calculating a pokemon's HP type based on IV
 
-// Responsible for calculating a pokemon's HP type based on IV
-
-// Responsible for calculating a pokemon's HP type based on IV
-
-// Responsible for calculating a pokemon's HP type based on IV
 using PokeDojo.src.Poke;
 
 namespace PokeDojo.src.Data.Type

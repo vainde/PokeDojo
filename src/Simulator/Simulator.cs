@@ -1,31 +1,26 @@
 ﻿using PokeDojo.src.Data;
 using PokeDojo.src.Poke.Generation;
 using PokeDojo.src.Poke;
-using PokeDojo.src.Simulator.Summary;
 using PokeDojo.src.Data.Items;
 using PokeDojo.src.Data.Type;
 using PokeDojo.src.Data.Stats;
 using PokeDojo.src.Data.Value;
-using PokeDojo.src.Poke.Generation.Descriptor;
 
 namespace PokeDojo.src.Simulator
 {
-    class Simulator
+    static class Simulator
     {
         static void Main()
         {
-          List<Nature> Natures = Initialize.Natures();
           List<PokemonType> Types = Initialize.Types();
           List<Item> Items = Initialize.Items();
 
           // Using snorlax as a test pokemon
-          Description SnorlaxDesc = new Description();
           Stat SnorlaxStat = new Stat();
           BaseStat SnorlaxBaseStat = new BaseStat();
           StatValue SnorlaxValue = new StatValue();
           PokemonType SnorlaxType = Types[16];
           GenerationInfo SnorlaxGen2 = new GenerationInfo();
-          Gender SnorlaxGender = new Gender();
 
           SnorlaxGen2.SetGeneration(2);
           SnorlaxGen2.GetDescription().SetName("Snorlax");

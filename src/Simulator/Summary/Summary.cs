@@ -140,6 +140,7 @@ namespace PokeDojo.src.Simulator.Summary
                         if (pokemon.GetItem().GetName() == "")
                         {
                             Console.WriteLine("No item selected.");
+                            Console.WriteLine();
                         }
                         else
                         {

@@ -6,7 +6,7 @@ namespace PokeDojo.src.Data.Items
     {
         string name;
         string description;
-        Action<Pokemon> UseItem;
+        readonly Action<Pokemon> UseItem;
         public Item(string name, string description, Action<Pokemon> UseItem)
         {
             this.name = name;
@@ -30,6 +30,13 @@ namespace PokeDojo.src.Data.Items
         public string GetDescription()
         {
             return description;
+        }
+
+        // Some items are single use so they are removed after using
+        public void RemoveItem()
+        {
+          name = "";
+          description = "";
         }
     }
 }
