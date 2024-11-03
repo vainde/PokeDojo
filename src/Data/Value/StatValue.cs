@@ -1,4 +1,4 @@
-﻿namespace PokeDojo.src.Value
+﻿namespace PokeDojo.src.Data.Value
 {
     public class StatValue
     {

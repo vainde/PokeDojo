@@ -1,5 +1,5 @@
 ﻿// Abstraction of the HUD in-battle
-namespace PokeDojo.src.Descriptor
+namespace PokeDojo.src.Poke.Generation.Descriptor
 {
     public class Description
     {

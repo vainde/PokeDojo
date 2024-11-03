@@ -1,4 +1,4 @@
-﻿namespace PokeDojo.src.Stats
+﻿namespace PokeDojo.src.Data.Stats
 {
     // Represents one of the possible natures in the game
     public class Nature

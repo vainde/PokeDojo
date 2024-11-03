@@ -1,9 +1,7 @@
 ﻿// Represents the actual stats of the pokemon
-using PokeDojo.src.Descriptor;
-using PokeDojo.src.Value;
 using PokeDojo.src.Poke;
 
-namespace PokeDojo.src.Stats
+namespace PokeDojo.src.Data.Stats
 {
     public class Stat
     {
@@ -35,7 +33,8 @@ namespace PokeDojo.src.Stats
             this.health = health;
         }
 
-        public void SetCurrentHealth(int currentHealth) {
+        public void SetCurrentHealth(int currentHealth)
+        {
             this.currentHealth = currentHealth;
         }
 

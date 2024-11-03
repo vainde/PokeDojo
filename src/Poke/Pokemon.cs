@@ -1,9 +1,9 @@
 ﻿// Represents the blueprint of a pokemon
-using PokeDojo.src.Generation;
-using PokeDojo.src.Stats;
-using PokeDojo.src.Type;
-using PokeDojo.src.Value;
-using PokeDojo.src.Items;
+using PokeDojo.src.Data.Items;
+using PokeDojo.src.Data.Type;
+using PokeDojo.src.Data.Stats;
+using PokeDojo.src.Data.Value;
+using PokeDojo.src.Poke.Generation;
 
 namespace PokeDojo.src.Poke
 {

@@ -1,6 +1,6 @@
 ﻿// Represents the gender of the pokemon and it's behavior
 
-namespace PokeDojo.src.Stats
+namespace PokeDojo.src.Poke.Generation.Descriptor
 {
     public class Gender
     {

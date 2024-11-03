@@ -1,10 +1,10 @@
-﻿using PokeDojo.src.Stats;
-using PokeDojo.src.Type;
-using PokeDojo.src.Items;
+﻿using PokeDojo.src.Data.Stats;
+using PokeDojo.src.Data.Type;
+using PokeDojo.src.Data.Items;
 
 namespace PokeDojo.src.Data
 {
-  public static class Initialize
+    public static class Initialize
   {
     public static List<Nature> Natures()
     {
@@ -53,9 +53,9 @@ namespace PokeDojo.src.Data
     {
       return new List<PokemonType>
       {
-          new PokemonType("Fighting"),
-          new PokemonType("Flying"),
-          new PokemonType("Poison"),
+              new PokemonType("Fighting"),
+              new PokemonType("Flying"),
+              new PokemonType("Poison"),
               new PokemonType("Ground"),
               new PokemonType("Rock"),
               new PokemonType("Bug"),

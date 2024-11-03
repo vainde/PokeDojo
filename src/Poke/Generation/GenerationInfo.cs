@@ -1,8 +1,7 @@
-﻿using PokeDojo.src.Descriptor;
-using PokeDojo.src.Stats;
-using PokeDojo.src.Type;
+﻿using PokeDojo.src.Data.Type;
+using PokeDojo.src.Poke.Generation.Descriptor;
 
-namespace PokeDojo.src.Generation
+namespace PokeDojo.src.Poke.Generation
 {
     public class GenerationInfo
     {

@@ -1,12 +1,12 @@
 ﻿using PokeDojo.src.Data;
-using PokeDojo.src.Descriptor;
-using PokeDojo.src.Generation;
+using PokeDojo.src.Poke.Generation;
 using PokeDojo.src.Poke;
-using PokeDojo.src.Stats;
-using PokeDojo.src.Type;
-using PokeDojo.src.Value;
-using PokeDojo.src.Items;
-using PokeDojo.src.Summaries;
+using PokeDojo.src.Simulator.Summary;
+using PokeDojo.src.Data.Items;
+using PokeDojo.src.Data.Type;
+using PokeDojo.src.Data.Stats;
+using PokeDojo.src.Data.Value;
+using PokeDojo.src.Poke.Generation.Descriptor;
 
 namespace PokeDojo.src.Simulator
 {
@@ -33,10 +33,21 @@ namespace PokeDojo.src.Simulator
 
           Pokemon SecondGenSnorlax = new(SnorlaxStat, SnorlaxBaseStat, SnorlaxValue, SnorlaxType, SnorlaxGen2, Items[0]);
           SecondGenSnorlax.GetGeneration().SetHappiness(255);
+
+          // Adding stats
+          SecondGenSnorlax.GetBaseStat().SetBaseStat(160, 110, 65, 65, 110, 30);
+          SecondGenSnorlax.GetStatValue().GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
+          SecondGenSnorlax.GetStatValue().GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
+          SecondGenSnorlax.GetStat().EarlyGenHealth(SecondGenSnorlax);
+          SecondGenSnorlax.GetStat().EarlyGenAttack(SecondGenSnorlax);
+          SecondGenSnorlax.GetStat().EarlyGenDefense(SecondGenSnorlax);
+          SecondGenSnorlax.GetStat().EarlyGenSpAttack(SecondGenSnorlax);
+          SecondGenSnorlax.GetStat().EarlyGenSpDefense(SecondGenSnorlax);
+          SecondGenSnorlax.GetStat().EarlyGenSpeed(SecondGenSnorlax);
+
           HiddenPower.HiddenPowerType(SecondGenSnorlax, Types);
 
-          Summary.Gen2Summary(SecondGenSnorlax);
-
+          Summary.Summary.Gen2Summary(SecondGenSnorlax);
         }
     }
 }

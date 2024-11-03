@@ -1,5 +1,5 @@
 ﻿// Describes the initial stats of a pokemon before IV and EV
-namespace PokeDojo.src.Stats
+namespace PokeDojo.src.Data.Stats
 {
     public class BaseStat
     {

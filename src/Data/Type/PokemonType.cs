@@ -1,5 +1,5 @@
 ﻿// Responsible for defining the type system in pokemon used for their type and moves
-namespace PokeDojo.src.Type
+namespace PokeDojo.src.Data.Type
 {
     public class PokemonType
     {
