@@ -53,6 +53,7 @@ namespace PokeDojo.src.Data
     {
       return new List<PokemonType>
       {
+              // modify later
               new PokemonType("Fighting"),
               new PokemonType("Flying"),
               new PokemonType("Poison"),

@@ -1,41 +1,42 @@
 ﻿// Responsible for defining the type system in pokemon used for their type and moves
+using PokeDojo.src.Poke;
 namespace PokeDojo.src.Data.Type
 {
     public class PokemonType
     {
         string name;
-        List<PokemonType> strongAgainst;
-        List<PokemonType> neutralAgainst;
-        List<PokemonType> weakAgainst;
-        List<PokemonType> nullAgainst;
+        readonly List<string> strongAgainst;
+        readonly List<string> neutralAgainst;
+        readonly List<string> weakAgainst;
+        readonly List<string> nullAgainst;
 
-        public PokemonType(string name)
+        public PokemonType(string name, List<string> strongAgainst, List<string> neutralAgainst, List<string> weakAgainst, List<string> nullAgainst)
         {
-            this.name = name;
-            strongAgainst = new List<PokemonType>();
-            neutralAgainst = new List<PokemonType>();
-            weakAgainst = new List<PokemonType>();
-            nullAgainst = new List<PokemonType>();
+          this.name = name;
+          this.strongAgainst = strongAgainst;
+          this.neutralAgainst = neutralAgainst;
+          this.weakAgainst = weakAgainst;
+          this.nullAgainst = nullAgainst;
         }
 
-        public void SetStrongAgainst(List<PokemonType> strongAgainst)
+        public List<string> GetStrongAgainst()
         {
-            this.strongAgainst = strongAgainst;
+          return strongAgainst;
         }
 
-        public void SetNeutralAgainst(List<PokemonType> neutralAgainst)
+        public List<string> GetNeutralAgainst()
         {
-            this.neutralAgainst = neutralAgainst;
+          return neutralAgainst;
         }
 
-        public void SetWeakAgainst(List<PokemonType> weakAgainst)
+        public List<string> GetWeakAgainst()
         {
-            this.weakAgainst = weakAgainst;
+          return weakAgainst; 
         }
 
-        public void SetNullAgainst(List<PokemonType> nullAgainst)
+        public List<string> GetNullAgainst()
         {
-            this.nullAgainst = nullAgainst;
+          return nullAgainst;
         }
 
         public string GetName()
