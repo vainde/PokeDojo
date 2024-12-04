@@ -7,14 +7,16 @@ namespace PokeDojo.src.Data.Type
         string name;
         readonly List<string> strongAgainst;
         readonly List<string> neutralAgainst;
+        readonly List<string> resistantAgainst;
         readonly List<string> weakAgainst;
         readonly List<string> nullAgainst;
 
-        public PokemonType(string name, List<string> strongAgainst, List<string> neutralAgainst, List<string> weakAgainst, List<string> nullAgainst)
+        public PokemonType(string name, List<string> strongAgainst, List<string> neutralAgainst, List<string> resistantAgainst, List<string> nullAgainst, List<string> weakAgainst)
         {
           this.name = name;
           this.strongAgainst = strongAgainst;
           this.neutralAgainst = neutralAgainst;
+          this.resistantAgainst = resistantAgainst;
           this.weakAgainst = weakAgainst;
           this.nullAgainst = nullAgainst;
         }
@@ -27,6 +29,11 @@ namespace PokeDojo.src.Data.Type
         public List<string> GetNeutralAgainst()
         {
           return neutralAgainst;
+        }
+
+        public List<string> GetResistantAgainst()
+        {
+          return resistantAgainst;
         }
 
         public List<string> GetWeakAgainst()

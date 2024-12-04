@@ -54,8 +54,8 @@ namespace PokeDojo.src.Data
       return new List<PokemonType>
       {
               // modify later
-              new PokemonType("Fighting"),
-              new PokemonType("Flying"),
+              new PokemonType("Fighting", ["Normal", "Ice", "Rock", "Dark", "Steel"], ["Fire", "Water", "Grass", "Electric", "Fighting", "Ground", "Dragon"], ["Poison", "Flying", "Psychic", "Bug", "Fairy"], ["Ghost"], ["Flying", "Psychic", "Fairy"]),
+              new PokemonType("Flying", ["Grass", "Fighting", "Bug"], ["Normal", "Fire", "Water", "Ice", "Poison", "Ground", "Flying", "Psychic", "Ghost", "Dragon", "Dark"], ["Electric", "Rock", "Steel"], [], ["Electric", "Ice", "Rock"]),
               new PokemonType("Poison"),
               new PokemonType("Ground"),
               new PokemonType("Rock"),
