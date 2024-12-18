@@ -13,7 +13,7 @@ namespace PokeDojo.src.Battle
       bool dualType = self.GetPokemonType().Count > 1;
       bool enemyDualType = self.GetPokemonType().Count == 2;
       double trueSTAB;
-      double firstSTAB = move.GetName() == firstType ? 1.5 : 1.0;
+      double firstSTAB = move.GetMoveInfo().GetName() == firstType ? 1.5 : 1.0;
 
       // By default the STAB is based on the first type assuming the pokemon is monotyped
       trueSTAB = firstSTAB;
@@ -21,7 +21,7 @@ namespace PokeDojo.src.Battle
       if (dualType)
       {
         string secondType = self.GetPokemonType()[1].GetName();
-        double secondSTAB = move.GetName() == secondType ? 1.5 : 1.0;
+        double secondSTAB = move.GetMoveInfo().GetName() == secondType ? 1.5 : 1.0;
         if (firstSTAB > 1.49 && firstSTAB < 1.51 || secondSTAB > 1.49 && secondSTAB < 1.51)
         {
           trueSTAB = 1.5;
@@ -29,11 +29,12 @@ namespace PokeDojo.src.Battle
       }
 
       int criticalHit = CriticalHit.IsCriticalHit(self, move) ? 2 : 1;
+
       int level = self.GetGeneration().GetDescription().GetLevel();
-      int basePower = move.GetBasePower();
+      int basePower = move.GetMoveInfo().GetBasePower();
 
       // If the move used is special, use the special attack of the pokemon against the target's special defense
-      string moveCategory = move.GetCategory();
+      string moveCategory = move.GetMoveInfo().GetCategory();
       int selfAttackType;
       int targetDefenseType;
 

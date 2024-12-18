@@ -1,10 +1,12 @@
 ﻿using PokeDojo.src.Data.Stats;
 using PokeDojo.src.Data.Type;
 using PokeDojo.src.Data.Items;
+using PokeDojo.src.Data.Moves;
+using PokeDojo.src.Data.Statuses;
 
 namespace PokeDojo.src.Data
 {
-    public static class Initialize
+  public static class Initialize
   {
     public static List<Nature> Natures()
     {
@@ -49,18 +51,18 @@ namespace PokeDojo.src.Data
       };
     }
 
-    public static List<PokemonType> Types()
+    public static List<MoveType> MoveTypes()
     {
-      return new List<PokemonType>
+      return new List<MoveType>
       {
-              // modify later
-              new PokemonType("Fighting", ["Normal", "Ice", "Rock", "Dark", "Steel"], ["Fire", "Water", "Grass", "Electric", "Fighting", "Ground", "Dragon"], ["Poison", "Flying", "Psychic", "Bug", "Fairy"], ["Ghost"], ["Flying", "Psychic", "Fairy"]),
-              new PokemonType("Flying", ["Grass", "Fighting", "Bug"], ["Normal", "Fire", "Water", "Ice", "Poison", "Ground", "Flying", "Psychic", "Ghost", "Dragon", "Dark"], ["Electric", "Rock", "Steel"], [], ["Electric", "Ice", "Rock"]),
-              new PokemonType("Poison"),
-              new PokemonType("Ground"),
-              new PokemonType("Rock"),
-              new PokemonType("Bug"),
-              new PokemonType("Ghost"),
+              new MoveType("Fighting", ["Normal", "Ice", "Rock", "Dark", "Steel"], ["Fire", "Water", "Grass", "Electric", "Fighting", "Ground", "Dragon"], ["Poison", "Flying", "Psychic", "Bug", "Fairy"], ["Ghost"]),
+              new MoveType("Flying", ["Grass", "Fighting", "Bug"], ["Normal", "Fire", "Water", "Ice", "Poison", "Ground", "Flying", "Psychic", "Ghost", "Dragon", "Dark"], ["Electric", "Rock", "Steel"], []),
+              new MoveType("Poison", ["Grass", "Fairy"], ["Normal", "Fire", "Water", "Electric", "Ice", "Fighting", "Flying", "Psychic", "Bug", "Dragon", "Dark"], ["Poison", "Ground", "Rock", "Ghost"], ["Steel"]),
+              new MoveType("Ground", ["Fire", "Electric", "Poison", "Rock", "Steel"], ["Normal", "Water", "Ice", "Fighting", "Ground", "Psychic", "Ghost", "Dragon", "Dark", "Fairy"], ["Grass", "Bug"], ["Flying"]),
+              new MoveType("Rock", ["Fire", "Ice", "Flying", "Bug"], ["Normal", "Water", "Grass", "Electric", "Poison", "Psychic", "Rock", "Ghost", "Dragon", "Dark", "Fairy"], ["Fighting", "Ground", "Steel"], []),
+              /* Will continue these later, I just want to test snorlax for now.
+              new MoveType("Bug", []),
+              new MoveType("Ghost"),
               new PokemonType("Steel"),
               new PokemonType("Fire"),
               new PokemonType("Water"),
@@ -69,8 +71,81 @@ namespace PokeDojo.src.Data
               new PokemonType("Psychic"),
               new PokemonType("Ice"),
               new PokemonType("Dragon"),
-              new PokemonType("Dark"),
-              new PokemonType("Normal")
+              new PokemonType("Dark"),*/
+              new MoveType("Normal", [], ["Normal", "Fire", "Water", "Grass", "Electric", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Dragon", "Dark", "Fairy"], ["Rock", "Steel"], ["Ghost"])
+      };
+    }
+
+    public static List<DefensiveType> DefenseTypes()
+    {
+      return new List<DefensiveType>()
+      {
+        new DefensiveType("Normal", ["Fighting"], ["Normal", "Fire", "Water", "Grass", "Electric", "Ice", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Dragon", "Dark", "Steel", "Fairy"], [], ["Ghost"])
+      };
+    }
+
+    public static List<PokemonType> Types()
+    {
+      List<MoveType> MoveTypes = Initialize.MoveTypes();
+      List<DefensiveType> Types = Initialize.DefenseTypes();
+
+      return new List<PokemonType>()
+      {
+        new PokemonType("Normal", MoveTypes[5], Types[0])
+      };
+    }
+
+    public static List<MoveInfo> MoveInformation(){
+      List<PokemonType> Types = Initialize.Types();
+
+      return new List<MoveInfo>()
+      {
+        new MoveInfo("Body Slam", "A full-body slam that may cause paralysis.", Types[0], 85, 15)
+      };
+    }
+    public static List<Move> Moves()
+    {
+      List<MoveInfo> MoveInfo = Initialize.MoveInformation();
+      return new List<Move>()
+      {
+        new Move(MoveInfo[0],
+        (self, target) =>
+        {
+          string selfName = self.GetGeneration().GetDescription().GetName();
+
+          Console.WriteLine($"{selfName} uses {MoveInfo[0].GetName()}.");
+
+          Random rand = new Random();
+          // Checks if there's a chance of paralyzing
+          if (rand.Next(0, 1) < 0.30)
+          {
+            string targetFirstType = target.GetPokemonType()[0].GetName();
+            string targetSecondType = target.GetPokemonType()[1].GetName();
+            int generation = self.GetGeneration().GetGeneration();
+            if (generation == 1 && !(targetFirstType == "Normal" || targetSecondType == "Normal"))
+            {
+              int targetSpeed = target.GetStat().GetSpeed();
+              target.GetStat().SetSpeed((int)(targetSpeed * 0.75));
+
+              string targetName = self.GetGeneration().GetDescription().GetName();
+              Console.WriteLine($"Enemy {targetName} is paralyzed! It may not attack!");
+            }
+          }
+        })
+      };
+    }
+    public static List<Status> Status()
+    {
+      return new List<Status>()
+      {
+        new Status("None", "No status applied.", onPokemon => {}),
+        new Status("Paralyze", "The Speed of a paralyzed Pokémon is decreased by 75%, rounded down.", 
+          onPokemon =>
+          {
+            int currentSpeed = onPokemon.GetStat().GetSpeed();
+            onPokemon.GetStat().SetSpeed((int)(currentSpeed * 0.75));
+          }
+        ),
       };
     }
 

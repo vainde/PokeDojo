@@ -2,58 +2,32 @@
 using PokeDojo.src.Poke;
 namespace PokeDojo.src.Data.Type
 {
-    public class PokemonType
+  public class PokemonType
+  {
+    readonly string name;
+    readonly MoveType moveType;
+    readonly DefensiveType defenseType;
+
+    public PokemonType(string name, MoveType moveType, DefensiveType defenseType)
     {
-        string name;
-        readonly List<string> strongAgainst;
-        readonly List<string> neutralAgainst;
-        readonly List<string> resistantAgainst;
-        readonly List<string> weakAgainst;
-        readonly List<string> nullAgainst;
-
-        public PokemonType(string name, List<string> strongAgainst, List<string> neutralAgainst, List<string> resistantAgainst, List<string> nullAgainst, List<string> weakAgainst)
-        {
-          this.name = name;
-          this.strongAgainst = strongAgainst;
-          this.neutralAgainst = neutralAgainst;
-          this.resistantAgainst = resistantAgainst;
-          this.weakAgainst = weakAgainst;
-          this.nullAgainst = nullAgainst;
-        }
-
-        public List<string> GetStrongAgainst()
-        {
-          return strongAgainst;
-        }
-
-        public List<string> GetNeutralAgainst()
-        {
-          return neutralAgainst;
-        }
-
-        public List<string> GetResistantAgainst()
-        {
-          return resistantAgainst;
-        }
-
-        public List<string> GetWeakAgainst()
-        {
-          return weakAgainst; 
-        }
-
-        public List<string> GetNullAgainst()
-        {
-          return nullAgainst;
-        }
-
-        public string GetName()
-        {
-            return name;
-        }
-
-        public void SetName(string name)
-        {
-            this.name = name;
-        }
+      this.name = name;
+      this.moveType = moveType;
+      this.defenseType = defenseType;
     }
+
+    public string GetName()
+    {
+      return name;
+    }
+
+    public MoveType GetMoveType()
+    {
+      return moveType;
+    }
+
+    public DefensiveType GetDefensiveType()
+    {
+      return defenseType;
+    }
+  }
 }

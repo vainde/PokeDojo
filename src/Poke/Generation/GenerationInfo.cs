@@ -1,4 +1,5 @@
-﻿using PokeDojo.src.Data.Type;
+﻿using PokeDojo.src.Data;
+using PokeDojo.src.Data.Type;
 using PokeDojo.src.Poke.Generation.Descriptor;
 
 namespace PokeDojo.src.Poke.Generation
@@ -13,10 +14,11 @@ namespace PokeDojo.src.Poke.Generation
 
         public GenerationInfo()
         {
+            List<PokemonType> Types = Initialize.Types();
             generation = 1;
             description = new Description();
             gender = new Gender();
-            hiddenPower = new PokemonType("");
+            hiddenPower = new PokemonType("Default", Types[0].GetMoveType(), Types[0].GetDefensiveType());
             happiness = 0;
         }
         public Gender GetGender()

@@ -1,5 +1,6 @@
 ﻿// Represents how the user views pokemon information
 using PokeDojo.src.Poke;
+using PokeDojo.src.Data.Moves;
 
 namespace PokeDojo.src.Simulator.Summary
 {
@@ -39,10 +40,11 @@ namespace PokeDojo.src.Simulator.Summary
             do
             {
                 Console.WriteLine("POKEMON INFORMATION");
-                Console.WriteLine("========================");
+                PrintBorder();
                 Console.WriteLine("1. View Stats");
                 Console.WriteLine("2. View Item");
-                Console.WriteLine("3. Quit");
+                Console.WriteLine("3. View Moves");
+                Console.WriteLine("4. Quit");
                 Console.WriteLine();
                 Console.WriteLine("What would you like to see?");
                 Console.Write(">");
@@ -57,6 +59,9 @@ namespace PokeDojo.src.Simulator.Summary
                         ShowItemInformation(pokemon);
                         break;
                     case 3:
+                        ShowMoveInformation(pokemon);
+                        break;    
+                    case 4:
                         Console.WriteLine("EXITING PROGRAM...");
                         Console.WriteLine();
                         break;
@@ -71,7 +76,7 @@ namespace PokeDojo.src.Simulator.Summary
         static public void SummaryTitle(Pokemon pokemon)
         {
             Console.WriteLine($"{pokemon.GetGeneration().GetDescription().GetName()} Gen {pokemon.GetGeneration().GetGeneration()} Summary");
-            Console.WriteLine($"========================");
+            PrintBorder();
         }
 
         static public void ShowAllStats(Pokemon pokemon)
@@ -80,7 +85,7 @@ namespace PokeDojo.src.Simulator.Summary
             do
             {
                 Console.WriteLine("EACH STAT CATEGORY");
-                Console.WriteLine("=========================");
+                PrintBorder();
                 Console.WriteLine("1. Stats");
                 Console.WriteLine("2. Effort Values");
                 Console.WriteLine("3. Individual Values");
@@ -127,7 +132,7 @@ namespace PokeDojo.src.Simulator.Summary
             do
             {
                 Console.WriteLine("ITEM INFORMATION");
-                Console.WriteLine("=========================");
+                PrintBorder();
                 Console.WriteLine("1. View Item");
                 Console.WriteLine("2. Go Back");
                 Console.WriteLine("What would you like to see?");
@@ -162,7 +167,14 @@ namespace PokeDojo.src.Simulator.Summary
         {
             Console.WriteLine($"Name: {pokemon.GetGeneration().GetDescription().GetName()}");
             Console.WriteLine($"Level: {pokemon.GetGeneration().GetDescription().GetLevel()}");
-            Console.WriteLine($"Type: {pokemon.GetPokemonType().GetName()}");
+            if(pokemon.GetPokemonType().Count > 1)
+            {
+              Console.WriteLine($"Type: {pokemon.GetPokemonType()[0].GetName()} {pokemon.GetPokemonType()[1].GetName()}");
+            }
+            else
+            {
+              Console.WriteLine($"Type: {pokemon.GetPokemonType()[0].GetName()}");
+            }
         }
 
         static public void ShowGen2Description(Pokemon pokemon)
@@ -191,7 +203,7 @@ namespace PokeDojo.src.Simulator.Summary
         static public void ShowEarlyGenEffort(Pokemon pokemon)
         {
             Console.WriteLine("EFFORT VALUES");
-            Console.WriteLine("=========================");
+            PrintBorder();
             Console.WriteLine($"HP EV: {pokemon.GetStatValue().GetEffortValue().GetHealthEV()}");
             Console.WriteLine($"Attack EV: {pokemon.GetStatValue().GetEffortValue().GetAttackEV()}");
             Console.WriteLine($"Defense EV:  {pokemon.GetStatValue().GetEffortValue().GetDefenseEV()}");
@@ -203,7 +215,7 @@ namespace PokeDojo.src.Simulator.Summary
         static public void ShowEarlyGenDeterminant(Pokemon pokemon)
         {
             Console.WriteLine("DETERMINANT VALUES");
-            Console.WriteLine("=========================");
+            PrintBorder();
             Console.WriteLine($"HP DV: {pokemon.GetStatValue().GetIndividualValue().GetHealthIV()}");
             Console.WriteLine($"Attack DV: {pokemon.GetStatValue().GetIndividualValue().GetAttackIV()}");
             Console.WriteLine($"Defense EV: {pokemon.GetStatValue().GetIndividualValue().GetDefenseIV()}");
@@ -216,13 +228,35 @@ namespace PokeDojo.src.Simulator.Summary
         static public void ShowBaseStat(Pokemon pokemon)
         {
             Console.WriteLine("BASE STATS");
-            Console.WriteLine("=========================");
+            PrintBorder();
             Console.WriteLine($"HP {pokemon.GetBaseStat().GetBaseHealth()}");
             Console.WriteLine($"Attack: {pokemon.GetBaseStat().GetBaseAttack()}");
             Console.WriteLine($"Defense: {pokemon.GetBaseStat().GetBaseDefense()}");
             Console.WriteLine($"Sp. Attack: {pokemon.GetBaseStat().GetBaseSpAttack()}");
             Console.WriteLine($"Sp. Defense: {pokemon.GetBaseStat().GetBaseSpDefense()}");
             Console.WriteLine($"Speed: {pokemon.GetBaseStat().GetBaseSpeed()}");
+        }
+
+        static public void ShowMoveInformation(Pokemon pokemon)
+        {
+            Console.WriteLine("MOVE INFORMATION");
+            PrintBorder();
+            int i = 1;
+            foreach(Move move in pokemon.GetMoves())
+            {
+              Console.WriteLine($"Move {i}: {move.GetMoveInfo().GetName()}");
+              Console.WriteLine($"Description: {move.GetMoveInfo().GetDescription()}");
+              Console.WriteLine($"Category: {move.GetMoveInfo().GetCategory()}");
+              Console.WriteLine($"Base Power: {move.GetMoveInfo().GetBasePower()}");
+              Console.WriteLine($"Power Points: {move.GetMoveInfo().GetPowerPoint()}");
+              Console.WriteLine($"Accuracy: {move.GetAccuracy() * 100}%");
+              i++;
+            }
+        }
+
+        static void PrintBorder()
+        {
+          Console.WriteLine("=========================");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Responsible for calculating a pokemon's HP type based on IV
 
 using PokeDojo.src.Poke;
+using PokeDojo.src.Data.Type;
 
 namespace PokeDojo.src.Data.Type
 {
@@ -18,13 +19,17 @@ namespace PokeDojo.src.Data.Type
             return hiddenPowerValue;
         }
 
-        static public void HiddenPowerType(Pokemon pokemon, List<PokemonType> types)
+        static public void HiddenPowerType(Pokemon pokemon)
         {
-            int HPValue = HiddenPowerValue(pokemon);
-            if (HPValue >= 0 && HPValue <= 15)
-            {
-                pokemon.GetGeneration().SetHiddenPower(types[HPValue]);
-            }
-        }
+            List<PokemonType> Types = Initialize.Types();
+
+            pokemon.GetGeneration().SetHiddenPower(Types[0]);
+          /*
+           *int HPValue = HiddenPowerValue(pokemon);
+          if (HPValue >= 0 && HPValue <= 15)
+          {
+              pokemon.GetGeneration().SetHiddenPower(Types[HPValue]);
+          }*/
     }
+  }
 }

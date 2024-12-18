@@ -5,6 +5,8 @@ using PokeDojo.src.Data.Items;
 using PokeDojo.src.Data.Type;
 using PokeDojo.src.Data.Stats;
 using PokeDojo.src.Data.Value;
+using PokeDojo.src.Data.Moves;
+using PokeDojo.src.Data.Statuses;
 
 namespace PokeDojo.src.Simulator
 {
@@ -12,21 +14,28 @@ namespace PokeDojo.src.Simulator
     {
         static void Main()
         {
+          // Pokemon need a type and items selection to pull from
           List<PokemonType> Types = Initialize.Types();
           List<Item> Items = Initialize.Items();
+          List<Move> Moves = Initialize.Moves();
+          List<Status> Status = Initialize.Status();
 
           // Using snorlax as a test pokemon
           Stat SnorlaxStat = new Stat();
           BaseStat SnorlaxBaseStat = new BaseStat();
           StatValue SnorlaxValue = new StatValue();
-          PokemonType SnorlaxType = Types[16];
           GenerationInfo SnorlaxGen2 = new GenerationInfo();
 
           SnorlaxGen2.SetGeneration(2);
           SnorlaxGen2.GetDescription().SetName("Snorlax");
           SnorlaxGen2.GetDescription().SetLevel(50);
 
-          Pokemon SecondGenSnorlax = new(SnorlaxStat, SnorlaxBaseStat, SnorlaxValue, SnorlaxType, SnorlaxGen2, Items[0]);
+          // Adding a move and status
+          List<PokemonType> SnorlaxType = [Types[0]];
+          List<Move> SnorlaxMoves = [Moves[0]];
+          Status SnorlaxStatus = Status[0];
+     
+          Pokemon SecondGenSnorlax = new(SnorlaxStat, SnorlaxBaseStat, SnorlaxValue, SnorlaxType, SnorlaxGen2, Items[0], SnorlaxMoves, SnorlaxStatus);
           SecondGenSnorlax.GetGeneration().SetHappiness(255);
 
           // Adding stats
@@ -40,9 +49,9 @@ namespace PokeDojo.src.Simulator
           SecondGenSnorlax.GetStat().EarlyGenSpDefense(SecondGenSnorlax);
           SecondGenSnorlax.GetStat().EarlyGenSpeed(SecondGenSnorlax);
 
-          HiddenPower.HiddenPowerType(SecondGenSnorlax, Types);
+          HiddenPower.HiddenPowerType(SecondGenSnorlax);
 
-          Summary.Summary.Gen2Summary(SecondGenSnorlax);
+          Summary.Summary.Gen1Summary(SecondGenSnorlax); 
         }
     }
 }

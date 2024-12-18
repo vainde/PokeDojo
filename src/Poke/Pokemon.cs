@@ -5,6 +5,7 @@ using PokeDojo.src.Data.Stats;
 using PokeDojo.src.Data.Value;
 using PokeDojo.src.Poke.Generation;
 using PokeDojo.src.Data.Moves;
+using PokeDojo.src.Data.Statuses;
 
 namespace PokeDojo.src.Poke
 {
@@ -17,16 +18,18 @@ namespace PokeDojo.src.Poke
         readonly GenerationInfo generation;
         readonly Item item;
         readonly List<Move> moves;
-        public Pokemon(Stat stat, BaseStat baseStat, StatValue value, List<PokemonType> type, GenerationInfo generation, Item item, List<Move> moves)
-        {
-          this.stat = stat;
-          this.baseStat = baseStat;
-          this.value = value;
-          this.type = type;
-          this.generation = generation;
-          this.item = item;
-          this.moves = moves;
-        }
+        readonly Status status;
+        public Pokemon(Stat stat, BaseStat baseStat, StatValue value, List<PokemonType> type, GenerationInfo generation, Item item, List<Move> moves, Status status)
+    {
+        this.stat = stat;
+        this.baseStat = baseStat;
+        this.value = value;
+        this.type = type;
+        this.generation = generation;
+        this.item = item;
+        this.moves = moves;
+        this.status = status;
+    }
 
         public Stat GetStat()
         {
@@ -61,5 +64,10 @@ namespace PokeDojo.src.Poke
        {
           return moves;
        }
+
+      public Status GetStatus()
+      {
+        return status;
+      }
     }
 }
