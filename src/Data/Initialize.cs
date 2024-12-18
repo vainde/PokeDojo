@@ -80,18 +80,20 @@ namespace PokeDojo.src.Data
     {
       return new List<DefensiveType>()
       {
-        new DefensiveType("Normal", ["Fighting"], ["Normal", "Fire", "Water", "Grass", "Electric", "Ice", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Dragon", "Dark", "Steel", "Fairy"], [], ["Ghost"])
+        new DefensiveType("Normal", ["Fighting"], ["Normal", "Fire", "Water", "Grass", "Electric", "Ice", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Dragon", "Dark", "Steel", "Fairy"], [], ["Ghost"]),
+        new DefensiveType("Ground", ["Water", "Grass", "Ice"], ["Normal", "Fire", "Fighting", "Ground", "Flying", "Psychic", "Bug", "Ghost", "Dragon", "Dark", "Steel", "Fairy"], ["Poison", "Rock"], ["Electric"])
       };
     }
 
     public static List<PokemonType> Types()
     {
       List<MoveType> MoveTypes = Initialize.MoveTypes();
-      List<DefensiveType> Types = Initialize.DefenseTypes();
+      List<DefensiveType> Types = DefenseTypes();
 
       return new List<PokemonType>()
       {
-        new PokemonType("Normal", MoveTypes[5], Types[0])
+        new PokemonType("Normal", MoveTypes[5], Types[0]),
+        new PokemonType("Ground", MoveTypes[3], Types[1])
       };
     }
 
@@ -100,36 +102,54 @@ namespace PokeDojo.src.Data
 
       return new List<MoveInfo>()
       {
-        new MoveInfo("Body Slam", "A full-body slam that may cause paralysis.", Types[0], 85, 15)
+        new MoveInfo("Body Slam", "A full-body slam that may cause paralysis.", Types[0], 85, 15),
+        new MoveInfo("Earthquake", "Tough but useless vs. flying foes.", Types[1], 100, 10)
       };
     }
     public static List<Move> Moves()
     {
-      List<MoveInfo> MoveInfo = Initialize.MoveInformation();
+      List<MoveInfo> MoveInfo = MoveInformation();
       return new List<Move>()
       {
         new Move(MoveInfo[0],
         (self, target) =>
         {
           string selfName = self.GetGeneration().GetDescription().GetName();
-
           Console.WriteLine($"{selfName} uses {MoveInfo[0].GetName()}.");
 
-          Random rand = new Random();
-          // Checks if there's a chance of paralyzing
-          if (rand.Next(0, 1) < 0.30)
+          // can make a switch case later for text regarding type matchups
+          if (target.GetPokemonType()[0].GetName() == "Ghost")
           {
-            string targetFirstType = target.GetPokemonType()[0].GetName();
-            string targetSecondType = target.GetPokemonType()[1].GetName();
-            int generation = self.GetGeneration().GetGeneration();
-            if (generation == 1 && !(targetFirstType == "Normal" || targetSecondType == "Normal"))
+            Console.WriteLine("But it was not effective!");
+          }
+          else
+          {
+            Random rand = new Random();
+            // Checks if there's a chance of paralyzing
+            if (rand.Next(0, 1) < 0.30)
             {
-              int targetSpeed = target.GetStat().GetSpeed();
-              target.GetStat().SetSpeed((int)(targetSpeed * 0.75));
+              string targetFirstType = target.GetPokemonType()[0].GetName();
+              int generation = self.GetGeneration().GetGeneration();
+              if (generation == 1 && (targetFirstType != "Normal"))
+              {
+                int targetSpeed = target.GetStat().GetSpeed();
+                target.GetStat().SetSpeed((int)(targetSpeed * 0.75));
 
-              string targetName = self.GetGeneration().GetDescription().GetName();
-              Console.WriteLine($"Enemy {targetName} is paralyzed! It may not attack!");
+                string targetName = self.GetGeneration().GetDescription().GetName();
+                Console.WriteLine($"Enemy {targetName} is paralyzed! It may not attack!");
+              }
             }
+          }
+        }),
+        new Move(MoveInfo[1],
+        (self, target) =>
+        {
+          string selfName = self.GetGeneration().GetDescription().GetName();
+          Console.WriteLine($"{selfName} uses {MoveInfo[1].GetName()}.");
+
+          if (target.GetPokemonType()[0].GetName() == "Flying")
+          {
+            Console.WriteLine("But it was not effective!");
           }
         })
       };

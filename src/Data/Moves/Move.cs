@@ -58,6 +58,8 @@ namespace PokeDojo.src.Data.Moves
         {
           SetDamage(self, target, this);
           UseMove.Invoke(self, target);
+          int targetCurrentHP = target.GetStat().GetCurrentHealth();
+          target.GetStat().SetCurrentHealth(targetCurrentHP - damage); 
         }
         else
         {

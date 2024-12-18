@@ -70,7 +70,7 @@ namespace PokeDojo.src.Simulator.Summary
                         Console.WriteLine();
                         break;
                 }
-            } while (option != 3);
+            } while (option != 4);
         }
 
         static public void SummaryTitle(Pokemon pokemon)

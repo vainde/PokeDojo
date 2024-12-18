@@ -49,10 +49,10 @@ namespace PokeDojo.src.Battle
         targetDefenseType = self.GetStat().GetDefense();
       }
 
-      int attackRatio = selfAttackType / targetDefenseType; 
+      double attackRatio = (double)selfAttackType / targetDefenseType; 
 
       int assessCrit = ((2 * level * criticalHit) / 5) + 2;
-      int assessPower = ((assessCrit * basePower * attackRatio) / 50) + 2;
+      int assessPower = (int)((assessCrit * basePower * attackRatio) / 50) + 2;
 
       double firstTypeAdvantage = move.GetTypeAdvantage(target, 0);
       double secondTypeAdvantage;

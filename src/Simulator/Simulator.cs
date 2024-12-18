@@ -30,7 +30,7 @@ namespace PokeDojo.src.Simulator
           SnorlaxGen2.GetDescription().SetName("Snorlax");
           SnorlaxGen2.GetDescription().SetLevel(50);
 
-          // Adding a move and status
+          // Adding a type, move and status
           List<PokemonType> SnorlaxType = [Types[0]];
           List<Move> SnorlaxMoves = [Moves[0]];
           Status SnorlaxStatus = Status[0];
@@ -48,10 +48,39 @@ namespace PokeDojo.src.Simulator
           SecondGenSnorlax.GetStat().EarlyGenSpAttack(SecondGenSnorlax);
           SecondGenSnorlax.GetStat().EarlyGenSpDefense(SecondGenSnorlax);
           SecondGenSnorlax.GetStat().EarlyGenSpeed(SecondGenSnorlax);
-
           HiddenPower.HiddenPowerType(SecondGenSnorlax);
 
-          Summary.Summary.Gen1Summary(SecondGenSnorlax); 
+          // Testing a second pokemon
+          Stat GolemStat = new Stat();
+          BaseStat GolemBaseStat = new BaseStat();
+          StatValue GolemValue = new StatValue();
+          GenerationInfo GolemGen2 = new GenerationInfo();
+          GolemGen2.SetGeneration(2);
+          GolemGen2.GetDescription().SetName("Golem");
+          GolemGen2.GetDescription().SetLevel(50);
+
+          // Adding a type, move and status
+          List<PokemonType> GolemType = [Types[1]];
+          List<Move> GolemMoves = [Moves[1]];
+          Status GolemStatus = Status[0];
+
+          Pokemon SecondGenGolem = new(GolemStat, GolemBaseStat, GolemValue, GolemType, GolemGen2, Items[0], GolemMoves, GolemStatus);
+          SecondGenGolem.GetGeneration().SetHappiness(255);
+
+          SecondGenGolem.GetBaseStat().SetBaseStat(80, 120, 130, 55, 65, 45);
+          SecondGenGolem.GetStatValue().GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
+          SecondGenGolem.GetStatValue().GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
+          SecondGenGolem.GetStat().EarlyGenHealth(SecondGenGolem);
+          SecondGenGolem.GetStat().EarlyGenAttack(SecondGenGolem);
+          SecondGenGolem.GetStat().EarlyGenDefense(SecondGenGolem);
+          SecondGenGolem.GetStat().EarlyGenSpAttack(SecondGenGolem);
+          SecondGenGolem.GetStat().EarlyGenSpDefense(SecondGenGolem);
+          SecondGenGolem.GetStat().EarlyGenSpeed(SecondGenGolem);
+          HiddenPower.HiddenPowerType(SecondGenSnorlax);
+
+          Summary.Summary.Gen2Summary(SecondGenSnorlax);
+          Summary.Summary.Gen2Summary(SecondGenGolem);
+          Summary.Fight.SimulateFight(SecondGenSnorlax, SecondGenGolem);
         }
     }
 }
