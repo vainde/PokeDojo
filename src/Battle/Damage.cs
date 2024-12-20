@@ -1,4 +1,4 @@
-﻿// Represents damage dealt by pokemon's moves
+﻿// Representsz damage dealt by pokemon's moves
 using PokeDojo.src.Data.Moves;
 using PokeDojo.src.Poke;
 using PokeDojo.src.Battle.Event;
@@ -9,9 +9,44 @@ namespace PokeDojo.src.Battle
   {
     public static int Gen1Damage(Pokemon self, Pokemon target, Move move)
     {
+
+      double trueSTAB = CalculateTrueSTAB(self, move);
+      int selfAttackType;
+      int targetDefenseType;
+      double enemyFirstTypeAdvantage;
+      double enemySecondTypeAdvantage;
+
+      int criticalHit = CriticalHit.IsCriticalHit(self, move) ? 2 : 1;
+
+      int level = self.GetGeneration().GetDescription().GetLevel();
+      int basePower = move.GetMoveInfo().GetBasePower();
+
+      // If the move used is special, use the special attack of the pokemon against the target's special defense
+      GetAttackAndDefenseType(self, target, move, out selfAttackType, out targetDefenseType);
+
+      double attackRatio = (double)selfAttackType / targetDefenseType;
+
+      // This value applies the extra damage for a crit
+      int assessCrit = ((2 * level * criticalHit) / 5) + 2;
+
+      // This value encapsulates the entire damage
+      int assessPower = (int)((assessCrit * basePower * attackRatio) / 50) + 2;
+
+      enemyFirstTypeAdvantage = move.GetTypeAdvantage(target, 0);
+      GetSecondTypeAdvantage(self, target, move, out enemySecondTypeAdvantage);
+
+      int beforeRandom = (int)(assessPower * trueSTAB * enemyFirstTypeAdvantage * enemySecondTypeAdvantage);
+      Random random = new Random();
+      int randomValue = beforeRandom >= 1 ? 1 : Convert.ToInt32(random.Next(217, 255) / 255);
+
+      int damageAfterRandom = beforeRandom * randomValue;
+      return damageAfterRandom;
+    }
+
+    static public double CalculateTrueSTAB(Pokemon self, Move move)
+    {
       string firstType = self.GetPokemonType()[0].GetName();
       bool dualType = self.GetPokemonType().Count > 1;
-      bool enemyDualType = self.GetPokemonType().Count == 2;
       double trueSTAB;
       double firstSTAB = move.GetMoveInfo().GetName() == firstType ? 1.5 : 1.0;
 
@@ -27,18 +62,14 @@ namespace PokeDojo.src.Battle
           trueSTAB = 1.5;
         }
       }
+      return trueSTAB;
+    }
 
-      int criticalHit = CriticalHit.IsCriticalHit(self, move) ? 2 : 1;
-
-      int level = self.GetGeneration().GetDescription().GetLevel();
-      int basePower = move.GetMoveInfo().GetBasePower();
-
-      // If the move used is special, use the special attack of the pokemon against the target's special defense
+    public static void GetAttackAndDefenseType(Pokemon self, Pokemon target, Move move, out int selfAttackType, out int targetDefenseType)
+    {
       string moveCategory = move.GetMoveInfo().GetCategory();
-      int selfAttackType;
-      int targetDefenseType;
 
-      if(moveCategory == "Special")
+      if (moveCategory == "Special")
       {
         selfAttackType = self.GetStat().GetSpecialAttack();
         targetDefenseType = target.GetStat().GetSpecialDefense();
@@ -48,26 +79,16 @@ namespace PokeDojo.src.Battle
         selfAttackType = self.GetStat().GetAttack();
         targetDefenseType = self.GetStat().GetDefense();
       }
+    }
 
-      double attackRatio = (double)selfAttackType / targetDefenseType; 
-
-      int assessCrit = ((2 * level * criticalHit) / 5) + 2;
-      int assessPower = (int)((assessCrit * basePower * attackRatio) / 50) + 2;
-
-      double firstTypeAdvantage = move.GetTypeAdvantage(target, 0);
-      double secondTypeAdvantage;
+    public static void GetSecondTypeAdvantage(Pokemon self, Pokemon target, Move move, out double secondTypeAdvantage)
+    {
+      bool enemyDualType = self.GetPokemonType().Count == 2;
 
       if (!enemyDualType)
         secondTypeAdvantage = 1;
       else
         secondTypeAdvantage = move.GetTypeAdvantage(target, 1);
-
-      int beforeRandom = (int)(assessPower * trueSTAB * firstTypeAdvantage * secondTypeAdvantage);
-      Random random = new Random();
-      int randomValue = beforeRandom >= 1 ? 1 : Convert.ToInt32(random.Next(217, 255) / 255);
-
-      int afterRandom = beforeRandom * randomValue;
-      return afterRandom;
     }
   }
 }

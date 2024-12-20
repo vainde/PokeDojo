@@ -16,17 +16,15 @@ namespace PokeDojo.src.Poke
         readonly StatValue value;
         readonly List <PokemonType> type;
         readonly GenerationInfo generation;
-        readonly Item item;
         readonly List<Move> moves;
         readonly Status status;
-        public Pokemon(Stat stat, BaseStat baseStat, StatValue value, List<PokemonType> type, GenerationInfo generation, Item item, List<Move> moves, Status status)
+        public Pokemon(Stat stat, BaseStat baseStat, StatValue value, List<PokemonType> type, GenerationInfo generation, List<Move> moves, Status status)
     {
         this.stat = stat;
         this.baseStat = baseStat;
         this.value = value;
         this.type = type;
         this.generation = generation;
-        this.item = item;
         this.moves = moves;
         this.status = status;
     }
@@ -53,11 +51,6 @@ namespace PokeDojo.src.Poke
         public GenerationInfo GetGeneration()
         {
             return generation;
-        }
-
-        public Item GetItem()
-        {
-          return item;
         }
 
        public List<Move> GetMoves()
