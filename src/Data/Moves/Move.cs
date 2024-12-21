@@ -1,7 +1,7 @@
 ﻿// Represents the blueprint for all moves
 using PokeDojo.src.Data.Type;
 using PokeDojo.src.Poke;
-using PokeDojo.src.Battle;
+using PokeDojo.src.Battles;
 
 namespace PokeDojo.src.Data.Moves
 {
@@ -10,10 +10,11 @@ namespace PokeDojo.src.Data.Moves
     // Only assigned in constructor so I am setting it to readonly as a standard
     readonly double accuracy;
     readonly int priority;
-    bool highCrit;
+    bool critHappened;
     readonly Action<Pokemon, Pokemon> UseMove;
     readonly MoveInfo moveInfo;
     int damage;
+    int currentPowerPoints;
 
     public Move(MoveInfo moveInfo, Action<Pokemon, Pokemon> useMove, double accuracy = 1, int priority = 0)
     {
@@ -21,8 +22,19 @@ namespace PokeDojo.src.Data.Moves
       this.moveInfo = moveInfo;
       this.priority = priority;
       this.accuracy = accuracy;
-      highCrit = false;
+      critHappened = false;
       damage = 0;
+      this.currentPowerPoints = moveInfo.GetPowerPoint();
+    }
+
+    public void SetCritHappened()
+    {
+      critHappened = true;
+    }
+
+    public void ResetCritHappened()
+    {
+      critHappened = false;
     }
 
     public double GetAccuracy()
@@ -30,15 +42,6 @@ namespace PokeDojo.src.Data.Moves
       return accuracy;
     }
 
-    public void SetHighCrit(bool value)
-    {
-      highCrit = value;
-    }
-
-    public bool GetHighCrit()
-    {
-      return highCrit;
-    }
     public int GetPriority()
     {
       return priority;
@@ -47,6 +50,11 @@ namespace PokeDojo.src.Data.Moves
     public MoveInfo GetMoveInfo()
     {
       return moveInfo;
+    }
+
+    public int GetCurrentPowerPoints()
+    {
+      return currentPowerPoints;
     }
 
     public void PerformUseMove(Pokemon self, Pokemon target)
@@ -59,13 +67,19 @@ namespace PokeDojo.src.Data.Moves
           SetDamage(self, target, this);
           UseMove.Invoke(self, target);
           int targetCurrentHP = target.GetStat().GetCurrentHealth();
-          target.GetStat().SetCurrentHealth(targetCurrentHP - damage); 
+          target.GetStat().SetCurrentHealth(targetCurrentHP - damage);
+          if (critHappened)
+          {
+            string name = self.GetGeneration().GetDescription().GetName();
+            Console.WriteLine($"{name} landed a critical hit!");
+          }
         }
         else
         {
           Console.WriteLine("But it missed!");
         }
       }
+      ResetCritHappened();
     }
 
     // Returns the modifier based on type advantage
@@ -94,6 +108,11 @@ namespace PokeDojo.src.Data.Moves
     public void SetDamage(Pokemon self, Pokemon target, Move move)
     {
       damage = Damage.Gen1Damage(self, target, this);
+    }
+
+    public void DecreasePowerPoints()
+    {
+      currentPowerPoints -= 1;
     }
   }
 }

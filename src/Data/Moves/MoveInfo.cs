@@ -10,7 +10,7 @@ namespace PokeDojo.src.Data.Moves
     string category;
     readonly int basePower;
     readonly int powerPoint;
-
+    bool highCrit;
     public MoveInfo(string name, string description, PokemonType type, int basePower, int powerPoint)
     {
       this.name = name;
@@ -18,7 +18,17 @@ namespace PokeDojo.src.Data.Moves
       this.type = type;
       this.basePower = basePower;
       this.powerPoint = powerPoint;
+      this.highCrit = false;
       SetCategory();
+    }
+
+    public void SetHighCrit()
+    {
+      highCrit = true;
+    }
+    public bool GetHighCrit()
+    {
+      return highCrit;
     }
 
     public string GetName()

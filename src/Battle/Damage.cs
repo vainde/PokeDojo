@@ -1,9 +1,9 @@
 ﻿// Representsz damage dealt by pokemon's moves
 using PokeDojo.src.Data.Moves;
 using PokeDojo.src.Poke;
-using PokeDojo.src.Battle.Event;
+using PokeDojo.src.Battles.Event;
 
-namespace PokeDojo.src.Battle
+namespace PokeDojo.src.Battles
 {
   static class Damage
   {
@@ -15,8 +15,31 @@ namespace PokeDojo.src.Battle
       int targetDefenseType;
       double enemyFirstTypeAdvantage;
       double enemySecondTypeAdvantage;
+      double criticalHit;
 
-      int criticalHit = CriticalHit.IsCriticalHit(self, move) ? 2 : 1;
+      if (self.GetGeneration().GetGeneration() != 1)
+      {
+        criticalHit = CriticalHit.IsCriticalHit(self, move) ? 2 : 1;
+      }
+      else
+      {
+        int selfLevel = self.GetGeneration().GetDescription().GetLevel();
+
+        bool critHappened = CriticalHit.IsCriticalHit(self, move);
+        if (critHappened)
+        {
+          criticalHit = (double)(2 * selfLevel + 5) / (selfLevel + 5);
+        }
+        else
+        {
+          criticalHit = 1;
+        }
+      }
+
+      if(criticalHit > 1.01)
+      {
+        move.SetCritHappened();
+      }
 
       int level = self.GetGeneration().GetDescription().GetLevel();
       int basePower = move.GetMoveInfo().GetBasePower();
@@ -27,7 +50,7 @@ namespace PokeDojo.src.Battle
       double attackRatio = (double)selfAttackType / targetDefenseType;
 
       // This value applies the extra damage for a crit
-      int assessCrit = ((2 * level * criticalHit) / 5) + 2;
+      int assessCrit = (int)((2 * level * criticalHit) / 5) + 2;
 
       // This value encapsulates the entire damage
       int assessPower = (int)((assessCrit * basePower * attackRatio) / 50) + 2;
