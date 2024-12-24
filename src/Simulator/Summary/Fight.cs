@@ -45,6 +45,8 @@ namespace PokeDojo.src.Simulator.Summary
         Console.Write(">");
         int option = Convert.ToInt32(Console.ReadLine());
         Console.WriteLine();
+
+        // check who's faster later
         if (option == 1)
         {
           Move choice = you.GetMoves()[option - 1];

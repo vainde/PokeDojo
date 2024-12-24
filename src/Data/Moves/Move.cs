@@ -68,7 +68,11 @@ namespace PokeDojo.src.Data.Moves
           UseMove.Invoke(self, target);
           int targetCurrentHP = target.GetStat().GetCurrentHealth();
           target.GetStat().SetCurrentHealth(targetCurrentHP - damage);
-          if (critHappened)
+          if(target.GetStat().GetCurrentHealth() <= 0)
+          {
+            target.GetStat().SetCurrentHealth(0);
+          }
+            if (critHappened)
           {
             string name = self.GetGeneration().GetDescription().GetName();
             Console.WriteLine($"{name} landed a critical hit!");

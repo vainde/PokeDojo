@@ -142,15 +142,15 @@ namespace PokeDojo.src.Simulator.Summary
                 switch (option)
                 {
                     case 1:
-                        if (pokemon.GetItem().GetName() == "")
+                        if (pokemon.GetGeneration().GetItem().GetName() == "")
                         {
                             Console.WriteLine("No item selected.");
                             Console.WriteLine();
                         }
                         else
                         {
-                            Console.WriteLine(pokemon.GetItem().GetName());
-                            Console.WriteLine(pokemon.GetItem().GetDescription());
+                            Console.WriteLine(pokemon.GetGeneration().GetItem().GetName());
+                            Console.WriteLine(pokemon.GetGeneration().GetItem().GetDescription());
                             Console.WriteLine();
                         }
                         break;
@@ -251,6 +251,7 @@ namespace PokeDojo.src.Simulator.Summary
               Console.WriteLine($"Power Points: {move.GetMoveInfo().GetPowerPoint()}");
               Console.WriteLine($"Accuracy: {move.GetAccuracy() * 100}%");
               i++;
+              Console.WriteLine();
             }
         }
 

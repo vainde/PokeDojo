@@ -2,6 +2,7 @@
 
 namespace PokeDojo.src.Data.Statuses
 {
+  //modify to account for generation differences
   public class Status
   {
     readonly string status;

@@ -130,7 +130,8 @@ namespace PokeDojo.src.Data
             {
               string targetFirstType = target.GetPokemonType()[0].GetName();
               int generation = self.GetGeneration().GetGeneration();
-              if (generation == 1 && (targetFirstType != "Normal"))
+              //check how much it's supposed to slow based on gen 1 and gen 2
+              if (generation == 2 && (targetFirstType != "Normal" && targetFirstType != "Ground"))
               {
                 int targetSpeed = target.GetStat().GetSpeed();
                 target.GetStat().SetSpeed((int)(targetSpeed * 0.75));
@@ -162,6 +163,7 @@ namespace PokeDojo.src.Data
         new Status("Paralyze", "The Speed of a paralyzed Pokémon is decreased by 75%, rounded down.", 
           onPokemon =>
           {
+            // Speed drop stays even if it's cured from paralysis with an item or through rest
             int currentSpeed = onPokemon.GetStat().GetSpeed();
             onPokemon.GetStat().SetSpeed((int)(currentSpeed * 0.75));
           }
