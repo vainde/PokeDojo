@@ -44,7 +44,7 @@ namespace PokeDojo.src.Battles
       SendOutFirstPokemon(out Pokemon playerCurrentPokemon);
       Pokemon enemyCurrentPokemon = GetFirstPokemon(enemyTeam);
       bool battleOver;
-      bool enemyTeamFainted = false;
+      bool enemyTeamFainted;
       do
       {
         DisplayTurn(turn);
@@ -54,10 +54,11 @@ namespace PokeDojo.src.Battles
         int choice = HandlePlayerChoice(playerTeam, playerCurrentPokemon, enemyCurrentPokemon);
         HandleEnemyChoice(enemyCurrentPokemon, out int enemyMoveIndex);
 
-        if (choice != -1)
+        if (choice >= 0)
         {
           HandleAttack(choice, playerCurrentPokemon, enemyCurrentPokemon, enemyMoveIndex);
         }
+        // Enemy will attack them after switching out
         else if (choice == -1)
         {
           playerCurrentPokemon = playerTeam[0];
@@ -170,57 +171,68 @@ namespace PokeDojo.src.Battles
     public static int SelectChoice(List<Pokemon> team)
     {
       bool oneLastMember = OneLastMember(team);
-      int option;
-      Console.WriteLine("1. Moves");
-      // check if 
-      if (!oneLastMember)
+      int option = -1;
+      while (option < 1 || option > 2 || (oneLastMember && option == 2))
       {
-        Console.WriteLine("2. Switch Out");
-      }
-      Console.Write(">");
-      option = Convert.ToInt32(Console.ReadLine());
-      Console.WriteLine();
-      if(oneLastMember && option == 2)
-      {
-        Console.WriteLine("Error: Invalid option selected.");
+        Console.WriteLine("1. Moves");
+        // check if 
+        if (!oneLastMember)
+        {
+          Console.WriteLine("2. Switch Out");
+        }
+        Console.Write(">");
+        option = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine();
+        if (oneLastMember && option == 2)
+        {
+          Console.WriteLine("Error: Invalid option selected.");
+        }
       }
       return option;
     }
 
     public static int HandlePlayerChoice(List<Pokemon> team, Pokemon player, Pokemon enemy)
     {
-      int choice = 0;
+      int playerMoveIndex = -1;
+      Pokemon nextPokemon = team[0];
 
-      while (choice != 1 && choice != 2)
+      do
       {
-        // Picks either move or switch out
-        choice = SelectChoice(team);
+        int choice = 0;
 
+        while (choice != 1 && choice != 2)
+        {
+          // Picks either move or switch out
+          choice = SelectChoice(team);
+        }
         // If the player selects move they should be able to cancel it
         if (choice == 1)
         {
           // By default it's the value the player picks to cancel
-          int playerMoveIndex = -1;
-          while (playerMoveIndex == -1)
+          playerMoveIndex = SelectMove(player);
+          if (playerMoveIndex != -1)
           {
-            playerMoveIndex = SelectMove(player);
+            player.GetMoves()[playerMoveIndex].DecreasePowerPoints();
+            return playerMoveIndex;
           }
-          player.GetMoves()[playerMoveIndex].DecreasePowerPoints();
-          return playerMoveIndex;
         }
         else if (choice == 2 && team.Count > 1)
         {
-          Pokemon nextPokemon = SelectPokemonToSwitchOut(team, false);
-          SwitchOut(team, nextPokemon);
+          nextPokemon = SelectPokemonToSwitchOut(team, false);
+          if (nextPokemon != team[0])
+          {
+            Console.WriteLine("Pokemon has successfully switched out.");
+            SwitchOut(team, nextPokemon);
+            return -1;
+          }
         }
         else
         {
           Console.WriteLine("Error: Invalid choice selected");
         }
-        Console.WriteLine();
         //change to switch case later
-      }
-      return -1; // for switching out
+      } while (playerMoveIndex != 1 || nextPokemon != team[0]);
+      return -2;
     }
 
     // Shows the current move list for the pokemon
@@ -243,6 +255,7 @@ namespace PokeDojo.src.Battles
         Console.WriteLine($"{moves.Count + 1}. Cancel");
         Console.Write(">");
         option = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine();
 
         if (option < 0 || option > moves.Count + 1)
         {
@@ -288,7 +301,7 @@ namespace PokeDojo.src.Battles
     {
       int option = -1;
       Console.WriteLine("Please select a pokemon to switch out to.");
-      while (option < 1 || option > team.Count)
+      while (!afterFainted && (option < 1 || option > team.Count) || (afterFainted && option < 1 || option >= team.Count))
       {
         for (int i = 1; i < team.Count; i++)
         {
@@ -303,9 +316,14 @@ namespace PokeDojo.src.Battles
           }
           Console.Write(">");
           option = Convert.ToInt32(Console.ReadLine());
-          if ((!afterFainted && (option < 1 || option > team.Count) || (afterFainted && option < 1 || option >= team.Count)))
+          Console.WriteLine();
+          if ((!afterFainted && (option < 1 || option > team.Count) || (afterFainted && option < 1 || option > team.Count)))
           {
             Console.WriteLine("Invalid option: Please select a valid pokemon.");
+          }
+          else if(option == team.Count)
+          {
+            return team[0];
           }
         }
       }
