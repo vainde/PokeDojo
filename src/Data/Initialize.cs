@@ -102,8 +102,8 @@ namespace PokeDojo.src.Data
 
       return new List<MoveInfo>()
       {
-        new MoveInfo("Body Slam", "A full-body slam that may cause paralysis.", Types[0], 85, 15),
-        new MoveInfo("Earthquake", "Tough but useless vs. flying foes.", Types[1], 100, 10)
+        new MoveInfo("Body Slam", "A full-body slam that may cause paralysis.", Types[0], 85, 15, 1),
+        new MoveInfo("Earthquake", "Tough but useless vs. flying foes.", Types[1], 100, 10, 1)
       };
     }
     public static List<Move> Moves()
@@ -115,7 +115,7 @@ namespace PokeDojo.src.Data
         (self, target) =>
         {
           string selfName = self.GetGeneration().GetDescription().GetName();
-          Console.WriteLine($"{selfName} uses {MoveInfo[0].GetName()}.");
+          Console.WriteLine($"{selfName} uses {MoveInfo[0].GetName()}!");
 
           // can make a switch case later for text regarding type matchups
           if (target.GetPokemonType()[0].GetName() == "Ghost")
@@ -126,16 +126,16 @@ namespace PokeDojo.src.Data
           {
             Random rand = new Random();
             // Checks if there's a chance of paralyzing
-            if (rand.Next(0, 1) < 0.30)
+            bool paralyzeChance = rand.Next(1, 100) <= 30;
+            if (paralyzeChance)
             {
               string targetFirstType = target.GetPokemonType()[0].GetName();
               int generation = self.GetGeneration().GetGeneration();
               //check how much it's supposed to slow based on gen 1 and gen 2
-              if (generation == 2 && (targetFirstType != "Normal" && targetFirstType != "Ground"))
+              if (generation == 2 && (targetFirstType != "Normal" && targetFirstType != "Ground")) // have to account for dual types
               {
                 int targetSpeed = target.GetStat().GetSpeed();
                 target.GetStat().SetSpeed((int)(targetSpeed * 0.75));
-
                 string targetName = self.GetGeneration().GetDescription().GetName();
                 Console.WriteLine($"Enemy {targetName} is paralyzed! It may not attack!");
               }
@@ -146,7 +146,7 @@ namespace PokeDojo.src.Data
         (self, target) =>
         {
           string selfName = self.GetGeneration().GetDescription().GetName();
-          Console.WriteLine($"{selfName} uses {MoveInfo[1].GetName()}.");
+          Console.WriteLine($"{selfName} uses {MoveInfo[1].GetName()}!");
 
           if (target.GetPokemonType()[0].GetName() == "Flying")
           {

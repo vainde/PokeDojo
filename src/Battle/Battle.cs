@@ -62,6 +62,7 @@ namespace PokeDojo.src.Battles
         else if (choice == -1)
         {
           playerCurrentPokemon = playerTeam[0];
+          Console.WriteLine($"Player sent out {playerCurrentPokemon.GetGeneration().GetDescription().GetName()}!");
           enemyCurrentPokemon.GetMoves()[enemyMoveIndex].PerformUseMove(enemyCurrentPokemon, playerCurrentPokemon);
           DisplayPokemon(playerCurrentPokemon);
         }
@@ -78,6 +79,7 @@ namespace PokeDojo.src.Battles
           Pokemon nextPokemon = SelectPokemonToSwitchOut(playerTeam, playerCurrentFainted);
           SwitchOut(playerTeam, nextPokemon);
           playerCurrentPokemon = nextPokemon;
+          Console.WriteLine($"Player sent out {playerCurrentPokemon.GetGeneration().GetDescription().GetName()}");
         }
         else if (enemyCurrentFainted && !enemyTeamFainted)
         {
@@ -85,6 +87,7 @@ namespace PokeDojo.src.Battles
           Pokemon nextPokemon = enemyTeam[enemyCurrentIdx + 1];
           SwitchOut(enemyTeam, nextPokemon);
           enemyCurrentPokemon = nextPokemon;
+          Console.WriteLine($"Enemy sent out {enemyCurrentPokemon.GetGeneration().GetDescription().GetName()}");
         }
         battleOver = playerTeamFainted || enemyTeamFainted || forfeit;
         turn++;
@@ -175,8 +178,7 @@ namespace PokeDojo.src.Battles
       while (option < 1 || option > 2 || (oneLastMember && option == 2))
       {
         Console.WriteLine("1. Moves");
-        // check if 
-        if (!oneLastMember)
+        if (!oneLastMember || team.Count != 1)
         {
           Console.WriteLine("2. Switch Out");
         }
@@ -200,7 +202,7 @@ namespace PokeDojo.src.Battles
       {
         int choice = 0;
 
-        while (choice != 1 && choice != 2)
+        while (choice < 1 || choice > 2)
         {
           // Picks either move or switch out
           choice = SelectChoice(team);
@@ -212,7 +214,6 @@ namespace PokeDojo.src.Battles
           playerMoveIndex = SelectMove(player);
           if (playerMoveIndex != -1)
           {
-            player.GetMoves()[playerMoveIndex].DecreasePowerPoints();
             return playerMoveIndex;
           }
         }
@@ -221,7 +222,6 @@ namespace PokeDojo.src.Battles
           nextPokemon = SelectPokemonToSwitchOut(team, false);
           if (nextPokemon != team[0])
           {
-            Console.WriteLine("Pokemon has successfully switched out.");
             SwitchOut(team, nextPokemon);
             return -1;
           }
@@ -265,7 +265,6 @@ namespace PokeDojo.src.Battles
             Console.WriteLine($"{moves[option - 1]} has 0 PP left.");
           }
         }
-        Console.WriteLine();
       } while (option < 0 || option > moves.Count + 1);
 
       if (option == moves.Count + 1)
@@ -289,7 +288,6 @@ namespace PokeDojo.src.Battles
     public static void HandleEnemyChoice(Pokemon enemy, out int enemyMoveIndex)
     {
       enemyMoveIndex = EnemySelectMove(enemy);
-      enemy.GetMoves()[enemyMoveIndex].DecreasePowerPoints();
     }
 
     public static void UseMove(Pokemon self, Pokemon target, int option)

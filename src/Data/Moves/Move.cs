@@ -24,7 +24,7 @@ namespace PokeDojo.src.Data.Moves
       this.accuracy = accuracy;
       critHappened = false;
       damage = 0;
-      this.currentPowerPoints = moveInfo.GetPowerPoint();
+      currentPowerPoints = moveInfo.GetPowerPoint();
     }
 
     public void SetCritHappened()
@@ -72,11 +72,12 @@ namespace PokeDojo.src.Data.Moves
           {
             target.GetStat().SetCurrentHealth(0);
           }
-            if (critHappened)
+          if (critHappened)
           {
             string name = self.GetGeneration().GetDescription().GetName();
             Console.WriteLine($"{name} landed a critical hit!");
           }
+          DecreasePowerPoints();
         }
         else
         {

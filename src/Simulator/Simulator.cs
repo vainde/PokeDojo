@@ -150,8 +150,8 @@ namespace PokeDojo.src.Simulator
 
           team1.Add(SecondGenSnorlax);
           team1.Add(SecondGenDugtrio);
-          team2.Add(SecondGenGolem);
-    //    team2.Add(SecondGenChansey);
+          team2.Add(SecondGenGolem); 
+          team2.Add(SecondGenChansey);
 
           Battle battle = new Battle(team1, team2);
           battle.HandleTurn();

@@ -10,15 +10,17 @@ namespace PokeDojo.src.Data.Moves
     string category;
     readonly int basePower;
     readonly int powerPoint;
+    readonly int generationIntroduced;
     bool highCrit;
-    public MoveInfo(string name, string description, PokemonType type, int basePower, int powerPoint)
+    public MoveInfo(string name, string description, PokemonType type, int basePower, int powerPoint, int generationIntroduced)
     {
       this.name = name;
       this.description = description;
       this.type = type;
       this.basePower = basePower;
       this.powerPoint = powerPoint;
-      this.highCrit = false;
+      this.generationIntroduced = generationIntroduced;
+      highCrit = false;
       SetCategory();
     }
 
@@ -58,6 +60,11 @@ namespace PokeDojo.src.Data.Moves
     public int GetPowerPoint()
     {
       return powerPoint;
+    }
+
+    public int GetGenerationIntroduced()
+    {
+      return generationIntroduced;
     }
     public void SetCategory()
     {
