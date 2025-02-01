@@ -1,5 +1,4 @@
 ﻿// Represents the blueprint of a pokemon
-using PokeDojo.src.Data.Items;
 using PokeDojo.src.Data.Type;
 using PokeDojo.src.Data.Stats;
 using PokeDojo.src.Data.Value;
@@ -18,16 +17,39 @@ namespace PokeDojo.src.Poke
         readonly GenerationInfo generation;
         readonly List<Move> moves;
         readonly Status status;
+        readonly List<int> allPowerPoints;
         public Pokemon(Stat stat, BaseStat baseStat, StatValue value, List<PokemonType> type, GenerationInfo generation, List<Move> moves, Status status)
-    {
-        this.stat = stat;
-        this.baseStat = baseStat;
-        this.value = value;
-        this.type = type;
-        this.generation = generation;
-        this.moves = moves;
-        this.status = status;
-    }
+        {
+          this.stat = stat;
+          this.baseStat = baseStat;
+          this.value = value;
+          this.type = type;
+          this.generation = generation;
+          this.moves = moves;
+          this.status = status;
+          allPowerPoints = new List<int>();
+          SetCurrentPowerPoints();
+        }
+
+        public void SetCurrentPowerPoints()
+        {
+          foreach(Move move in moves)
+          {
+            int currentPP = move.GetMoveInfo().GetPowerPoint();
+            allPowerPoints.Add(currentPP);
+          }
+        }
+
+        public void DecreasePowerPoint(Move move)
+        {
+          int idx = moves.IndexOf(move);
+          allPowerPoints[idx] -= 1;
+        }
+        
+        public List<int> GetPowerPoints()
+        {
+          return allPowerPoints;
+        }
 
         public Stat GetStat()
         {

@@ -38,7 +38,12 @@ namespace PokeDojo.src.Battles
         modern = true;
       }
     }
-
+    public void DisplayCurrentPokemon(Pokemon player, Pokemon enemy)
+    {
+      DisplayTurn(turn);
+      DisplayPokemon(player);
+      DisplayPokemon(enemy);
+    }
     public void HandleTurn()
     {
       SendOutFirstPokemon(out Pokemon playerCurrentPokemon);
@@ -47,10 +52,7 @@ namespace PokeDojo.src.Battles
       bool enemyTeamFainted;
       do
       {
-        DisplayTurn(turn);
-        DisplayPokemon(playerCurrentPokemon);
-        DisplayPokemon(enemyCurrentPokemon);
-
+        DisplayCurrentPokemon(playerCurrentPokemon, enemyCurrentPokemon);
         int choice = HandlePlayerChoice(playerTeam, playerCurrentPokemon, enemyCurrentPokemon);
         HandleEnemyChoice(enemyCurrentPokemon, out int enemyMoveIndex);
 
@@ -67,7 +69,6 @@ namespace PokeDojo.src.Battles
           DisplayPokemon(playerCurrentPokemon);
         }
 
-        int enemyCurrentIdx = enemyTeam.IndexOf(enemyCurrentPokemon);
         bool playerCurrentFainted = IsFainted(playerCurrentPokemon);
         bool enemyCurrentFainted = IsFainted(enemyCurrentPokemon);
         bool playerTeamFainted = GetTeamFainted(playerTeam);
@@ -75,28 +76,48 @@ namespace PokeDojo.src.Battles
 
         if (playerCurrentFainted && !playerTeamFainted)
         {
-          DisplayPokemonFainted(playerCurrentPokemon);
-          Pokemon nextPokemon = SelectPokemonToSwitchOut(playerTeam, playerCurrentFainted);
-          SwitchOut(playerTeam, nextPokemon);
-          playerCurrentPokemon = nextPokemon;
-          Console.WriteLine($"Player sent out {playerCurrentPokemon.GetGeneration().GetDescription().GetName()}");
+          playerCurrentPokemon = PokemonFainted(playerCurrentPokemon, playerCurrentFainted, playerTeam);
         }
         else if (enemyCurrentFainted && !enemyTeamFainted)
         {
-          DisplayPokemonFainted(enemyCurrentPokemon);
-          Pokemon nextPokemon = enemyTeam[enemyCurrentIdx + 1];
-          SwitchOut(enemyTeam, nextPokemon);
-          enemyCurrentPokemon = nextPokemon;
-          Console.WriteLine($"Enemy sent out {enemyCurrentPokemon.GetGeneration().GetDescription().GetName()}");
+          int enemyCurrentIdx = enemyTeam.IndexOf(enemyCurrentPokemon);
+          enemyCurrentPokemon = PokemonFainted(enemyCurrentPokemon, enemyCurrentFainted, enemyTeam, enemyCurrentIdx);
         }
         battleOver = playerTeamFainted || enemyTeamFainted || forfeit;
         turn++;
       } while (!battleOver);
-      StopBattle(enemyTeamFainted);
     }
+
+    public static Pokemon PokemonFainted(Pokemon pokemon, bool pokemonFainted, List<Pokemon> team, int enemyIdx = -1)
+    {
+      Pokemon nextPokemon;
+      DisplayPokemonFainted(pokemon);
+      if (enemyIdx == -1)
+      {
+        nextPokemon = SelectPokemonToSwitchOut(team, pokemonFainted);
+      }
+      else
+      {
+        nextPokemon = team[enemyIdx + 1];
+      }
+      SwitchOut(team, nextPokemon);
+      pokemon = nextPokemon;
+      string whoSwitched = enemyIdx == -1 ? "Player" : "Enemy";
+      Console.WriteLine($"{whoSwitched} sent out {pokemon.GetGeneration().GetDescription().GetName()}");
+      Console.WriteLine();
+      return nextPokemon;
+    }
+
+    public static void HandleMove(Pokemon currentPokemon, Pokemon currentTarget, int choice)
+    {
+      Move selectedMove = currentPokemon.GetMoves()[choice];
+      selectedMove.PerformUseMove(currentPokemon, currentTarget);
+      currentPokemon.DecreasePowerPoint(selectedMove);
+      DisplayPokemon(currentTarget);
+    }
+
     public static void HandleAttack(int choice, Pokemon playerCurrentPokemon, Pokemon enemyCurrentPokemon, int enemyMoveIndex)
     {
-      // Make sure they dont attack if they are dead
       int playerCurrentSpeed = playerCurrentPokemon.GetStat().GetSpeed();
       int enemyCurrentSpeed = enemyCurrentPokemon.GetStat().GetSpeed();
       if (playerCurrentSpeed > enemyCurrentSpeed)
@@ -104,30 +125,38 @@ namespace PokeDojo.src.Battles
         int playerCurrentHP = playerCurrentPokemon.GetStat().GetCurrentHealth();
         if (playerCurrentHP >= 0)
         {
-          playerCurrentPokemon.GetMoves()[choice].PerformUseMove(playerCurrentPokemon, enemyCurrentPokemon);
-          DisplayPokemon(enemyCurrentPokemon);
+          HandleMove(playerCurrentPokemon, enemyCurrentPokemon, choice);
         }
         int enemyCurrentHP = enemyCurrentPokemon.GetStat().GetCurrentHealth();
         if (enemyCurrentHP >= 0)
         {
-          enemyCurrentPokemon.GetMoves()[enemyMoveIndex].PerformUseMove(enemyCurrentPokemon, playerCurrentPokemon);
-          DisplayPokemon(playerCurrentPokemon);
+          HandleMove(enemyCurrentPokemon, playerCurrentPokemon, choice);
         }
       }
-      else
+      else if (playerCurrentSpeed < enemyCurrentSpeed)
       {
         // Make sure that they dont attack if they are dead
         int enemyCurrentHP = enemyCurrentPokemon.GetStat().GetCurrentHealth();
         if (enemyCurrentHP >= 0)
         {
-          enemyCurrentPokemon.GetMoves()[enemyMoveIndex].PerformUseMove(enemyCurrentPokemon, playerCurrentPokemon);
-          DisplayPokemon(playerCurrentPokemon);
+          HandleMove(enemyCurrentPokemon, playerCurrentPokemon, choice);
         }
         int playerCurrentHP = playerCurrentPokemon.GetStat().GetCurrentHealth();
         if (playerCurrentHP >= 0)
         {
-          playerCurrentPokemon.GetMoves()[choice].PerformUseMove(playerCurrentPokemon, enemyCurrentPokemon);
-          DisplayPokemon(enemyCurrentPokemon);
+          HandleMove(playerCurrentPokemon, enemyCurrentPokemon, choice);
+        }
+      }
+      else
+      {
+        Random rand = new Random();
+        if(rand.Next(0, 1) <= 0.5)
+        {
+          HandleMove(playerCurrentPokemon, enemyCurrentPokemon, choice);
+        }
+        else
+        {
+          HandleMove(enemyCurrentPokemon, playerCurrentPokemon, choice);
         }
       }
     }
@@ -246,7 +275,7 @@ namespace PokeDojo.src.Battles
         {
           string name = moves[i].GetMoveInfo().GetName();
           int basePower = moves[i].GetMoveInfo().GetBasePower();
-          int powerPoint = moves[i].GetCurrentPowerPoints();
+          int powerPoint = pokemon.GetPowerPoints()[i];
           double accuracy = moves[i].GetAccuracy();
 
           Console.WriteLine($"{i + 1}. {name}");
@@ -260,7 +289,7 @@ namespace PokeDojo.src.Battles
         if (option < 0 || option > moves.Count + 1)
         {
           Console.WriteLine("Invalid option selected, please try again.");
-          if (moves[option - 1].GetCurrentPowerPoints() == 0)
+          if (pokemon.GetPowerPoints()[option - 1] == 0)
           {
             Console.WriteLine($"{moves[option - 1]} has 0 PP left.");
           }

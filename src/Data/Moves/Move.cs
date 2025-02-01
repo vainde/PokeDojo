@@ -14,7 +14,6 @@ namespace PokeDojo.src.Data.Moves
     readonly Action<Pokemon, Pokemon> UseMove;
     readonly MoveInfo moveInfo;
     int damage;
-    int currentPowerPoints;
 
     public Move(MoveInfo moveInfo, Action<Pokemon, Pokemon> useMove, double accuracy = 1, int priority = 0)
     {
@@ -24,7 +23,6 @@ namespace PokeDojo.src.Data.Moves
       this.accuracy = accuracy;
       critHappened = false;
       damage = 0;
-      currentPowerPoints = moveInfo.GetPowerPoint();
     }
 
     public void SetCritHappened()
@@ -52,16 +50,11 @@ namespace PokeDojo.src.Data.Moves
       return moveInfo;
     }
 
-    public int GetCurrentPowerPoints()
-    {
-      return currentPowerPoints;
-    }
-
     public void PerformUseMove(Pokemon self, Pokemon target)
     {
       if (UseMove != null)
       {
-        Random rand = new Random();
+        Random rand = new();
         if (rand.Next(0, 1) < accuracy)
         {
           SetDamage(self, target, this);
@@ -77,7 +70,6 @@ namespace PokeDojo.src.Data.Moves
             string name = self.GetGeneration().GetDescription().GetName();
             Console.WriteLine($"{name} landed a critical hit!");
           }
-          DecreasePowerPoints();
         }
         else
         {
@@ -113,11 +105,6 @@ namespace PokeDojo.src.Data.Moves
     public void SetDamage(Pokemon self, Pokemon target, Move move)
     {
       damage = Damage.Gen1Damage(self, target, this);
-    }
-
-    public void DecreasePowerPoints()
-    {
-      currentPowerPoints -= 1;
     }
   }
 }
