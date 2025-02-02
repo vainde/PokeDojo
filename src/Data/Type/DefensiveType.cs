@@ -2,47 +2,13 @@
 
 namespace PokeDojo.src.Data.Type
 {
-  public class DefensiveType
+  public class DefensiveType(string name, List<string> weakAgainst, List<string> neutralAgainst, List<string> resistantAgainst, List<string> nullAgainst)
   {
-    readonly string name;
-    readonly List<string> weakAgainst;
-    readonly List<string> neutralAgainst;
-    readonly List<string> resistantAgainst;
-    readonly List<string> nullAgainst;
-
-    public DefensiveType(string name, List<string> weakAgainst, List<string> neutralAgainst, List<string> resistantAgainst, List<string> nullAgainst)
-    {
-      this.name = name;
-      this.weakAgainst = weakAgainst;
-      this.neutralAgainst = neutralAgainst;
-      this.resistantAgainst = resistantAgainst;
-      this.nullAgainst = nullAgainst;
-    }
-
-    public List<string> GetWeakAgainst()
-    {
-      return weakAgainst;
-    }
-
-    public List<string> GetNeutralAgainst()
-    {
-      return neutralAgainst;
-    }
-
-    public List<string> GetResistantAgainst()
-    {
-      return resistantAgainst;
-    }
-
-    public List<string> GetNullAgainst()
-    {
-      return nullAgainst;
-    }
-
-    public string GetName()
-    {
-      return name;
-    }
+    public string Name { get; set; } = name;
+    public List<string> WeakAgainst { get; } = weakAgainst;
+    public List<string> NeutralAgainst { get; } = neutralAgainst;
+    public List<string> ResistantAgainst { get; } = resistantAgainst;
+    public List<string> NullAgainst { get; } = nullAgainst;
   }
 }
 

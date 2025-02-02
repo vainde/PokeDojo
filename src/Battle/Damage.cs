@@ -11,19 +11,16 @@ namespace PokeDojo.src.Battles
     {
 
       double trueSTAB = CalculateTrueSTAB(self, move);
-      int selfAttackType;
-      int targetDefenseType;
       double enemyFirstTypeAdvantage;
-      double enemySecondTypeAdvantage;
       double criticalHit;
 
-      if (self.GetGeneration().GetGeneration() != 1)
+      if (self.Generation.Generation != 1)
       {
         criticalHit = CriticalHit.IsCriticalHit(self, move) ? 2 : 1;
       }
       else
       {
-        int selfLevel = self.GetGeneration().GetDescription().GetLevel();
+        int selfLevel = self.Generation.Description.Level;
 
         bool critHappened = CriticalHit.IsCriticalHit(self, move);
         if (critHappened)
@@ -41,11 +38,11 @@ namespace PokeDojo.src.Battles
         move.SetCritHappened();
       }
 
-      int level = self.GetGeneration().GetDescription().GetLevel();
-      int basePower = move.GetMoveInfo().GetBasePower();
+      int level = self.Generation.Description.Level;
+      int basePower = move.GetMoveInfo().BasePower;
 
       // If the move used is special, use the special attack of the pokemon against the target's special defense
-      GetAttackAndDefenseType(self, target, move, out selfAttackType, out targetDefenseType);
+      GetAttackAndDefenseType(self, target, move, out int selfAttackType, out int targetDefenseType);
 
       double attackRatio = (double)selfAttackType / targetDefenseType;
 
@@ -56,10 +53,10 @@ namespace PokeDojo.src.Battles
       int assessPower = (int)((assessCrit * basePower * attackRatio) / 50) + 2;
 
       enemyFirstTypeAdvantage = move.GetTypeAdvantage(target, 0);
-      GetSecondTypeAdvantage(self, target, move, out enemySecondTypeAdvantage);
+      GetSecondTypeAdvantage(self, target, move, out double enemySecondTypeAdvantage);
 
       int beforeRandom = (int)(assessPower * trueSTAB * enemyFirstTypeAdvantage * enemySecondTypeAdvantage);
-      Random random = new Random();
+      Random random = new();
       int randomValue = beforeRandom >= 1 ? 1 : Convert.ToInt32(random.Next(217, 255) / 255);
 
       int damageAfterRandom = beforeRandom * randomValue;
@@ -68,18 +65,18 @@ namespace PokeDojo.src.Battles
 
     static public double CalculateTrueSTAB(Pokemon self, Move move)
     {
-      string firstType = self.GetPokemonType()[0].GetName();
-      bool dualType = self.GetPokemonType().Count > 1;
+      string firstType = self.Type[0].Name;
+      bool dualType = self.Type.Count > 1;
       double trueSTAB;
-      double firstSTAB = move.GetMoveInfo().GetName() == firstType ? 1.5 : 1.0;
+      double firstSTAB = move.GetMoveInfo().Name == firstType ? 1.5 : 1.0;
 
       // By default the STAB is based on the first type assuming the pokemon is monotyped
       trueSTAB = firstSTAB;
 
       if (dualType)
       {
-        string secondType = self.GetPokemonType()[1].GetName();
-        double secondSTAB = move.GetMoveInfo().GetName() == secondType ? 1.5 : 1.0;
+        string secondType = self.Type[1].Name;
+        double secondSTAB = move.GetMoveInfo().Name == secondType ? 1.5 : 1.0;
         if (firstSTAB > 1.49 && firstSTAB < 1.51 || secondSTAB > 1.49 && secondSTAB < 1.51)
         {
           trueSTAB = 1.5;
@@ -90,23 +87,23 @@ namespace PokeDojo.src.Battles
 
     public static void GetAttackAndDefenseType(Pokemon self, Pokemon target, Move move, out int selfAttackType, out int targetDefenseType)
     {
-      string moveCategory = move.GetMoveInfo().GetCategory();
+      string moveCategory = move.GetMoveInfo().Category!;
 
       if (moveCategory == "Special")
       {
-        selfAttackType = self.GetStat().GetSpecialAttack();
-        targetDefenseType = target.GetStat().GetSpecialDefense();
+        selfAttackType = self.Stat.SpAttack;
+        targetDefenseType = target.Stat.SpDefense;
       }
       else
       {
-        selfAttackType = self.GetStat().GetAttack();
-        targetDefenseType = self.GetStat().GetDefense();
+        selfAttackType = self.Stat.Attack;
+        targetDefenseType = self.Stat.Defense;
       }
     }
 
     public static void GetSecondTypeAdvantage(Pokemon self, Pokemon target, Move move, out double secondTypeAdvantage)
     {
-      bool enemyDualType = self.GetPokemonType().Count == 2;
+      bool enemyDualType = self.Type.Count == 2;
 
       if (!enemyDualType)
         secondTypeAdvantage = 1;

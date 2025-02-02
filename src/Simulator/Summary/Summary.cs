@@ -36,7 +36,7 @@ namespace PokeDojo.src.Simulator.Summary
 
         static public void SummaryMenu(Pokemon pokemon)
         {
-            int option = 0;
+            int option;
             do
             {
                 Console.WriteLine("POKEMON INFORMATION");
@@ -75,7 +75,7 @@ namespace PokeDojo.src.Simulator.Summary
 
         static public void SummaryTitle(Pokemon pokemon)
         {
-            Console.WriteLine($"{pokemon.GetGeneration().GetDescription().GetName()} Gen {pokemon.GetGeneration().GetGeneration()} Summary");
+            Console.WriteLine($"{pokemon.Generation.Description.Name} Gen {pokemon.Generation.Generation} Summary");
             PrintBorder();
         }
 
@@ -115,7 +115,7 @@ namespace PokeDojo.src.Simulator.Summary
                         Console.WriteLine();
                         break;
                     case 5:
-                        Console.WriteLine($"Ending Gen {pokemon.GetGeneration().GetGeneration()} Summary");
+                        Console.WriteLine($"Ending Gen {pokemon.Generation.Generation} Summary");
                         Console.WriteLine();
                         break;
                     default:
@@ -142,15 +142,15 @@ namespace PokeDojo.src.Simulator.Summary
                 switch (option)
                 {
                     case 1:
-                        if (pokemon.GetGeneration().GetItem().GetName() == "")
+                        if (pokemon.Generation.Item.Name == "")
                         {
                             Console.WriteLine("No item selected.");
                             Console.WriteLine();
                         }
                         else
                         {
-                            Console.WriteLine(pokemon.GetGeneration().GetItem().GetName());
-                            Console.WriteLine(pokemon.GetGeneration().GetItem().GetDescription());
+                            Console.WriteLine(pokemon.Generation.Item.Name);
+                            Console.WriteLine(pokemon.Generation.Item.Description);
                             Console.WriteLine();
                         }
                         break;
@@ -165,63 +165,63 @@ namespace PokeDojo.src.Simulator.Summary
 
         static public void ShowBasicDescription(Pokemon pokemon)
         {
-            Console.WriteLine($"Name: {pokemon.GetGeneration().GetDescription().GetName()}");
-            Console.WriteLine($"Level: {pokemon.GetGeneration().GetDescription().GetLevel()}");
-            if(pokemon.GetPokemonType().Count > 1)
+            Console.WriteLine($"Name: {pokemon.Generation.Description.Name}");
+            Console.WriteLine($"Level: {pokemon.Generation.Description.Level}");
+            if(pokemon.Type.Count > 1)
             {
-              Console.WriteLine($"Type: {pokemon.GetPokemonType()[0].GetName()} {pokemon.GetPokemonType()[1].GetName()}");
+              Console.WriteLine($"Type: {pokemon.Type[0].Name} {pokemon.Type[1].Name}");
             }
             else
             {
-              Console.WriteLine($"Type: {pokemon.GetPokemonType()[0].GetName()}");
+              Console.WriteLine($"Type: {pokemon.Type[0].Name}");
             }
         }
 
         static public void ShowGen2Description(Pokemon pokemon)
         {
-            Console.WriteLine($"Happiness: {pokemon.GetGeneration().GetHappiness()}");
-            Console.WriteLine($"Hidden Power: {pokemon.GetGeneration().GetHiddenPower().GetName()}");
+            Console.WriteLine($"Happiness: {pokemon.Generation.Happiness}");
+            Console.WriteLine($"Hidden Power: {pokemon.Generation.HiddenPower.Name}");
         }
 
         static public void ShowGender(Pokemon pokemon)
         {
-            Console.WriteLine($"Gender: {pokemon.GetGeneration().GetGender().GetGender()}");
+            Console.WriteLine($"Gender: {pokemon.Generation.Gender.Value}");
         }
 
         static public void ShowEarlyGenStats(Pokemon pokemon)
         {
             Console.WriteLine("STATS");
             Console.WriteLine("=========================");
-            Console.WriteLine($"HP: {pokemon.GetStat().GetHealth()}");
-            Console.WriteLine($"Attack: {pokemon.GetStat().GetAttack()}");
-            Console.WriteLine($"Defense: {pokemon.GetStat().GetDefense()}");
-            Console.WriteLine($"Sp. Attack: {pokemon.GetStat().GetSpecialAttack()}");
-            Console.WriteLine($"Sp. Defense: {pokemon.GetStat().GetSpecialDefense()}");
-            Console.WriteLine($"Speed: {pokemon.GetStat().GetSpeed()}");
+            Console.WriteLine($"HP: {pokemon.Stat.Health}");
+            Console.WriteLine($"Attack: {pokemon.Stat.Attack}");
+            Console.WriteLine($"Defense: {pokemon.Stat.Defense}");
+            Console.WriteLine($"Sp. Attack: {pokemon.Stat.SpAttack}");
+            Console.WriteLine($"Sp. Defense: {pokemon.Stat.SpDefense}");
+            Console.WriteLine($"Speed: {pokemon.Stat.Speed}");
         }
 
         static public void ShowEarlyGenEffort(Pokemon pokemon)
         {
             Console.WriteLine("EFFORT VALUES");
             PrintBorder();
-            Console.WriteLine($"HP EV: {pokemon.GetStatValue().GetEffortValue().GetHealthEV()}");
-            Console.WriteLine($"Attack EV: {pokemon.GetStatValue().GetEffortValue().GetAttackEV()}");
-            Console.WriteLine($"Defense EV:  {pokemon.GetStatValue().GetEffortValue().GetDefenseEV()}");
-            Console.WriteLine($"Sp.Attack EV: {pokemon.GetStatValue().GetEffortValue().GetDefenseEV()}");
-            Console.WriteLine($"Sp. Defense EV:  {pokemon.GetStatValue().GetEffortValue().GetSpDefenseEV()}");
-            Console.WriteLine($"Speed EV: {pokemon.GetStatValue().GetEffortValue().GetSpeedEV()}");
+            Console.WriteLine($"HP EV: {pokemon.Value.GetEffortValue().GetHealthEV()}");
+            Console.WriteLine($"Attack EV: {pokemon.Value.GetEffortValue().GetAttackEV()}");
+            Console.WriteLine($"Defense EV:  {pokemon.Value.GetEffortValue().GetDefenseEV()}");
+            Console.WriteLine($"Sp.Attack EV: {pokemon.Value.GetEffortValue().GetDefenseEV()}");
+            Console.WriteLine($"Sp. Defense EV:  {pokemon.Value.GetEffortValue().GetSpDefenseEV()}");
+            Console.WriteLine($"Speed EV: {pokemon.Value.GetEffortValue().GetSpeedEV()}");
         }
 
         static public void ShowEarlyGenDeterminant(Pokemon pokemon)
         {
             Console.WriteLine("DETERMINANT VALUES");
             PrintBorder();
-            Console.WriteLine($"HP DV: {pokemon.GetStatValue().GetIndividualValue().GetHealthIV()}");
-            Console.WriteLine($"Attack DV: {pokemon.GetStatValue().GetIndividualValue().GetAttackIV()}");
-            Console.WriteLine($"Defense EV: {pokemon.GetStatValue().GetIndividualValue().GetDefenseIV()}");
-            Console.WriteLine($"Sp. Attack EV: {pokemon.GetStatValue().GetIndividualValue().GetSpAttackIV()}");
-            Console.WriteLine($"Sp. Defense EV: {pokemon.GetStatValue().GetIndividualValue().GetSpDefenseIV()}");
-            Console.WriteLine($"Speed EV: {pokemon.GetStatValue().GetIndividualValue().GetSpeedIV()}");
+            Console.WriteLine($"HP DV: {pokemon.Value.GetIndividualValue().GetHealthIV()}");
+            Console.WriteLine($"Attack DV: {pokemon.Value.GetIndividualValue().GetAttackIV()}");
+            Console.WriteLine($"Defense EV: {pokemon.Value.GetIndividualValue().GetDefenseIV()}");
+            Console.WriteLine($"Sp. Attack EV: {pokemon.Value.GetIndividualValue().GetSpAttackIV()}");
+            Console.WriteLine($"Sp. Defense EV: {pokemon.Value.GetIndividualValue().GetSpDefenseIV()}");
+            Console.WriteLine($"Speed EV: {pokemon.Value.GetIndividualValue().GetSpeedIV()}");
         }
 
 
@@ -229,12 +229,12 @@ namespace PokeDojo.src.Simulator.Summary
         {
             Console.WriteLine("BASE STATS");
             PrintBorder();
-            Console.WriteLine($"HP {pokemon.GetBaseStat().GetBaseHealth()}");
-            Console.WriteLine($"Attack: {pokemon.GetBaseStat().GetBaseAttack()}");
-            Console.WriteLine($"Defense: {pokemon.GetBaseStat().GetBaseDefense()}");
-            Console.WriteLine($"Sp. Attack: {pokemon.GetBaseStat().GetBaseSpAttack()}");
-            Console.WriteLine($"Sp. Defense: {pokemon.GetBaseStat().GetBaseSpDefense()}");
-            Console.WriteLine($"Speed: {pokemon.GetBaseStat().GetBaseSpeed()}");
+            Console.WriteLine($"HP {pokemon.BaseStat.Health}");
+            Console.WriteLine($"Attack: {pokemon.BaseStat.Attack}");
+            Console.WriteLine($"Defense: {pokemon.BaseStat.Defense}");
+            Console.WriteLine($"Sp. Attack: {pokemon.BaseStat.SpAttack}");
+            Console.WriteLine($"Sp. Defense: {pokemon.BaseStat.SpDefense}");
+            Console.WriteLine($"Speed: {pokemon.BaseStat.Speed}");
         }
 
         static public void ShowMoveInformation(Pokemon pokemon)
@@ -242,13 +242,13 @@ namespace PokeDojo.src.Simulator.Summary
             Console.WriteLine("MOVE INFORMATION");
             PrintBorder();
             int i = 1;
-            foreach(Move move in pokemon.GetMoves())
+            foreach(Move move in pokemon.Moves)
             {
-              Console.WriteLine($"Move {i}: {move.GetMoveInfo().GetName()}");
-              Console.WriteLine($"Description: {move.GetMoveInfo().GetDescription()}");
-              Console.WriteLine($"Category: {move.GetMoveInfo().GetCategory()}");
-              Console.WriteLine($"Base Power: {move.GetMoveInfo().GetBasePower()}");
-              Console.WriteLine($"Power Points: {move.GetMoveInfo().GetPowerPoint()}");
+              Console.WriteLine($"Move {i}: {move.GetMoveInfo().Name}");
+              Console.WriteLine($"Description: {move.GetMoveInfo().Description}");
+              Console.WriteLine($"Category: {move.GetMoveInfo().Category}");
+              Console.WriteLine($"Base Power: {move.GetMoveInfo().BasePower}");
+              Console.WriteLine($"Power Points: {move.GetMoveInfo().PowerPoint}");
               Console.WriteLine($"Accuracy: {move.GetAccuracy() * 100}%");
               i++;
               Console.WriteLine();

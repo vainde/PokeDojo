@@ -4,44 +4,25 @@ namespace PokeDojo.src.Poke.Generation.Descriptor
 {
     public class Gender
     {
-        string value;
-        double genderRatio;
+        public string? Value { get; set; }
+        public double GenderRatio { get; set; }
 
         public Gender()
         {
-            value = "Male";
-            genderRatio = 0.0;
+            RandomizeGender();
+            GenderRatio = 0.0;
         }
 
-        public string GetGender()
-        {
-            return value;
-        }
-
-        public double GetGenderRatio()
-        {
-            return genderRatio;
-        }
-        public void SetGender(string gender)
-        {
-            value = gender;
-        }
-
-        public void SetGenderRatio(double genderRatio)
-        {
-            this.genderRatio = genderRatio;
-        }
-
-        // For AI trainers
         public void RandomizeGender()
         {
-            if (genderRatio >= 0.5)
+            Random rand = new();
+            if (rand.Next(0, 1) >= GenderRatio)
             {
-                value = "Male";
+                Value = "Male";
             }
             else
             {
-                value = "Female";
+                Value = "Female";
             }
         }
     }

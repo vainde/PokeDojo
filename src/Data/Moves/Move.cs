@@ -57,17 +57,17 @@ namespace PokeDojo.src.Data.Moves
         Random rand = new();
         if (rand.Next(0, 1) < accuracy)
         {
-          SetDamage(self, target, this);
+          SetDamage(self, target);
           UseMove.Invoke(self, target);
-          int targetCurrentHP = target.GetStat().GetCurrentHealth();
-          target.GetStat().SetCurrentHealth(targetCurrentHP - damage);
-          if(target.GetStat().GetCurrentHealth() <= 0)
+          int targetCurrentHP = target.Stat.CurrentHealth;
+          target.Stat.CurrentHealth = targetCurrentHP - damage;
+          if(target.Stat.CurrentHealth <= 0)
           {
-            target.GetStat().SetCurrentHealth(0);
+            target.Stat.CurrentHealth = 0;
           }
           if (critHappened)
           {
-            string name = self.GetGeneration().GetDescription().GetName();
+            string name = self.Generation.Description.Name;
             Console.WriteLine($"{name} landed a critical hit!");
           }
         }
@@ -82,12 +82,12 @@ namespace PokeDojo.src.Data.Moves
     // Returns the modifier based on type advantage
     public double GetTypeAdvantage(Pokemon target, int index)
     {
-        string targetType = target.GetPokemonType()[index].GetName();
-        PokemonType moveType = moveInfo.GetMoveType();
+        string targetType = target.Type[index].Name;
+        PokemonType moveType = moveInfo.Type;
 
-        List<string> strongAgainst = moveType.GetMoveType().GetStrongAgainst();
-        List<string> neutralAgainst = moveType.GetMoveType().GetNeutralAgainst();
-        List<string> weakAgainst = moveType.GetDefensiveType().GetWeakAgainst();
+        List<string> strongAgainst = moveType.MoveType.StrongAgainst;
+        List<string> neutralAgainst = moveType.MoveType.NeutralAgainst;
+        List<string> weakAgainst = moveType.DefenseType.WeakAgainst;
 
         if (neutralAgainst.Contains(targetType))
           return 1;
@@ -102,7 +102,7 @@ namespace PokeDojo.src.Data.Moves
           return 0;
     }
 
-    public void SetDamage(Pokemon self, Pokemon target, Move move)
+    public void SetDamage(Pokemon self, Pokemon target)
     {
       damage = Damage.Gen1Damage(self, target, this);
     }

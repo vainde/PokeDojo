@@ -7,69 +7,23 @@ namespace PokeDojo.src.Poke.Generation
 {
     public class GenerationInfo
     {
-        int generation;
-        Description description;
-        Gender gender;
-        PokemonType hiddenPower;
-        int happiness;
-        readonly Item item;
+        public int Generation { get; set;  }
+        public Description Description { get; }
+        public Gender Gender { get; }
+        public PokemonType HiddenPower { get; set; }
+        public int Happiness { get; set; }
+        public Item Item { get; }
 
         public GenerationInfo()
         {
             List<PokemonType> Types = Initialize.Types();
             List<Item> Items = Initialize.Items();
-            generation = 1;
-            description = new Description();
-            gender = new Gender();
-            hiddenPower = new PokemonType("Default", Types[0].GetMoveType(), Types[0].GetDefensiveType());
-            happiness = 0;
-            item = new Item(Items[0].GetName(), Items[0].GetDescription(), Items[0].PerformUseItem);
-        }
-        public Gender GetGender()
-        {
-            return gender;
-        }
-
-        public Description GetDescription()
-        {
-            return description;
-        }
-
-        public Item GetItem()
-        {
-          return item;
-        }
-
-        public void SetHappiness(int happiness)
-            {
-                if (happiness <= 255)
-                {
-                    this.happiness = happiness;
-                }
-            }
-
-        public void SetHiddenPower(PokemonType type)
-        {
-            hiddenPower = type;
-        }
-        public int GetHappiness()
-        {
-            return happiness;
-        }
-
-        public PokemonType GetHiddenPower()
-        {
-            return hiddenPower;
-        }
-
-        public int GetGeneration()
-        {
-            return generation;
-        }
-
-        public void SetGeneration(int generation)
-        {
-            this.generation = generation;
+            Generation = 1;
+            Description = new Description();
+            Gender = new Gender();
+            HiddenPower = new PokemonType("Default", Types[0].MoveType, Types[0].DefenseType);
+            Happiness = 0;
+            Item = new Item(Items[0].Name, Items[0].Description, Items[0].PerformUseItem);
         }
     }
 }

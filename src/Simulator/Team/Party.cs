@@ -1,18 +1,14 @@
 ﻿using System;
 using PokeDojo.src.Poke;
+using PokeDojo.src.Data;
 
 namespace PokeDojo.src.Simulator.Team
 {
-  class Party
+  class Party(int generation)
   {
-    readonly List<Pokemon> party;
-    int generation;
+    public List<Pokemon> Team { get; set; } = [];
+    public int Generation { get; set; } = generation;
 
-    public Party(int generation)
-    {
-      party = new List<Pokemon>();
-      this.generation = generation;
-    }
     public static void PrintBorder()
     {
       Console.WriteLine("=========================");
@@ -33,12 +29,11 @@ namespace PokeDojo.src.Simulator.Team
       return option;
     }
 
-    public void AddPokemon()
+    public static void AddPokemon()
     {
       Console.WriteLine("ADD A POKEMON");
       PrintBorder();
       Console.WriteLine("Enter pokemon by name: ");
-      // Looks in initialize.Pokedex
     }
 
     public static int SearchForPokemon()
@@ -60,27 +55,6 @@ namespace PokeDojo.src.Simulator.Team
         }
       }
       return filter;
-    }
-
-    // Individual functions for filtering by type, moves and base stat. Then return the specific type, move or base stat.
-
-    public static void DisplayPokemon(List <Pokemon> allPokemon)
-    {
-      int filter = SearchForPokemon();
-      switch (filter)
-      {
-        case 1:
-          // get the type
-          break;
-        case 2:
-          // get the move
-          break;
-        case 3:
-          // get the base stat
-          break;
-        default:
-          break;
-      }
     }
   }
 }

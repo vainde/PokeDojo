@@ -3,35 +3,15 @@
 namespace PokeDojo.src.Data.Statuses
 {
   //modify to account for generation differences
-  public class Status
+  public class Status(string name, string description, Action<Pokemon> onPokemon)
   {
-    readonly string status;
-    readonly string description;
-    readonly Action<Pokemon> applyStatus;
+    public string Name { get; set; } = name;
+    public string Description { get; set; } = description;
+    public Action<Pokemon> ApplyStatus { get; set; } = onPokemon;
 
-    public Status(string status, string description, Action<Pokemon> onPokemon)
+    public void Apply(Pokemon self)
     {
-      this.status = status;
-      this.description = description;
-      this.applyStatus = onPokemon;
-    }
-
-    public void ApplyStatus(Pokemon self)
-    {
-      if(applyStatus != null)
-      {
-        applyStatus.Invoke(self);
-      }
-    }
-
-    public string GetStatus()
-    {
-      return status;
-    }
-
-    public string GetDescription()
-    {
-      return description;
+      ApplyStatus?.Invoke(self);
     }
   }
 }

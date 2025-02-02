@@ -4,39 +4,27 @@ namespace PokeDojo.src.Data.Items
 {
     public class Item
     {
-        string name;
-        string description;
-        readonly Action<Pokemon> UseItem;
-        public Item(string name, string description, Action<Pokemon> UseItem)
+        public string Name { get; set; }
+        public string Description {  get; set; }
+        public Action<Pokemon> UseItem {  get; set; }
+
+        public Item(string name, string description, Action<Pokemon> useItem)
         {
-            this.name = name;
-            this.description = description;
-            this.UseItem = UseItem;
+          Name = name;
+          Description = description;
+          UseItem = useItem;
         }
 
         public void PerformUseItem(Pokemon onPokemon)
         {
-            if (UseItem != null)
-            {
-                UseItem.Invoke(onPokemon);
-            }
-        }
-
-        public string GetName()
-        {
-            return name;
-        }
-
-        public string GetDescription()
-        {
-            return description;
+          UseItem.Invoke(onPokemon);
         }
 
         // Some items are single use so they are removed after using
         public void RemoveItem()
         {
-          name = "";
-          description = "";
+          Name = "";
+          Description = "";
         }
     }
 }

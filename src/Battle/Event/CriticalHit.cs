@@ -1,7 +1,6 @@
 ﻿// Represents the critical hit chance
 using PokeDojo.src.Poke;
 using PokeDojo.src.Data.Moves;
-using System;
 
 namespace PokeDojo.src.Battles.Event
 {
@@ -10,8 +9,8 @@ namespace PokeDojo.src.Battles.Event
     // On a normal move, if the random number is less than the threshold, a critical hit is performed
     public static bool IsCriticalHit(Pokemon pokemon, Move move)
     {
-      Random random = new Random();
-      if (pokemon.GetGeneration().GetGeneration() == 1)
+      Random random = new();
+      if (pokemon.Generation.Generation == 1)
       {
         byte randomNumber = Convert.ToByte(random.Next(0, 255));
         byte threshold = ProcessThreshold(pokemon, move);
@@ -28,7 +27,7 @@ namespace PokeDojo.src.Battles.Event
       else
       {
         int value = random.Next(1, 16);
-          if (value == 1)
+        if (value == 1)
         {
           return true;
         }
@@ -42,22 +41,22 @@ namespace PokeDojo.src.Battles.Event
     public static byte ProcessThreshold(Pokemon pokemon, Move move)
     {
       byte threshold;
-      if (pokemon.GetGeneration().GetGeneration() == 1)
+      if (pokemon.Generation.Generation == 1)
       {
         //refactor later
-        if (move.GetMoveInfo().GetHighCrit())
+        if (move.GetMoveInfo().HighCrit)
         {
-           int preThreshold = (int)Convert.ToByte(pokemon.GetStat().GetSpeed() / 2);
+           int preThreshold = Convert.ToByte(pokemon.Stat.Speed / 2);
            threshold = (byte)Math.Min(preThreshold, 255);
         }
         else
         {
-          threshold = Convert.ToByte(pokemon.GetStat().GetSpeed() / 2);
+          threshold = Convert.ToByte(pokemon.Stat.Speed / 2);
         }
       }
       else
       {
-        threshold = Convert.ToByte((pokemon.GetStat().GetSpeed() / 2) / 256);
+        threshold = Convert.ToByte((pokemon.Stat.Speed / 2) / 256);
       }
       return threshold;
     }

@@ -92,8 +92,8 @@ namespace PokeDojo.src.Data
 
       return new List<PokemonType>()
       {
-        new PokemonType("Normal", MoveTypes[5], Types[0]),
-        new PokemonType("Ground", MoveTypes[3], Types[1])
+        new("Normal", MoveTypes[5], Types[0]),
+        new("Ground", MoveTypes[3], Types[1])
       };
     }
 
@@ -114,11 +114,11 @@ namespace PokeDojo.src.Data
         new Move(MoveInfo[0],
         (self, target) =>
         {
-          string selfName = self.GetGeneration().GetDescription().GetName();
-          Console.WriteLine($"{selfName} uses {MoveInfo[0].GetName()}!");
+          string selfName = self.Generation.Description.Name;
+          Console.WriteLine($"{selfName} uses {MoveInfo[0].Name}!");
 
           // can make a switch case later for text regarding type matchups
-          if (target.GetPokemonType()[0].GetName() == "Ghost")
+          if (target.Type[0].Name == "Ghost")
           {
             Console.WriteLine("But it was not effective!");
           }
@@ -129,14 +129,14 @@ namespace PokeDojo.src.Data
             bool paralyzeChance = rand.Next(1, 100) <= 30;
             if (paralyzeChance)
             {
-              string targetFirstType = target.GetPokemonType()[0].GetName();
-              int generation = self.GetGeneration().GetGeneration();
+              string targetFirstType = target.Type[0].Name;
+              int generation = self.Generation.Generation;
               //check how much it's supposed to slow based on gen 1 and gen 2
               if (generation == 2 && (targetFirstType != "Normal" && targetFirstType != "Ground")) // have to account for dual types
               {
-                int targetSpeed = target.GetStat().GetSpeed();
-                target.GetStat().SetSpeed((int)(targetSpeed * 0.75));
-                string targetName = self.GetGeneration().GetDescription().GetName();
+                int targetSpeed = target.Stat.Speed;
+                target.Stat.Speed = ((int)(targetSpeed * 0.75));
+                string targetName = self.Generation.Description.Name;
                 Console.WriteLine($"Enemy {targetName} is paralyzed! It may not attack!");
               }
             }
@@ -145,10 +145,10 @@ namespace PokeDojo.src.Data
         new Move(MoveInfo[1],
         (self, target) =>
         {
-          string selfName = self.GetGeneration().GetDescription().GetName();
-          Console.WriteLine($"{selfName} uses {MoveInfo[1].GetName()}!");
+          string selfName = self.Generation.Description.Name;
+          Console.WriteLine($"{selfName} uses {MoveInfo[1].Name}!");
 
-          if (target.GetPokemonType()[0].GetName() == "Flying")
+          if (target.Type[0].Name == "Flying")
           {
             Console.WriteLine("But it was not effective!");
           }
@@ -157,15 +157,15 @@ namespace PokeDojo.src.Data
     }
     public static List<Status> Status()
     {
-      return new List<Status>()
+      return new()
       {
-        new Status("None", "No status applied.", onPokemon => {}),
-        new Status("Paralyze", "The Speed of a paralyzed Pokémon is decreased by 75%, rounded down.", 
+        new("OK", "No status applied.", onPokemon => {}),
+        new("PAR", "The Speed of a paralyzed Pokémon is decreased by 75%, rounded down.", 
           onPokemon =>
           {
             // Speed drop stays even if it's cured from paralysis with an item or through rest
-            int currentSpeed = onPokemon.GetStat().GetSpeed();
-            onPokemon.GetStat().SetSpeed((int)(currentSpeed * 0.75));
+            int currentSpeed = onPokemon.Stat.Speed;
+            onPokemon.Stat.Speed = ((int)(currentSpeed * 0.75));
           }
         ),
       };
@@ -187,8 +187,8 @@ namespace PokeDojo.src.Data
           "At the end of every turn, holder restores 1/6 of its max HP.",
           onPokemon =>
           {
-            int maxHealth = onPokemon.GetStat().GetHealth();
-            int currentHealth = onPokemon.GetStat().GetCurrentHealth();
+            int maxHealth = onPokemon.Stat.Health;
+            int currentHealth = onPokemon.Stat.CurrentHealth;
 
             // If the pokemon is already at max health, it doesn't need to heal
             if(currentHealth != maxHealth)
@@ -198,12 +198,12 @@ namespace PokeDojo.src.Data
               // Health restored can't go over max health
               if(currentHealth + restoreHealth > maxHealth)
               {
-                onPokemon.GetStat().SetCurrentHealth(maxHealth);
+                onPokemon.Stat.CurrentHealth = maxHealth;
               }
               // Restore health by 1/16 of max health
               else
               {
-                onPokemon.GetStat().SetCurrentHealth(currentHealth + restoreHealth);
+                onPokemon.Stat.CurrentHealth = currentHealth + restoreHealth;
               }
             }
           }
@@ -213,12 +213,12 @@ namespace PokeDojo.src.Data
           "If held by Pikachu, it's special attack is doubled.",
           onPokemon =>
           {
-            string pokemonName = onPokemon.GetGeneration().GetDescription().GetName();
+            string pokemonName = onPokemon.Generation.Description.Name;
             // Pikachu with a lightball needs to double it's sp. attack
             if(pokemonName == "Pikachu")
             {
-              int specialAttack = onPokemon.GetStat().GetSpecialAttack();
-              onPokemon.GetStat().SetSpecialAttack(specialAttack * 2);
+              int specialAttack = onPokemon.Stat.SpAttack;
+              onPokemon.Stat.SpAttack = specialAttack * 2;
             }
           }
           ),
@@ -227,12 +227,12 @@ namespace PokeDojo.src.Data
           "Restores 30 HP when at 1/2 max HP or less.",
           onPokemon =>
           {
-            int maxHealth = onPokemon.GetStat().GetHealth();
-            int currentHealth = onPokemon.GetStat().GetCurrentHealth();
+            int maxHealth = onPokemon.Stat.Health;
+            int currentHealth = onPokemon.Stat.CurrentHealth;
             // Needs to heal by 30 HP if it meets the condition
             if(currentHealth < (maxHealth / 2))
             {
-              onPokemon.GetStat().SetCurrentHealth(currentHealth + 30);
+              onPokemon.Stat.CurrentHealth = currentHealth + 30;
             }
           }
           ),
@@ -241,11 +241,11 @@ namespace PokeDojo.src.Data
           "If held by a Cubone or Marowak, its Attack is doubled",
           onPokemon =>
           {
-            string pokemonName = onPokemon.GetGeneration().GetDescription().GetName();
+            string pokemonName = onPokemon.Generation.Description.Name;
             if(pokemonName == "Cubone" || pokemonName == "Marowak")
             {
-              int attack = onPokemon.GetStat().GetAttack();
-              onPokemon.GetStat().SetAttack(attack * 2);
+              int attack = onPokemon.Stat.Attack;
+              onPokemon.Stat.Attack = (attack * 2);
             }
           }
           )

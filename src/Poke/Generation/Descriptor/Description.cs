@@ -3,31 +3,12 @@ namespace PokeDojo.src.Poke.Generation.Descriptor
 {
     public class Description
     {
-        string name;
-        int level;
+        public string Name {  get; set; }
+        public int Level {  get; set; }
         public Description()
         {
-            name = "";
-            level = 100;
+            Name = "";
+            Level = 100;
         }
-        public void SetName(string name)
-        {
-            this.name = name;
-        }
-        public void SetLevel(int level)
-        {
-            this.level = level;
-        }
-
-        public string GetName()
-        {
-            return name;
-        }
-
-        public int GetLevel()
-        {
-            return level;
-        }
-
     }
 }

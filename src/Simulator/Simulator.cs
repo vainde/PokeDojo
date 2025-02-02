@@ -20,14 +20,14 @@ namespace PokeDojo.src.Simulator
           List<Status> Status = Initialize.Status();
 
           // Using snorlax as a test pokemon
-          Stat SnorlaxStat = new Stat();
-          BaseStat SnorlaxBaseStat = new BaseStat();
-          StatValue SnorlaxValue = new StatValue();
-          GenerationInfo SnorlaxGen2 = new GenerationInfo();
+          Stat SnorlaxStat = new();
+          BaseStat SnorlaxBaseStat = new();
+          StatValue SnorlaxValue = new();
+          GenerationInfo SnorlaxGen2 = new() { };
 
-          SnorlaxGen2.SetGeneration(2);
-          SnorlaxGen2.GetDescription().SetName("Snorlax");
-          SnorlaxGen2.GetDescription().SetLevel(50);
+          SnorlaxGen2.Generation = 2;
+          SnorlaxGen2.Description.Name = "Snorlax";
+          SnorlaxGen2.Description.Level = 50;
 
           // Adding a type, move and status
           List<PokemonType> SnorlaxType = [Types[0]];
@@ -35,28 +35,28 @@ namespace PokeDojo.src.Simulator
           Status SnorlaxStatus = Status[0];
      
           Pokemon SecondGenSnorlax = new(SnorlaxStat, SnorlaxBaseStat, SnorlaxValue, SnorlaxType, SnorlaxGen2, SnorlaxMoves, SnorlaxStatus);
-          SecondGenSnorlax.GetGeneration().SetHappiness(255);
+          SecondGenSnorlax.Generation.Happiness = 255;
 
           // Adding stats
-          SecondGenSnorlax.GetBaseStat().SetBaseStat(160, 110, 65, 65, 110, 30);
-          SecondGenSnorlax.GetStatValue().GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
-          SecondGenSnorlax.GetStatValue().GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
-          SecondGenSnorlax.GetStat().EarlyGenHealth(SecondGenSnorlax);
-          SecondGenSnorlax.GetStat().EarlyGenAttack(SecondGenSnorlax);
-          SecondGenSnorlax.GetStat().EarlyGenDefense(SecondGenSnorlax);
-          SecondGenSnorlax.GetStat().EarlyGenSpAttack(SecondGenSnorlax);
-          SecondGenSnorlax.GetStat().EarlyGenSpDefense(SecondGenSnorlax);
-          SecondGenSnorlax.GetStat().EarlyGenSpeed(SecondGenSnorlax);
+          SecondGenSnorlax.BaseStat.SetBaseStat(160, 110, 65, 65, 110, 30);
+          SecondGenSnorlax.Value.GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
+          SecondGenSnorlax.Value.GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
+          Stat.EarlyGenHealth(SecondGenSnorlax);
+          Stat.EarlyGenAttack(SecondGenSnorlax);
+          Stat.EarlyGenDefense(SecondGenSnorlax);
+          Stat.EarlyGenSpAttack(SecondGenSnorlax);
+          Stat.EarlyGenSpDefense(SecondGenSnorlax);
+          Stat.EarlyGenSpeed(SecondGenSnorlax);
           HiddenPower.HiddenPowerType(SecondGenSnorlax);
 
           // Testing a second pokemon
-          Stat GolemStat = new Stat();
-          BaseStat GolemBaseStat = new BaseStat();
-          StatValue GolemValue = new StatValue();
-          GenerationInfo GolemGen2 = new GenerationInfo();
-          GolemGen2.SetGeneration(2);
-          GolemGen2.GetDescription().SetName("Golem");
-          GolemGen2.GetDescription().SetLevel(50);
+          Stat GolemStat = new();
+          BaseStat GolemBaseStat = new();
+          StatValue GolemValue = new();
+          GenerationInfo GolemGen2 = new();
+          GolemGen2.Generation = 2;
+          GolemGen2.Description.Name = "Golem";
+          GolemGen2.Description.Level = 50;
 
           // Adding a type, move and status
           List<PokemonType> GolemType = [Types[1]];
@@ -64,26 +64,26 @@ namespace PokeDojo.src.Simulator
           Status GolemStatus = Status[0];
 
           Pokemon SecondGenGolem = new(GolemStat, GolemBaseStat, GolemValue, GolemType, GolemGen2, GolemMoves, GolemStatus);
-          SecondGenGolem.GetGeneration().SetHappiness(255);
+          SecondGenGolem.Generation.Happiness = 255;
 
-          SecondGenGolem.GetBaseStat().SetBaseStat(80, 120, 130, 55, 65, 45);
-          SecondGenGolem.GetStatValue().GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
-          SecondGenGolem.GetStatValue().GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
-          SecondGenGolem.GetStat().EarlyGenHealth(SecondGenGolem);
-          SecondGenGolem.GetStat().EarlyGenAttack(SecondGenGolem);
-          SecondGenGolem.GetStat().EarlyGenDefense(SecondGenGolem);
-          SecondGenGolem.GetStat().EarlyGenSpAttack(SecondGenGolem);
-          SecondGenGolem.GetStat().EarlyGenSpDefense(SecondGenGolem);
-          SecondGenGolem.GetStat().EarlyGenSpeed(SecondGenGolem);
+          SecondGenGolem.BaseStat.SetBaseStat(80, 120, 130, 55, 65, 45);
+          SecondGenGolem.Value.GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
+          SecondGenGolem.Value.GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
+          Stat.EarlyGenHealth(SecondGenGolem);
+          Stat.EarlyGenAttack(SecondGenGolem);
+          Stat.EarlyGenDefense(SecondGenGolem);
+          Stat.EarlyGenSpAttack(SecondGenGolem);
+          Stat.EarlyGenSpDefense(SecondGenGolem);
+          Stat.EarlyGenSpeed(SecondGenGolem);
 
           // Testing Chansey instead of Golem
-          Stat ChanseyStat = new Stat();
-          BaseStat ChanseyBaseStat = new BaseStat();
-          StatValue ChanseyValue = new StatValue();
-          GenerationInfo ChanseyGen2 = new GenerationInfo();
-          ChanseyGen2.SetGeneration(2);
-          ChanseyGen2.GetDescription().SetName("Chansey");
-          ChanseyGen2.GetDescription().SetLevel(50);
+          Stat ChanseyStat = new();
+          BaseStat ChanseyBaseStat = new();
+          StatValue ChanseyValue = new();
+          GenerationInfo ChanseyGen2 = new();
+          ChanseyGen2.Generation = 2;
+          ChanseyGen2.Description.Name = "Chansey";
+          ChanseyGen2.Description.Level = 50;
 
           // Adding a type, move, and status for Chansey
           List<PokemonType> ChanseyType = [Types[0]]; // Assume this is the correct type for Chansey
@@ -91,33 +91,33 @@ namespace PokeDojo.src.Simulator
           Status ChanseyStatus = Status[0]; // Assume this is the correct status for Chansey
 
           Pokemon SecondGenChansey = new(ChanseyStat, ChanseyBaseStat, ChanseyValue, ChanseyType, ChanseyGen2, ChanseyMoves, ChanseyStatus);
-          SecondGenChansey.GetGeneration().SetHappiness(255);
+          SecondGenChansey.Generation.Happiness = 255;
 
           // Setting the base stats for Chansey
-          SecondGenChansey.GetBaseStat().SetBaseStat(250, 5, 5, 35, 105, 50);
+          SecondGenChansey.BaseStat.SetBaseStat(250, 5, 5, 35, 105, 50);
 
           // Setting the individual values (IVs) for Chansey
-          SecondGenChansey.GetStatValue().GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
+          SecondGenChansey.Value.GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
 
           // Setting the effort values (EVs) for Chansey
-          SecondGenChansey.GetStatValue().GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
+          SecondGenChansey.Value.GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
 
           // Calculating the early generation stats for Chansey
-          SecondGenChansey.GetStat().EarlyGenHealth(SecondGenChansey);
-          SecondGenChansey.GetStat().EarlyGenAttack(SecondGenChansey);
-          SecondGenChansey.GetStat().EarlyGenDefense(SecondGenChansey);
-          SecondGenChansey.GetStat().EarlyGenSpAttack(SecondGenChansey);
-          SecondGenChansey.GetStat().EarlyGenSpDefense(SecondGenChansey);
-          SecondGenChansey.GetStat().EarlyGenSpeed(SecondGenChansey);
+          Stat.EarlyGenHealth(SecondGenChansey);
+          Stat.EarlyGenAttack(SecondGenChansey);
+          Stat.EarlyGenDefense(SecondGenChansey);
+          Stat.EarlyGenSpAttack(SecondGenChansey);
+          Stat.EarlyGenSpDefense(SecondGenChansey);
+          Stat.EarlyGenSpeed(SecondGenChansey);
 
           // Testing Dugtrio instead of Golem
-          Stat DugtrioStat = new Stat();
-          BaseStat DugtrioBaseStat = new BaseStat();
-          StatValue DugtrioValue = new StatValue();
-          GenerationInfo DugtrioGen2 = new GenerationInfo();
-          DugtrioGen2.SetGeneration(2);
-          DugtrioGen2.GetDescription().SetName("Dugtrio");
-          DugtrioGen2.GetDescription().SetLevel(50);
+          Stat DugtrioStat = new();
+          BaseStat DugtrioBaseStat = new();
+          StatValue DugtrioValue = new();
+          GenerationInfo DugtrioGen2 = new();
+          DugtrioGen2.Generation = 2;
+          DugtrioGen2.Description.Name = "Dugtrio";
+          DugtrioGen2.Description.Level = 50;
 
           // Adding a type, move, and status for Dugtrio
           List<PokemonType> DugtrioType = [Types[1]]; // Assume this is the correct type for Dugtrio
@@ -125,35 +125,34 @@ namespace PokeDojo.src.Simulator
           Status DugtrioStatus = Status[0]; // Assume this is the correct status for Dugtrio
 
           Pokemon SecondGenDugtrio = new(DugtrioStat, DugtrioBaseStat, DugtrioValue, DugtrioType, DugtrioGen2, DugtrioMoves, DugtrioStatus);
-          SecondGenDugtrio.GetGeneration().SetHappiness(255);
+          SecondGenDugtrio.Generation.Happiness = 255;
 
           // Setting the base stats for Dugtrio
-          SecondGenDugtrio.GetBaseStat().SetBaseStat(35, 100, 50, 50, 70, 120);
+          SecondGenDugtrio.BaseStat.SetBaseStat(35, 100, 50, 50, 70, 120);
 
           // Setting the individual values (IVs) for Dugtrio
-          SecondGenDugtrio.GetStatValue().GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
+          SecondGenDugtrio.Value.GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
 
           // Setting the effort values (EVs) for Dugtrio
-          SecondGenDugtrio.GetStatValue().GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
+          SecondGenDugtrio.Value.GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
 
           // Calculating the early generation stats for Dugtrio
-          SecondGenDugtrio.GetStat().EarlyGenHealth(SecondGenDugtrio);
-          SecondGenDugtrio.GetStat().EarlyGenAttack(SecondGenDugtrio);
-          SecondGenDugtrio.GetStat().EarlyGenDefense(SecondGenDugtrio);
-          SecondGenDugtrio.GetStat().EarlyGenSpAttack(SecondGenDugtrio);
-          SecondGenDugtrio.GetStat().EarlyGenSpDefense(SecondGenDugtrio);
-          SecondGenDugtrio.GetStat().EarlyGenSpeed(SecondGenDugtrio);
+          Stat.EarlyGenHealth(SecondGenDugtrio);
+          Stat.EarlyGenAttack(SecondGenDugtrio);
+          Stat.EarlyGenDefense(SecondGenDugtrio);
+          Stat.EarlyGenSpAttack(SecondGenDugtrio);
+          Stat.EarlyGenSpDefense(SecondGenDugtrio);
+          Stat.EarlyGenSpeed(SecondGenDugtrio);
 
-
-          List<Pokemon> team1 = new List<Pokemon>();
-          List<Pokemon> team2 = new List<Pokemon>();
+          List<Pokemon> team1 = [];
+          List<Pokemon> team2 = [];
 
           team1.Add(SecondGenSnorlax);
           team1.Add(SecondGenDugtrio);
           team2.Add(SecondGenGolem); 
           team2.Add(SecondGenChansey);
 
-          Battle battle = new Battle(team1, team2);
+          Battle battle = new(team1, team2);
           battle.HandleTurn();
         }
     }
