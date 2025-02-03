@@ -35,7 +35,7 @@ namespace PokeDojo.src.Battles
 
       if(criticalHit > 1.01)
       {
-        move.SetCritHappened();
+        move.CritHappened = true;
       }
 
       int level = self.Generation.Description.Level;

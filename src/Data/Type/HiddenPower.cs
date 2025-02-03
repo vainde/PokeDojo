@@ -21,9 +21,8 @@ namespace PokeDojo.src.Data.Type
 
         static public void HiddenPowerType(Pokemon pokemon)
         {
-          List<PokemonType> Types = Initialize.Types();
-
-          pokemon.Generation.HiddenPower = Types[0];
+          Dictionary<string, PokemonType> Types = Initialize.Types();
+          pokemon.Generation.HiddenPower = Types["Normal"];
         }
   }
 }

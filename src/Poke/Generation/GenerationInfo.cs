@@ -16,14 +16,14 @@ namespace PokeDojo.src.Poke.Generation
 
         public GenerationInfo()
         {
-            List<PokemonType> Types = Initialize.Types();
-            List<Item> Items = Initialize.Items();
+            Dictionary<string, PokemonType> Types = Initialize.Types();
+            Dictionary<string, Item> Items = Initialize.Items();
             Generation = 1;
             Description = new Description();
             Gender = new Gender();
-            HiddenPower = new PokemonType("Default", Types[0].MoveType, Types[0].DefenseType);
+            HiddenPower = new PokemonType("Default", Types["Normal"].MoveType, Types["Normal"].DefenseType);
             Happiness = 0;
-            Item = new Item(Items[0].Name, Items[0].Description, Items[0].PerformUseItem);
+            Item = new Item(Items[""].Name, Items[""].Description, Items[""].PerformUseItem);
         }
     }
 }

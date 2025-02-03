@@ -15,9 +15,9 @@ namespace PokeDojo.src.Simulator
         static void Main()
         {
           // Pokemon need a type and items selection to pull from
-          List<PokemonType> Types = Initialize.Types();
-          List<Move> Moves = Initialize.Moves();
-          List<Status> Status = Initialize.Status();
+         Dictionary<string, PokemonType> Types = Initialize.Types();
+         Dictionary<string, Move> Moves = Initialize.Moves();
+         Dictionary<string, Status> Status = Initialize.Status();
 
           // Using snorlax as a test pokemon
           Stat SnorlaxStat = new();
@@ -30,9 +30,9 @@ namespace PokeDojo.src.Simulator
           SnorlaxGen2.Description.Level = 50;
 
           // Adding a type, move and status
-          List<PokemonType> SnorlaxType = [Types[0]];
-          List<Move> SnorlaxMoves = [Moves[0]];
-          Status SnorlaxStatus = Status[0];
+          List<PokemonType> SnorlaxType = [Types["Normal"]];
+          List<Move> SnorlaxMoves = [Moves["BodySlam"]];
+          Status SnorlaxStatus = Status["OK"];
      
           Pokemon SecondGenSnorlax = new(SnorlaxStat, SnorlaxBaseStat, SnorlaxValue, SnorlaxType, SnorlaxGen2, SnorlaxMoves, SnorlaxStatus);
           SecondGenSnorlax.Generation.Happiness = 255;
@@ -59,9 +59,9 @@ namespace PokeDojo.src.Simulator
           GolemGen2.Description.Level = 50;
 
           // Adding a type, move and status
-          List<PokemonType> GolemType = [Types[1]];
-          List<Move> GolemMoves = [Moves[1]];
-          Status GolemStatus = Status[0];
+          List<PokemonType> GolemType = [Types["Ground"]];
+          List<Move> GolemMoves = [Moves["Earthquake"]];
+          Status GolemStatus = Status["OK"];
 
           Pokemon SecondGenGolem = new(GolemStat, GolemBaseStat, GolemValue, GolemType, GolemGen2, GolemMoves, GolemStatus);
           SecondGenGolem.Generation.Happiness = 255;
@@ -86,9 +86,9 @@ namespace PokeDojo.src.Simulator
           ChanseyGen2.Description.Level = 50;
 
           // Adding a type, move, and status for Chansey
-          List<PokemonType> ChanseyType = [Types[0]]; // Assume this is the correct type for Chansey
-          List<Move> ChanseyMoves = [Moves[0]]; // Assume this is the correct move for Chansey
-          Status ChanseyStatus = Status[0]; // Assume this is the correct status for Chansey
+          List<PokemonType> ChanseyType = [Types["Normal"]]; // Assume this is the correct type for Chansey
+          List<Move> ChanseyMoves = [Moves["BodySlam"]]; // Assume this is the correct move for Chansey
+          Status ChanseyStatus = Status["OK"]; // Assume this is the correct status for Chansey
 
           Pokemon SecondGenChansey = new(ChanseyStat, ChanseyBaseStat, ChanseyValue, ChanseyType, ChanseyGen2, ChanseyMoves, ChanseyStatus);
           SecondGenChansey.Generation.Happiness = 255;
@@ -120,9 +120,9 @@ namespace PokeDojo.src.Simulator
           DugtrioGen2.Description.Level = 50;
 
           // Adding a type, move, and status for Dugtrio
-          List<PokemonType> DugtrioType = [Types[1]]; // Assume this is the correct type for Dugtrio
-          List<Move> DugtrioMoves = [Moves[1]]; // Assume this is the correct move for Dugtrio
-          Status DugtrioStatus = Status[0]; // Assume this is the correct status for Dugtrio
+          List<PokemonType> DugtrioType = [Types["Ground"]]; // Assume this is the correct type for Dugtrio
+          List<Move> DugtrioMoves = [Moves["Earthquake"]]; // Assume this is the correct move for Dugtrio
+          Status DugtrioStatus = Status["OK"]; // Assume this is the correct status for Dugtrio
 
           Pokemon SecondGenDugtrio = new(DugtrioStat, DugtrioBaseStat, DugtrioValue, DugtrioType, DugtrioGen2, DugtrioMoves, DugtrioStatus);
           SecondGenDugtrio.Generation.Happiness = 255;

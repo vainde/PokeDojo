@@ -5,35 +5,15 @@ using PokeDojo.src.Battles;
 
 namespace PokeDojo.src.Data.Moves
 {
-  public class Move
+  public class Move(MoveInfo moveInfo, Action<Pokemon, Pokemon> useMove, double accuracy = 1, int priority = 0)
   {
     // Only assigned in constructor so I am setting it to readonly as a standard
-    readonly double accuracy;
-    readonly int priority;
-    bool critHappened;
-    readonly Action<Pokemon, Pokemon> UseMove;
-    readonly MoveInfo moveInfo;
-    int damage;
-
-    public Move(MoveInfo moveInfo, Action<Pokemon, Pokemon> useMove, double accuracy = 1, int priority = 0)
-    {
-      UseMove = useMove;
-      this.moveInfo = moveInfo;
-      this.priority = priority;
-      this.accuracy = accuracy;
-      critHappened = false;
-      damage = 0;
-    }
-
-    public void SetCritHappened()
-    {
-      critHappened = true;
-    }
-
-    public void ResetCritHappened()
-    {
-      critHappened = false;
-    }
+    public double Accuracy { get; } = accuracy;
+    public int Priority { get;  } = priority;
+    public bool CritHappened {get; set;} = false;
+    public Action<Pokemon, Pokemon> UseMove { get; } = useMove;
+    public MoveInfo MoveInfo { get; } = moveInfo;
+    public int DamageDealt { get; set; } = 0;
 
     public double GetAccuracy()
     {
@@ -60,12 +40,12 @@ namespace PokeDojo.src.Data.Moves
           SetDamage(self, target);
           UseMove.Invoke(self, target);
           int targetCurrentHP = target.Stat.CurrentHealth;
-          target.Stat.CurrentHealth = targetCurrentHP - damage;
+          target.Stat.CurrentHealth = targetCurrentHP - DamageDealt;
           if(target.Stat.CurrentHealth <= 0)
           {
             target.Stat.CurrentHealth = 0;
           }
-          if (critHappened)
+          if (CritHappened)
           {
             string name = self.Generation.Description.Name;
             Console.WriteLine($"{name} landed a critical hit!");
@@ -76,7 +56,7 @@ namespace PokeDojo.src.Data.Moves
           Console.WriteLine("But it missed!");
         }
       }
-      ResetCritHappened();
+      CritHappened = false;
     }
 
     // Returns the modifier based on type advantage
@@ -104,7 +84,7 @@ namespace PokeDojo.src.Data.Moves
 
     public void SetDamage(Pokemon self, Pokemon target)
     {
-      damage = Damage.Gen1Damage(self, target, this);
+      DamageDealt = Damage.Gen1Damage(self, target, this);
     }
   }
 }
