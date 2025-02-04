@@ -118,52 +118,78 @@ namespace PokeDojo.src.Battles
       DisplayPokemon(currentTarget);
     }
 
+    /*i can put handlemove on a queue based on speed
+      if player is faster then queue player action first, then enemy second
+      else enemy first then player second
+     dequeue first and invoke, second and invoke gg ez*/
+
     public static void HandleAttack(int choice, Pokemon playerCurrentPokemon, Pokemon enemyCurrentPokemon)
     {
       int playerCurrentSpeed = playerCurrentPokemon.Stat.Speed;
       int enemyCurrentSpeed = enemyCurrentPokemon.Stat.Speed;
-      int playerCurrentHP;
-      int enemyCurrentHP;
 
+      Queue<Action> MoveQueue = new();
       if (playerCurrentSpeed > enemyCurrentSpeed)
       {
-        playerCurrentHP = playerCurrentPokemon.Stat.CurrentHealth;
-        if (playerCurrentHP > 0)
+        if (CheckPokemonAlive(playerCurrentPokemon))
         {
-          HandleMove(playerCurrentPokemon, enemyCurrentPokemon, choice);
+          MoveQueue.Enqueue(() => HandleMove(playerCurrentPokemon, enemyCurrentPokemon, choice));
+          MoveQueue.Dequeue().Invoke();
         }
-        enemyCurrentHP = enemyCurrentPokemon.Stat.CurrentHealth;
-        if (enemyCurrentHP > 0)
+        if (CheckPokemonAlive(enemyCurrentPokemon))
         {
-          HandleMove(enemyCurrentPokemon, playerCurrentPokemon, choice);
+          MoveQueue.Enqueue(() => HandleMove(enemyCurrentPokemon, playerCurrentPokemon, choice));
+          MoveQueue.Dequeue().Invoke();
         }
       }
       else if (playerCurrentSpeed < enemyCurrentSpeed)
       {
-        // Make sure that they dont attack if they are dead
-        enemyCurrentHP = enemyCurrentPokemon.Stat.CurrentHealth;
-        if (enemyCurrentHP > 0)
+        if (CheckPokemonAlive(enemyCurrentPokemon))
         {
-          HandleMove(enemyCurrentPokemon, playerCurrentPokemon, choice);
+          MoveQueue.Enqueue(() => HandleMove(enemyCurrentPokemon, playerCurrentPokemon, choice));
+          MoveQueue.Dequeue().Invoke();
         }
-        playerCurrentHP = playerCurrentPokemon.Stat.CurrentHealth;
-        if (playerCurrentHP > 0)
+        if (CheckPokemonAlive(playerCurrentPokemon))
         {
-          HandleMove(playerCurrentPokemon, enemyCurrentPokemon, choice);
+          MoveQueue.Enqueue(() => HandleMove(playerCurrentPokemon, enemyCurrentPokemon, choice));
+          MoveQueue.Dequeue().Invoke();
         }
       }
       else
       {
         Random rand = new();
-        if(rand.Next(0, 1) <= 0.5)
+        if (rand.Next(0, 1) <= 0.5)
         {
-          HandleMove(playerCurrentPokemon, enemyCurrentPokemon, choice);
+          if (CheckPokemonAlive(playerCurrentPokemon))
+          {
+            MoveQueue.Enqueue(() => HandleMove(playerCurrentPokemon, enemyCurrentPokemon, choice));
+            MoveQueue.Dequeue().Invoke();
+          }
+          if (CheckPokemonAlive(enemyCurrentPokemon))
+          {
+            MoveQueue.Enqueue(() => HandleMove(enemyCurrentPokemon, playerCurrentPokemon, choice));
+            MoveQueue.Dequeue().Invoke();
+          }
         }
         else
         {
-          HandleMove(enemyCurrentPokemon, playerCurrentPokemon, choice);
+          if (CheckPokemonAlive(enemyCurrentPokemon))
+          {
+            MoveQueue.Enqueue(() => HandleMove(enemyCurrentPokemon, playerCurrentPokemon, choice));
+            MoveQueue.Dequeue().Invoke();
+          }
+          if (CheckPokemonAlive(playerCurrentPokemon))
+          {
+            MoveQueue.Enqueue(() => HandleMove(playerCurrentPokemon, enemyCurrentPokemon, choice));
+            MoveQueue.Dequeue().Invoke();
+          }
         }
       }
+    }
+
+    public static bool CheckPokemonAlive(Pokemon pokemon)
+    {
+      return pokemon.Stat.CurrentHealth > 0;
     }
     public static void DisplayPokemonFainted(Pokemon pokemon)
     {
