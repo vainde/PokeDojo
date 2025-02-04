@@ -31,9 +31,11 @@ namespace PokeDojo.src.Simulator.Team
 
     public static void AddPokemon()
     {
-      Console.WriteLine("ADD A POKEMON");
+      Console.WriteLine("ADD A POKEMON BY NAME");
       PrintBorder();
       Console.WriteLine("Enter pokemon by name: ");
+      //Find pokemon name if it matches the key in Pokemon[Name];
+      //Return value
     }
 
     public static int SearchForPokemon()

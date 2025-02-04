@@ -5,29 +5,25 @@ using PokeDojo.src.Data.Value;
 using PokeDojo.src.Poke.Generation;
 using PokeDojo.src.Data.Moves;
 using PokeDojo.src.Data.Statuses;
-
+using PokeDojo.src.Data;
 namespace PokeDojo.src.Poke
 {
   public class Pokemon
   {
-    public Stat Stat { get; }
+    public Stat Stat { get; } = new Stat();
     public BaseStat BaseStat { get; }
-    public StatValue Value { get; }
-    public List<PokemonType> Type { get; }
-    public GenerationInfo Generation { get; }
-    public List<Move> Moves { get; }
+    public StatValue Value { get; } = new StatValue();
+    public List<PokemonType> Type { get; } = [];
+    public GenerationInfo Generation { get; } = new GenerationInfo();
+    public List<Move> Moves { get; } = [];
     public Status Status { get; }
-    public List<int> AllPowerPoints { get; }
-    public Pokemon(Stat stat, BaseStat baseStat, StatValue value, List<PokemonType> type, GenerationInfo generation, List<Move> moves, Status status)
+    public List<int> AllPowerPoints { get; } = [];
+    public Pokemon(BaseStat baseStat, List<PokemonType> type)
     {
-      Stat = stat;
+      Dictionary<string, Status> Statuses = Initialize.Status();
       BaseStat = baseStat;
-      Value = value;
       Type = type;
-      Generation = generation;
-      Moves = moves;
-      Status = status;
-      AllPowerPoints = [];
+      Status = Statuses["OK"];
       SetCurrentPowerPoints();
     }
 

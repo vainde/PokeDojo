@@ -1,23 +1,13 @@
 ﻿// Describes the initial stats of a pokemon before IV and EV
 namespace PokeDojo.src.Data.Stats
 {
-  public class BaseStat
+  public class BaseStat(int health, int attack, int spAttack, int defense, int spDefense, int speed)
   {
-    public int Health { get; set; } = 0;
-    public int Attack { get; set; } = 0;
-    public int SpAttack { get; set; } = 0;
-    public int Defense { get; set; } = 0;
-    public int SpDefense { get; set; } = 0;
-    public int Speed { get; set; } = 0;
-
-    public void SetBaseStat(int hp, int atk, int spatk, int def, int spdef, int spd)
-    {
-      Health = hp;
-      Attack = atk;
-      SpAttack = spatk;
-      Defense = def;
-      SpDefense = spdef;
-      Speed = spd;
-    }
+    public int Health { get; set; } = health;
+    public int Attack { get; set; } = attack;
+    public int SpAttack { get; set; } = spAttack;
+    public int Defense { get; set; } = defense;
+    public int SpDefense { get; set; } = spDefense;
+    public int Speed { get; set; } = speed;
   }
 }

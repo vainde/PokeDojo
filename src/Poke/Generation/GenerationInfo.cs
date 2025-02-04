@@ -23,7 +23,7 @@ namespace PokeDojo.src.Poke.Generation
             Gender = new Gender();
             HiddenPower = new PokemonType("Default", Types["Normal"].MoveType, Types["Normal"].DefenseType);
             Happiness = 0;
-            Item = new Item(Items[""].Name, Items[""].Description, Items[""].PerformUseItem);
+            Item = new Item(Items["Normal"].Name, Items[""].Description, Items[""].PerformUseItem);
         }
     }
 }

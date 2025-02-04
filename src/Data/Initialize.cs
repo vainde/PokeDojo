@@ -1,8 +1,11 @@
-﻿using PokeDojo.src.Data.Stats;
+﻿using PokeDojo.src.Poke;
+using PokeDojo.src.Data.Stats;
+using PokeDojo.src.Data.Value;
 using PokeDojo.src.Data.Type;
 using PokeDojo.src.Data.Items;
 using PokeDojo.src.Data.Moves;
 using PokeDojo.src.Data.Statuses;
+using PokeDojo.src.Poke.Generation;
 
 namespace PokeDojo.src.Data
 {
@@ -13,12 +16,13 @@ namespace PokeDojo.src.Data
       return new Dictionary<string, MoveType>
       {
         {"Fighting",
-         new(
-           "Fighting",
-           ["Normal", "Ice", "Rock", "Dark", "Steel"],
-           ["Fire", "Water", "Grass", "Electric", "Fighting", "Ground", "Dragon"],
-           ["Poison", "Flying", "Psychic", "Bug", "Fairy"], ["Ghost"]
-        )},
+          new(
+            "Fighting",
+            ["Normal", "Ice", "Rock", "Dark", "Steel"],
+            ["Fire", "Water", "Grass", "Electric", "Fighting", "Ground", "Dragon"],
+            ["Poison", "Flying", "Psychic", "Bug", "Fairy"], ["Ghost"]
+          )
+        },
         {
         "Flying",
           new(
@@ -27,11 +31,47 @@ namespace PokeDojo.src.Data
           ["Normal", "Fire", "Water", "Ice", "Poison", "Ground", "Flying", "Psychic", "Ghost", "Dragon", "Dark"],
           ["Electric", "Rock", "Steel"],
           []
-        )},
-        {"Poison", new("Poison", ["Grass", "Fairy"], ["Normal", "Fire", "Water", "Electric", "Ice", "Fighting", "Flying", "Psychic", "Bug", "Dragon", "Dark"], ["Poison", "Ground", "Rock", "Ghost"], ["Steel"])},
-        {"Ground", new("Ground", ["Fire", "Electric", "Poison", "Rock", "Steel"], ["Normal", "Water", "Ice", "Fighting", "Ground", "Psychic", "Ghost", "Dragon", "Dark", "Fairy"], ["Grass", "Bug"], ["Flying"])},
-        {"Rock", new("Rock", ["Fire", "Ice", "Flying", "Bug"], ["Normal", "Water", "Grass", "Electric", "Poison", "Psychic", "Rock", "Ghost", "Dragon", "Dark", "Fairy"], ["Fighting", "Ground", "Steel"], [])},
-        {"Normal", new("Normal", [], ["Normal", "Fire", "Water", "Grass", "Electric", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Dragon", "Dark", "Fairy"], ["Rock", "Steel"], ["Ghost"])}
+          )
+        },
+        {
+          "Poison", 
+          new(
+            "Poison",
+            ["Grass", "Fairy"],
+            ["Normal", "Fire", "Water", "Electric", "Ice", "Fighting", "Flying", "Psychic", "Bug", "Dragon", "Dark"],
+            ["Poison", "Ground", "Rock", "Ghost"], ["Steel"]
+            )
+        },
+        {
+          "Ground",
+          new(
+            "Ground",
+            ["Fire", "Electric", "Poison", "Rock", "Steel"],
+            ["Normal", "Water", "Ice", "Fighting", "Ground", "Psychic", "Ghost", "Dragon", "Dark", "Fairy"],
+            ["Grass", "Bug"],
+            ["Flying"]
+            )
+        },
+        {
+          "Rock",
+          new(
+            "Rock",
+            ["Fire", "Ice", "Flying", "Bug"],
+            ["Normal", "Water", "Grass", "Electric", "Poison", "Psychic", "Rock", "Ghost", "Dragon", "Dark", "Fairy"],
+            ["Fighting", "Ground", "Steel"],
+            []
+            )
+        },
+        {
+          "Normal",
+          new(
+            "Normal",
+            [],
+            ["Normal", "Fire", "Water", "Grass", "Electric", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Dragon", "Dark", "Fairy"],
+            ["Rock", "Steel"],
+            ["Ghost"]
+            )
+        }
       };     
     }
       
@@ -224,6 +264,78 @@ namespace PokeDojo.src.Data
                 onPokemon.Stat.Attack = (attack * 2);
               }
             }
+          )
+        }
+      };
+    }
+
+    public static Dictionary<string, Pokemon> Pokemons()
+    {
+      Dictionary<string, PokemonType> Type = Types();
+
+      return new Dictionary<string, Pokemon>
+      {
+        {
+          "Bulbasaur",
+          new Pokemon(
+            new BaseStat(45, 49, 65, 49, 65, 45),
+            [Type["Grass"], Type["Poison"]]
+          )
+        },
+        {
+          "Ivysaur",
+          new Pokemon(
+            new BaseStat(60, 62, 80, 63, 80, 60),
+            [Type["Grass"], Type["Poison"]]
+          )
+        },
+        {
+          "Venusaur",
+          new Pokemon(
+            new BaseStat(80, 82, 100, 83, 100, 80),
+            [Type["Grass"], Type["Poison"]]
+          )
+        },
+        {
+          "Charmander",
+          new Pokemon(
+            new BaseStat(39, 52, 60, 43, 50, 65),
+            [Type["Fire"]]
+          )
+        },
+        {
+          "Charmeleon",
+          new Pokemon(
+            new BaseStat(58, 64, 80, 58, 65, 80),
+            [Type["Fire"]]
+          )
+        },
+        {
+          "Charizard",
+          new Pokemon(
+            new BaseStat(78, 84, 109, 78, 85, 100),
+            [Type["Fire"], Type["Flying"]]
+          )
+        },
+        {
+          "Squirtle",
+          new Pokemon(
+            new BaseStat(44, 48, 50, 65, 64, 43),
+            [Type["Water"]]
+          )
+        },
+        {
+          "Wartortle",
+          new Pokemon(
+            new BaseStat(59, 63, 65,80, 80, 58),
+            [Type["Water"]]
+          )
+        },
+        {
+          "Blastoise",
+          new Pokemon(
+            new BaseStat(79, 83, 85, 100, 105, 78),
+            [Type["Water"]]
           )
         }
       };
