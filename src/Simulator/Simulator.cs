@@ -1,11 +1,9 @@
 ﻿using PokeDojo.src.Data;
 using PokeDojo.src.Poke;
 using PokeDojo.src.Data.Type;
-using PokeDojo.src.Data.Stats;
-using PokeDojo.src.Data.Value;
 using PokeDojo.src.Data.Moves;
-using PokeDojo.src.Data.Statuses;
 using PokeDojo.src.Battles;
+using PokeDojo.src.Simulator.Team;
 
 namespace PokeDojo.src.Simulator
 {
@@ -21,6 +19,16 @@ namespace PokeDojo.src.Simulator
 
           //SecondGenSnorlax.Value.GetIndividualValue().SetIndividualValue(15, 15, 15, 15, 15, 15);
           //SecondGenSnorlax.Value.GetEffortValue().SetEffortValue(65535, 65535, 65535, 65535, 65535, 65535);
+
+          Party party = new Party();
+
+          // Need a main menu for Party Options, Summary and Battle
+          
+          int option = -1;
+          while (option != 3)
+          {
+            option = party.CreateATeam();
+          }
         
           List<Pokemon> team1 = [];
           List<Pokemon> team2 = [];

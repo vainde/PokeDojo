@@ -13,14 +13,6 @@ namespace PokeDojo.src.Simulator.Summary
             ShowMenu(pokemon);
         }
 
-        static public void Gen2Summary(Pokemon pokemon)
-        {
-            ShowDefaultSummary(pokemon);
-            Console.WriteLine();
-            ShowMenu(pokemon);
-        }
-
-
         static public void ShowDefaultSummary(Pokemon pokemon)
         {
             ShowBasicDescription(pokemon);
