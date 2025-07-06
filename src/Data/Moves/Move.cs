@@ -15,6 +15,8 @@ namespace PokeDojo.src.Data.Moves
     public MoveInfo MoveInfo { get; } = moveInfo;
     public int DamageDealt { get; set; } = 0;
 
+    public int CurrentPowerPoint { get; set; } = moveInfo.PowerPoint;
+
     public double GetAccuracy()
     {
       return accuracy;
@@ -47,7 +49,7 @@ namespace PokeDojo.src.Data.Moves
           }
           if (CritHappened)
           {
-            string name = self.Generation.Description.Name;
+            string name = self.Name;
             Console.WriteLine($"{name} landed a critical hit!");
           }
         }

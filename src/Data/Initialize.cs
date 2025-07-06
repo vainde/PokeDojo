@@ -1,11 +1,8 @@
 ﻿using PokeDojo.src.Poke;
 using PokeDojo.src.Data.Stats;
-using PokeDojo.src.Data.Value;
 using PokeDojo.src.Data.Type;
-using PokeDojo.src.Data.Items;
 using PokeDojo.src.Data.Moves;
 using PokeDojo.src.Data.Statuses;
-using PokeDojo.src.Poke.Generation;
 
 namespace PokeDojo.src.Data
 {
@@ -34,7 +31,7 @@ namespace PokeDojo.src.Data
           )
         },
         {
-          "Poison", 
+          "Poison",
           new(
             "Poison",
             ["Grass", "Fairy"],
@@ -71,6 +68,36 @@ namespace PokeDojo.src.Data
             ["Rock", "Steel"],
             ["Ghost"]
             )
+        },
+        {
+          "Fire",
+          new(
+            "Fire",
+            ["Grass", "Ice", "Bug", "Steel"],
+            ["Normal", "Electric", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Ghost", "Dark"],
+            ["Fire", "Water", "Rock", "Dragon"],
+            []
+            )
+        },
+        {
+          "Water",
+          new(
+            "Water",
+            ["Fire", "Ground", "Rock"],
+            ["Normal", "Electric", "Ice", "Fighting", "Poison", "Flying", "Psychic", "Bug", "Ghost", "Dark"],
+            ["Water", "Grass", "Dragon"],
+            []
+            )
+        },
+        {
+          "Grass",
+          new(
+            "Grass",
+            ["Water", "Ground", "Rock"],
+            ["Normal", "Electric", "Ice", "Fighting", "Psychic", "Bug", "Ghost", "Dark"],
+            ["Fire", "Grass", "Poison", "Flying", "Bug", "Dragon", "Steel"],
+            []
+            )
         }
       };     
     }
@@ -81,7 +108,12 @@ namespace PokeDojo.src.Data
       return new Dictionary<string, DefensiveType>
       {
         {"Normal", new DefensiveType("Normal", ["Fighting"], ["Normal", "Fire", "Water", "Grass", "Electric", "Ice", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Dragon", "Dark", "Steel", "Fairy"], [], ["Ghost"])},
-        {"Ground", new DefensiveType("Ground", ["Water", "Grass", "Ice"], ["Normal", "Fire", "Fighting", "Ground", "Flying", "Psychic", "Bug", "Ghost", "Dragon", "Dark", "Steel", "Fairy"], ["Poison", "Rock"], ["Electric"])}
+        {"Ground", new DefensiveType("Ground", ["Water", "Grass", "Ice"], ["Normal", "Fire", "Fighting", "Ground", "Flying", "Psychic", "Bug", "Ghost", "Dragon", "Dark", "Steel", "Fairy"], ["Poison", "Rock"], ["Electric"])},
+        {"Fire", new DefensiveType("Fire", ["Water", "Ground", "Rock"], ["Normal", "Electric", "Fighting", "Poison", "Flying", "Psychic", "Ghost", "Dragon", "Dark"], ["Fire", "Grass", "Ice", "Bug", "Steel"], [])},
+        {"Water", new DefensiveType("Water", ["Grass", "Electric"], ["Normal", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark"], ["Fire", "Water", "Ice", "Steel"], [])},
+        {"Grass", new DefensiveType("Grass", ["Fire", "Ice", "Poison", "Flying", "Bug"], ["Normal", "Fighting", "Psychic", "Rock", "Ghost", "Dragon", "Dark", "Steel"], ["Water", "Grass", "Electric", "Ground"], [])},
+        {"Flying", new DefensiveType("Flying", ["Electric", "Ice", "Rock"], ["Normal", "Fire", "Water", "Poison", "Flying", "Psychic", "Ghost", "Dragon", "Dark", "Steel"], ["Grass", "Fighting", "Bug"], ["Ground"])},
+        {"Poison", new DefensiveType("Poison", ["Ground", "Psychic"], ["Normal", "Fire", "Water", "Electric", "Ice", "Flying", "Rock", "Ghost", "Dragon", "Dark", "Steel"], ["Grass", "Fighting", "Poison", "Bug"], []){} }
       };
     }
 
@@ -92,7 +124,12 @@ namespace PokeDojo.src.Data
       return new Dictionary<string, PokemonType>
       {
         {"Normal",  new("Normal", Offense["Normal"], Defense["Normal"])},
-        {"Ground", new("Ground", Offense["Ground"], Defense["Ground"])}
+        {"Ground", new("Ground", Offense["Ground"], Defense["Ground"])},
+        {"Fire", new("Fire", Offense["Fire"], Defense["Fire"])},
+        {"Water", new("Water", Offense["Water"], Defense["Water"])},
+        {"Grass", new("Grass", Offense["Grass"], Defense["Grass"])},
+        {"Flying", new("Flying", Offense["Flying"], Defense["Flying"])},
+        {"Poison", new("Poison", Offense["Poison"], Defense["Poison"])},
       };
     }
 
@@ -114,7 +151,7 @@ namespace PokeDojo.src.Data
             MoveInfo["BodySlam"],
             (self, target) =>
             {
-              string selfName = self.Generation.Description.Name;
+              string selfName = self.Name!;
               Console.WriteLine($"{selfName} uses {MoveInfo["BodySlam"].Name}!");
 
               // can make a switch case later for text regarding type matchups
@@ -124,21 +161,12 @@ namespace PokeDojo.src.Data
               }
               else
               {
-                Random rand = new Random();
+                Random rand = new();
                 // Checks if there's a chance of paralyzing
                 bool paralyzeChance = rand.Next(1, 100) <= 30;
                 if (paralyzeChance)
                 {
                   string targetFirstType = target.Type[0].Name;
-                  int generation = self.Generation.Generation;
-                  //check how much it's supposed to slow based on gen 1 and gen 2
-                  if (generation == 2 && (targetFirstType != "Normal" && targetFirstType != "Ground")) // have to account for dual types
-                  {
-                    int targetSpeed = target.Stat.Speed;
-                    target.Stat.Speed = ((int)(targetSpeed * 0.75));
-                    string targetName = self.Generation.Description.Name;
-                    Console.WriteLine($"Enemy {targetName} is paralyzed! It may not attack!");
-                  }
                 }
               }
             })
@@ -148,7 +176,7 @@ namespace PokeDojo.src.Data
         new Move(MoveInfo["Earthquake"],
         (self, target) =>
         {
-          string selfName = self.Generation.Description.Name;
+          string selfName = self.Name!;
           Console.WriteLine($"{selfName} uses {MoveInfo["Earthquake"].Name}!");
 
           if (target.Type[0].Name == "Flying")
@@ -179,96 +207,6 @@ namespace PokeDojo.src.Data
       };
     }
 
-    public static Dictionary<string, Item> Items()
-    {
-      return new Dictionary<string, Item>
-      {
-        {
-          "",
-          new Item("", "", onPokemon => {})
-        },
-        {
-          "Leftovers",
-          new Item(
-            "Leftovers",
-            "At the end of every turn, holder restores 1/6 of its max HP.",
-            onPokemon =>
-            {
-              int maxHealth = onPokemon.Stat.Health;
-              int currentHealth = onPokemon.Stat.CurrentHealth;
-
-              // If the pokemon is already at max health, it doesn't need to heal
-              if(currentHealth != maxHealth)
-              {
-                // Ratio at which leftovers recovers health
-                int restoreHealth = (maxHealth / 16);
-                // Health restored can't go over max health
-                if(currentHealth + restoreHealth > maxHealth)
-                {
-                  onPokemon.Stat.CurrentHealth = maxHealth;
-                }
-                // Restore health by 1/16 of max health
-                else
-                {
-                  onPokemon.Stat.CurrentHealth = currentHealth + restoreHealth;
-                }
-              }
-            }
-          )
-        },
-        {
-          "Light Ball",
-          new Item(
-          "Light Ball",
-          "If held by Pikachu, it's special attack is doubled.",
-          onPokemon =>
-          {
-            string pokemonName = onPokemon.Generation.Description.Name;
-            // Pikachu with a lightball needs to double it's sp. attack
-            if(pokemonName == "Pikachu")
-            {
-              int specialAttack = onPokemon.Stat.SpAttack;
-              onPokemon.Stat.SpAttack = specialAttack * 2;
-            }
-          }
-          )
-        },
-        {
-          "Gold Berry",
-          new Item(
-            "Gold Berry",
-            "Restores 30 HP when at 1/2 max HP or less.",
-            onPokemon =>
-            {
-              int maxHealth = onPokemon.Stat.Health;
-              int currentHealth = onPokemon.Stat.CurrentHealth;
-              // Needs to heal by 30 HP if it meets the condition
-              if(currentHealth < (maxHealth / 2))
-              {
-                onPokemon.Stat.CurrentHealth = currentHealth + 30;
-              }
-            }
-          )
-        },
-        {
-          "Thick Club",
-          new Item(
-            "Thick Club",
-            "If held by a Cubone or Marowak, its Attack is doubled",
-            onPokemon =>
-            {
-              string pokemonName = onPokemon.Generation.Description.Name;
-              if(pokemonName == "Cubone" || pokemonName == "Marowak")
-              {
-                int attack = onPokemon.Stat.Attack;
-                onPokemon.Stat.Attack = (attack * 2);
-              }
-            }
-          )
-        }
-      };
-    }
-
     public static Dictionary<string, Pokemon> Pokemons()
     {
       Dictionary<string, PokemonType> Type = Types();
@@ -279,63 +217,72 @@ namespace PokeDojo.src.Data
           "Bulbasaur",
           new Pokemon(
             new BaseStat(45, 49, 65, 49, 65, 45),
-            [Type["Grass"], Type["Poison"]]
+            [Type["Grass"], Type["Poison"]],
+            "Bulbasaur"
           )
         },
         {
           "Ivysaur",
           new Pokemon(
             new BaseStat(60, 62, 80, 63, 80, 60),
-            [Type["Grass"], Type["Poison"]]
+            [Type["Grass"], Type["Poison"]],
+            "Ivysaur"
           )
         },
         {
           "Venusaur",
           new Pokemon(
             new BaseStat(80, 82, 100, 83, 100, 80),
-            [Type["Grass"], Type["Poison"]]
+            [Type["Grass"], Type["Poison"]],
+            "Venusaur"
           )
         },
         {
           "Charmander",
           new Pokemon(
             new BaseStat(39, 52, 60, 43, 50, 65),
-            [Type["Fire"]]
+            [Type["Fire"]],
+            "Charmander"
           )
         },
         {
           "Charmeleon",
           new Pokemon(
             new BaseStat(58, 64, 80, 58, 65, 80),
-            [Type["Fire"]]
+            [Type["Fire"]],
+            "Charmeleon"
           )
         },
         {
           "Charizard",
           new Pokemon(
             new BaseStat(78, 84, 109, 78, 85, 100),
-            [Type["Fire"], Type["Flying"]]
+            [Type["Fire"], Type["Flying"]],
+            "Charizard"
           )
         },
         {
           "Squirtle",
           new Pokemon(
             new BaseStat(44, 48, 50, 65, 64, 43),
-            [Type["Water"]]
+            [Type["Water"]],
+            "Squirtle"
           )
         },
         {
           "Wartortle",
           new Pokemon(
             new BaseStat(59, 63, 65,80, 80, 58),
-            [Type["Water"]]
+            [Type["Water"]],
+            "Wartortle"
           )
         },
         {
           "Blastoise",
           new Pokemon(
             new BaseStat(79, 83, 85, 100, 105, 78),
-            [Type["Water"]]
+            [Type["Water"]],
+            "Blastoise"
           )
         }
       };

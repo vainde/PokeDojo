@@ -16,8 +16,6 @@ namespace PokeDojo.src.Simulator.Summary
         static public void Gen2Summary(Pokemon pokemon)
         {
             ShowDefaultSummary(pokemon);
-            ShowGender(pokemon);
-            ShowGen2Description(pokemon);
             Console.WriteLine();
             ShowMenu(pokemon);
         }
@@ -25,7 +23,6 @@ namespace PokeDojo.src.Simulator.Summary
 
         static public void ShowDefaultSummary(Pokemon pokemon)
         {
-            SummaryTitle(pokemon);
             ShowBasicDescription(pokemon);
         }
 
@@ -56,12 +53,9 @@ namespace PokeDojo.src.Simulator.Summary
                         ShowAllStats(pokemon);
                         break;
                     case 2:
-                        ShowItemInformation(pokemon);
-                        break;
-                    case 3:
                         ShowMoveInformation(pokemon);
                         break;    
-                    case 4:
+                    case 3:
                         Console.WriteLine("EXITING PROGRAM...");
                         Console.WriteLine();
                         break;
@@ -71,12 +65,6 @@ namespace PokeDojo.src.Simulator.Summary
                         break;
                 }
             } while (option != 4);
-        }
-
-        static public void SummaryTitle(Pokemon pokemon)
-        {
-            Console.WriteLine($"{pokemon.Generation.Description.Name} Gen {pokemon.Generation.Generation} Summary");
-            PrintBorder();
         }
 
         static public void ShowAllStats(Pokemon pokemon)
@@ -114,10 +102,6 @@ namespace PokeDojo.src.Simulator.Summary
                         ShowBaseStat(pokemon);
                         Console.WriteLine();
                         break;
-                    case 5:
-                        Console.WriteLine($"Ending Gen {pokemon.Generation.Generation} Summary");
-                        Console.WriteLine();
-                        break;
                     default:
                         Console.WriteLine("Invalid option selected. Please try again!");
                         Console.WriteLine();
@@ -126,47 +110,10 @@ namespace PokeDojo.src.Simulator.Summary
             } while (option != 5);
         }
 
-        static public void ShowItemInformation(Pokemon pokemon)
-        {
-            int option;
-            do
-            {
-                Console.WriteLine("ITEM INFORMATION");
-                PrintBorder();
-                Console.WriteLine("1. View Item");
-                Console.WriteLine("2. Go Back");
-                Console.WriteLine("What would you like to see?");
-                Console.Write(">");
-                option = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine();
-                switch (option)
-                {
-                    case 1:
-                        if (pokemon.Generation.Item.Name == "")
-                        {
-                            Console.WriteLine("No item selected.");
-                            Console.WriteLine();
-                        }
-                        else
-                        {
-                            Console.WriteLine(pokemon.Generation.Item.Name);
-                            Console.WriteLine(pokemon.Generation.Item.Description);
-                            Console.WriteLine();
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("Finished showing item...");
-                        Console.WriteLine();
-                        break;
-                }
-
-            } while (option != 2);
-        }
-
         static public void ShowBasicDescription(Pokemon pokemon)
         {
-            Console.WriteLine($"Name: {pokemon.Generation.Description.Name}");
-            Console.WriteLine($"Level: {pokemon.Generation.Description.Level}");
+            Console.WriteLine($"Name: {pokemon.Name}");
+            Console.WriteLine($"Level: {pokemon.Level}");
             if(pokemon.Type.Count > 1)
             {
               Console.WriteLine($"Type: {pokemon.Type[0].Name} {pokemon.Type[1].Name}");
@@ -175,17 +122,6 @@ namespace PokeDojo.src.Simulator.Summary
             {
               Console.WriteLine($"Type: {pokemon.Type[0].Name}");
             }
-        }
-
-        static public void ShowGen2Description(Pokemon pokemon)
-        {
-            Console.WriteLine($"Happiness: {pokemon.Generation.Happiness}");
-            Console.WriteLine($"Hidden Power: {pokemon.Generation.HiddenPower.Name}");
-        }
-
-        static public void ShowGender(Pokemon pokemon)
-        {
-            Console.WriteLine($"Gender: {pokemon.Generation.Gender.Value}");
         }
 
         static public void ShowEarlyGenStats(Pokemon pokemon)

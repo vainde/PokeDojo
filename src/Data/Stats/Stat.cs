@@ -33,7 +33,7 @@ namespace PokeDojo.src.Data.Stats
             int baseHealth = pokemon.BaseStat.Health;
             int healthIV = pokemon.Value.GetIndividualValue().GetHealthIV();
             int healthEV = pokemon.Value.GetEffortValue().GetHealthEV();
-            int level = pokemon.Generation.Description.Level;
+            int level = pokemon.Level;
 
             int combinedHealth = (baseHealth + healthIV) * 2;
             int dividedHealthEV = (int)(Math.Sqrt(healthEV) / 4);
@@ -79,7 +79,7 @@ namespace PokeDojo.src.Data.Stats
             int baseSpAttack = pokemon.BaseStat.SpAttack;
             int spAttackIV = pokemon.Value.GetIndividualValue().GetSpAttackIV();
             int spAttackEV = pokemon.Value.GetEffortValue().GetSpAttackEV();
-            int level = pokemon.Generation.Description.Level;
+            int level = pokemon.Level;
             int spAttack = CalculateEarlyGenStat(baseSpAttack, spAttackIV, spAttackEV, level);
             pokemon.Stat.SpAttack = spAttack;
         }
@@ -89,7 +89,7 @@ namespace PokeDojo.src.Data.Stats
             int baseSpDefense = pokemon.BaseStat.SpDefense;
             int spDefenseIV = pokemon.Value.GetIndividualValue().GetSpDefenseIV();
             int spDefenseEV = pokemon.Value.GetEffortValue().GetSpDefenseEV();
-            int level = pokemon.Generation.Description.Level;
+            int level = pokemon.Level;
             int spDefense = CalculateEarlyGenStat(baseSpDefense, spDefenseIV, spDefenseEV, level);
             pokemon.Stat.SpDefense = spDefense;
         }
@@ -98,8 +98,7 @@ namespace PokeDojo.src.Data.Stats
         {
             int baseSpeed = pokemon.BaseStat.Speed;
             int speedIV = pokemon.Value.GetIndividualValue().GetSpeedIV();
-            int speedEV = pokemon.Value.GetEffortValue().GetSpeedEV();
-            int level = pokemon.Generation.Description.Level;
+            int speedEV = pokemon.Level;
             int speed = CalculateEarlyGenStat(baseSpeed, speedIV, speedEV, level);
             pokemon.Stat.Speed = speed;
         }

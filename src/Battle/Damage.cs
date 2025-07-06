@@ -14,23 +14,16 @@ namespace PokeDojo.src.Battles
       double enemyFirstTypeAdvantage;
       double criticalHit;
 
-      if (self.Generation.Generation != 1)
+      int selfLevel = self.Level;
+
+      bool critHappened = CriticalHit.IsCriticalHit(self, move);
+      if (critHappened)
       {
-        criticalHit = CriticalHit.IsCriticalHit(self, move) ? 2 : 1;
+          criticalHit = (double)(2 * selfLevel + 5) / (selfLevel + 5);
       }
       else
       {
-        int selfLevel = self.Generation.Description.Level;
-
-        bool critHappened = CriticalHit.IsCriticalHit(self, move);
-        if (critHappened)
-        {
-          criticalHit = (double)(2 * selfLevel + 5) / (selfLevel + 5);
-        }
-        else
-        {
           criticalHit = 1;
-        }
       }
 
       if(criticalHit > 1.01)
@@ -38,7 +31,7 @@ namespace PokeDojo.src.Battles
         move.CritHappened = true;
       }
 
-      int level = self.Generation.Description.Level;
+      int level = self.Level;
       int basePower = move.GetMoveInfo().BasePower;
 
       // If the move used is special, use the special attack of the pokemon against the target's special defense
