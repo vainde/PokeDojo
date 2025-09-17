@@ -24,6 +24,15 @@ namespace PokeDojo.src.Poke
       Type = type;
       Status = Statuses["OK"];
       Level = 1;
+      Name = name;
+
+      // Calculating Stats from Level 1
+      Stat.EarlyGenHealth(this);
+      Stat.EarlyGenAttack(this);
+      Stat.EarlyGenDefense(this);
+      Stat.EarlyGenSpAttack(this);
+      Stat.EarlyGenSpDefense(this);
+      Stat.EarlyGenSpeed(this);
     }
   }
         
