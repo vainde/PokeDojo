@@ -59,7 +59,7 @@ namespace PokeDojo.src.Data.Stats
             int baseAttack = pokemon.BaseStat.Attack;
             int attackIV = pokemon.Value.GetIndividualValue().GetAttackIV();
             int attackEV = pokemon.Value.GetEffortValue().GetAttackEV();
-            int level = pokemon.Generation.Description.Level;
+            int level = pokemon.Level;
             int attack = CalculateEarlyGenStat(baseAttack, attackIV, attackEV, level);
             pokemon.Stat.Attack = attack;
         }
@@ -69,7 +69,7 @@ namespace PokeDojo.src.Data.Stats
             int baseDefense = pokemon.BaseStat.Defense;
             int defenseIV = pokemon.Value.GetIndividualValue().GetDefenseIV();
             int defenseEV = pokemon.Value.GetEffortValue().GetDefenseEV();
-            int level = pokemon.Generation.Description.Level;
+            int level = pokemon.Level;
             int defense = CalculateEarlyGenStat(baseDefense, defenseIV, defenseEV, level);
             pokemon.Stat.Defense = defense;
         }
@@ -99,7 +99,7 @@ namespace PokeDojo.src.Data.Stats
             int baseSpeed = pokemon.BaseStat.Speed;
             int speedIV = pokemon.Value.GetIndividualValue().GetSpeedIV();
             int speedEV = pokemon.Level;
-            int speed = CalculateEarlyGenStat(baseSpeed, speedIV, speedEV, level);
+            int speed = CalculateEarlyGenStat(baseSpeed, speedIV, speedEV, pokemon.Level);
             pokemon.Stat.Speed = speed;
         }
     }
