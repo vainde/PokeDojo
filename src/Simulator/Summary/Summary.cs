@@ -31,9 +31,8 @@ namespace PokeDojo.src.Simulator.Summary
                 Console.WriteLine("POKEMON INFORMATION");
                 PrintBorder();
                 Console.WriteLine("1. View Stats");
-                Console.WriteLine("2. View Item");
-                Console.WriteLine("3. View Moves");
-                Console.WriteLine("4. Quit");
+                Console.WriteLine("2. View Moves");
+                Console.WriteLine("3. Quit");
                 Console.WriteLine();
                 Console.WriteLine("What would you like to see?");
                 Console.Write(">");
