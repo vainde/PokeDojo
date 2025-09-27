@@ -6,6 +6,7 @@ using PokeDojo.src.Battles;
 using PokeDojo.src.Simulator.Team;
 using System.Collections.Generic;
 using PokeDojo.src.Simulator.User;
+using System.Numerics;
 
 namespace PokeDojo.src.Simulator
 {
@@ -98,9 +99,16 @@ namespace PokeDojo.src.Simulator
                 }
                 else
                 {
-                  Console.WriteLine("PRE-BATTLE");
-                  Console.WriteLine("Select the team you would like to send out into battle.");
-                  //TODO
+                  Party playerTeam = SelectTeam(player);
+                  if (playerTeam == null)
+                  {
+                    Console.WriteLine("Error selecting team.");
+                  }
+                  else
+                  {
+                    // randomize enemy here
+                    Console.WriteLine("Battle starting...");
+                  }
                 }
               break;
               case 5:
@@ -112,5 +120,34 @@ namespace PokeDojo.src.Simulator
             }
           }
         }
+
+      static Party SelectTeam(Player player)
+      {
+        Console.WriteLine("SELECT TEAM");
+        Console.WriteLine("Select the team you would like to send out into battle.");
+        for (int i = 0; i < player.Teams.Count; i++)
+        {
+          Console.WriteLine($"{i + 1}. {player.Teams[i].Name}");
+        }
+        int teamSelection = Convert.ToInt32(Console.ReadLine());
+        bool validTeam = teamSelection < 1 || teamSelection > player.Teams.Count;
+        if (teamSelection < 1 || teamSelection > player.Teams.Count)
+        {
+          return null!;
+        }
+        else
+        {
+          Party team = player.Teams[teamSelection - 1];
+          if (team.Team.Count == 0)
+          {
+            return null!;
+          }
+          else
+          {
+            Console.WriteLine($"Player selected team: {team.Name}");
+            return player.Teams[teamSelection - 1];
+          }
+        }
+      }
     }
 }
